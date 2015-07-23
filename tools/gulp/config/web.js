@@ -1,8 +1,8 @@
 var dirs = {
-    sourceDir: './source/',
-    sourceAssetsDir: './source/assets/',
-    buildDir: './public/',
-    buildAssetsDir: './public/assets/'
+    sourceDir: './public/',
+    sourceAssetsDir: './public/assets/',
+    buildDir: './build/',
+    buildAssetsDir: './build/assets/'
   };
 
 module.exports = {
