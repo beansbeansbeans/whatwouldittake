@@ -1,13 +1,13 @@
 var dirs = {
     sourceDir: './public/',
-    sourceAssetsDir: './public/assets/',
+    sourceAssetsDir: './public/',
     buildDir: './build/',
-    buildAssetsDir: './build/assets/'
+    buildAssetsDir: './build/'
   };
 
 module.exports = {
   env:        'WEB',
-  port: 3000,
+  port: 4000,
   react: false,
   local_api: 'http://localhost:8080/api', //app is local, api is local
   test_api: 'https://test-environment.appspot.com/api', //app is local, api is test
@@ -22,9 +22,9 @@ module.exports = {
     markup: {
       watchSource: [
         dirs.sourceAssetsDir + 'index.html',
-        dirs.sourceAssetsDir + 'template/**/*.{hbs,html}'
+        dirs.sourceAssetsDir + 'templates/**/*.{hbs,html}'
       ],
-      watchFolder: dirs.sourceAssetsDir + 'template'
+      watchFolder: dirs.sourceAssetsDir + 'templates'
     },
     sass: {
       watchSource: dirs.sourceAssetsDir + 'scss/**/*.scss'
@@ -42,12 +42,8 @@ module.exports = {
       ],
       entryPoints: [
         {
-          entry: dirs.sourceAssetsDir + 'js/main-lobby.js',
-          dest: 'bundle-lobby.js'
-        },
-        {
-          entry: dirs.sourceAssetsDir + 'js/main-room.js',
-          dest: 'bundle-room.js'
+          entry: dirs.sourceAssetsDir + 'js/main.js',
+          dest: 'bundle.js'
         }
       ]
     }
