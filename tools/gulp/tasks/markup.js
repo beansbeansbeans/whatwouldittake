@@ -25,7 +25,6 @@ gulp.task('markup', [], function() {
   return   gulp.src(config.targets.markup.bundleFileName)
       .pipe(handlebars(templateData, templateOptions))
       .on('error', handleErrors)
-      .pipe(gulp.dest(config.sourceDir))
       .pipe(gulp.dest(config.buildDir))
       .pipe(connect.reload());
 });

@@ -22,7 +22,7 @@ module.exports = {
     markup: {
       watchSource: [
         dirs.sourceAssetsDir + 'index.html',
-        dirs.sourceAssetsDir + 'templates/**/*.{hbs,html}'
+        dirs.sourceAssetsDir + 'templates/*'
       ],
       watchFolder: dirs.sourceAssetsDir + 'templates'
     },
