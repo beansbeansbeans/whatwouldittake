@@ -54,7 +54,7 @@ module.exports = {
     },
     sass: {
       bundleFileName: 'styles.css',
-      bundleDir: dirs.sourceAssetsDir + 'css/'
+      bundleDir: dirs.buildAssetsDir + 'css/'
     },
     images: {
       bundleDir: dirs.buildAssetsDir + 'img/'
