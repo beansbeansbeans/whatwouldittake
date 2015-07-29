@@ -1,3 +1,6 @@
+@import "library";
+
 body {
   color: green;
+  @include border-radius(50%);
 }
