@@ -1,7 +1,12 @@
+var baseURL = "";
+
 module.exports = {
+  setURL(url) {
+    baseURL = url;
+  },
   get(url, callback) {
     var request = new XMLHttpRequest();
-    request.open('GET', url, true);
+    request.open('GET', baseURL + url, true);
 
     request.setRequestHeader("Accept", "application/json");
     if(this.token) {
@@ -28,9 +33,8 @@ module.exports = {
     request.send();
   },
   post(url, data, callback) {
-    console.log("posting");
     var request = new XMLHttpRequest();
-    request.open('POST', url, true);
+    request.open('POST', baseURL + url, true);
 
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Accept", "application/json");
