@@ -2,8 +2,15 @@
 <html>
   {{>templates/head}}
   <body>
-    <input type="text" name="count" placeholder="how many would it take?">
-    <input id="vote-button" type="submit" value="submit">
+    <div class="vote">
+      <input type="text" name="count" placeholder="how many would it take?">
+      <input id="vote-button" type="submit" value="submit">
+    </div>
+    <div class="create">
+      <input type="text" name="identifier" placeholder="identifier?">
+      <input type="text" name="text" placeholder="text?">
+      <input id="create-button" type="submit" value="submit">
+    </div>
   </body>
   <script src="/js/bundle.js"></script>
 </html>

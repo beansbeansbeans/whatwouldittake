@@ -1,10 +1,24 @@
 var util = require('./util');
 var api = require('./api');
 
-api.setURL("http://oughtness-49671.onmodulus.net");
+if(window.location.hostname === "localhost") {
+  api.setURL("http://localhost:4400");
+} else {
+  api.setURL("http://oughtness-49671.onmodulus.net");
+}
 
 document.querySelector("#vote-button").addEventListener("click", () => {
-  api.post('/vote', {question_id: 0, data: 20}, (data) => {
+  api.post('/vote', {scenario_id: '55be756d248cacaee30bf3e5', data: 20}, (data) => {
+    console.log("SUCCESS");
+    console.log(data);
+  });
+});
+
+document.querySelector("#create-button").addEventListener("click", () => {
+  api.post('/create', {
+    identifier: "lifeboat",
+    text: "sacrifice lifeboaters for greater good?"
+  }, (data) => {
     console.log("SUCCESS");
     console.log(data);
   });
