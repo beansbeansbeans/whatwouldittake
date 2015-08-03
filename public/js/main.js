@@ -2,9 +2,9 @@ var util = require('./util');
 var api = require('./api');
 
 if(window.location.hostname === "localhost") {
-  api.setURL("http://localhost:4400");
+  api.setURL("http://localhost:5500");
 } else {
-  api.setURL("http://oughtness-49671.onmodulus.net");
+  api.setURL("http://storiesof-49778.onmodulus.net");
 }
 
 document.querySelector("#vote-button").addEventListener("click", () => {
