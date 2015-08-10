@@ -7,7 +7,7 @@ var dirs = {
 
 module.exports = {
   env:        'WEB',
-  port: 4000,
+  port: 5000,
   react: false,
   local_api: 'http://localhost:8080/api', //app is local, api is local
   test_api: 'https://test-environment.appspot.com/api', //app is local, api is test
