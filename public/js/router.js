@@ -20,8 +20,6 @@ module.exports = {
       page('/', (context) => {
         if(context.pathname.indexOf("#!") !== -1) {
           page.redirect(context.pathname.slice(3));
-        } else {
-          page.redirect('login');
         }
       });
 

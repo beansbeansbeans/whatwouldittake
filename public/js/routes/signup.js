@@ -17,7 +17,7 @@ module.exports = {
         }, (data) => {
           if(data.success) {
             console.log("SIGNED UP");
-            page.show('/', null, false);
+            page.redirect('/');
           } else {
             console.log("FAILED TO SIGN UP");
             // render error message

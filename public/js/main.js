@@ -19,6 +19,11 @@ window.addEventListener("DOMContentLoaded", () => {
     var path = context.path.split('/')[0],
       partial = d.qs("#" + path + '-template');
 
+    if(!path.length) {
+      path = "index";
+      partial = d.qs("#index-template");
+    }
+
     d.body.setAttribute("data-active-route", path);
 
     if(partial) {
