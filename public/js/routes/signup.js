@@ -14,7 +14,11 @@ module.exports = {
           email: 'ann@ann.com',
           password: 'yuan'
         }, (data) => {
-          console.log("SIGNED UP");
+          if(data.success) {
+            console.log("SIGNED UP");
+          } else {
+            console.log("FAILED TO SIGN UP");
+          }
           console.log(data);
         });
       }
