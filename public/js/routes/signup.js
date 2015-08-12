@@ -16,13 +16,11 @@ module.exports = {
           password: form.querySelector('[name="password"]').value
         }, (data) => {
           if(data.success) {
-            console.log("SIGNED UP");
             page.redirect('/');
           } else {
             console.log("FAILED TO SIGN UP");
-            // render error message
+            console.log(data.error);
           }
-          console.log(data);
         });
       }
     });
