@@ -7,7 +7,7 @@ var router = require('./router');
 if(window.location.hostname === "localhost") {
   api.setURL("http://localhost:5500");
 } else {
-  api.setURL("http://storiesof-49778.onmodulus.net");
+  api.setURL("https://storiesof-49778.onmodulus.net");
 }
 
 window.addEventListener("click", (e) => {
