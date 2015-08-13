@@ -11,6 +11,7 @@ module.exports = {
     }
 
     var request = new XMLHttpRequest();
+    request.withCredentials = true;
     request.open('GET', baseURL + url, true);
 
     request.setRequestHeader("Accept", "application/json");

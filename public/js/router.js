@@ -2,7 +2,8 @@ var state = require('./state');
 var mediator = require('./mediator');
 var routes = {
   login: require('./routes/login'),
-  signup: require('./routes/signup')
+  signup: require('./routes/signup'),
+  me: require('./routes/me')
 };
 
 module.exports = {
@@ -25,6 +26,7 @@ module.exports = {
 
       page('login', routes.login.start);
       page('signup', routes.signup.start);
+      page('me', routes.me.start);
 
       page();
     });
