@@ -10,6 +10,6 @@ module.exports = {
     api.get('/me', (err, data) => {
       console.log("SUCCESS");
       console.log(data);
-    });
+    }, false);
   }
 };

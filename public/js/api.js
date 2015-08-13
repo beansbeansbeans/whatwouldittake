@@ -5,7 +5,7 @@ module.exports = {
   setURL(url) {
     baseURL = url;
   },
-  get(url, callback) {
+  get(url, callback, cacheReq) {
     if(typeof cache[url] !== 'undefined') {
       return callback(null, cache[url]);
     }
@@ -30,7 +30,9 @@ module.exports = {
       result.responseCode = request.status;
       result.data = data;
 
-      cache[url] = result;
+      if(cacheReq !== false) {
+        cache[url] = result;
+      }
       
       if(callback) {
         callback(null, result);
