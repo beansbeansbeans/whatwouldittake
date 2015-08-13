@@ -42,6 +42,7 @@ module.exports = {
   },
   post(url, data, callback) {
     var request = new XMLHttpRequest();
+    request.withCredentials = true;
     request.open('POST', baseURL + url, true);
 
     request.setRequestHeader("Content-Type", "application/json");
