@@ -1,55 +1,74 @@
 var h = require('virtual-dom/h');
-var diff = require('virtual-dom/diff');
-var patch = require('virtual-dom/patch');
-var createElement = require('virtual-dom/create-element');
 var api = require('../api');
 var mediator = require('../mediator');
+var view = require('../view');
 
-var rootNode;
-var tree;
-
-var updateState = () => {
-  var newTree = render();
-  var patches = diff(tree, newTree);
-  rootNode = patch(rootNode, patches);
-  tree = newTree;
+var state = {
+  attemptingSubmission: false,
+  fieldStatus: {
+    username: false,
+    password: false
+  }
 };
 
-var render = () => {
-  return h('div#login-page', [
-    h('div.title', 'login to the app'),
-    h('form', [
-      h('input')
-    ])
-  ]);
-};
-
-module.exports = {
-  initialize() {
-
-  },
+class loginView extends view {
   start() {
-    tree = render();
-    rootNode = createElement(tree);
-    d.gbID('content').appendChild(rootNode);
+    super.start();
 
     mediator.subscribe("window_click", (e) => {
       if(e.target.getAttribute("id") === "login-button") {
         e.preventDefault();
-        var form = d.gbID("login-form");
+        var form = d.gbID("login-form"),
+          username = form.querySelector('[name="username"]').value,
+          password = form.querySelector('[name="password"]').value;
+        
+        state.attemptingSubmission = true;
+        state.fieldStatus = {
+          username: !username,
+          password: !password
+        };
+        this.updateState();
 
-        api.post('/login', {
-          username: form.querySelector('[name="username"]').value,
-          password: form.querySelector('[name="password"]').value
-        }, (data) => {
-          if(data.success) {
-            page.redirect('/');
-          } else {
-            console.log("FAILED TO SIGN UP");
-            console.log(data.error);
-          }
-        });
+        if(Object.keys(state.fieldStatus).every(x => !state.fieldStatus[x])) {
+          api.post('/login', {
+            username: username,
+            password: password
+          }, (data) => {
+            if(data.success) {
+              page.redirect('/');
+            } else {
+              console.log("FAILED TO SIGN UP");
+              console.log(data.error);
+            }
+          });
+        }
       }
     });
   }
-};
+
+  render() {
+    return h('div#login-page', [
+      h('div.title', 'login to the app'),
+      h('form#login-form', { method: "post" }, [
+        h('input', {
+          type: "text",
+          name: "username",
+          placeholder: "username",
+          dataset: { error: state.fieldStatus.username }
+        }),
+        h('input', {
+          type: "text",
+          name: "password",
+          placeholder: "password",
+          dataset: { error: state.fieldStatus.password }
+        }),
+        h('input#login-button', {
+          type: "submit",
+          value: "login"
+        })
+      ])
+    ]);
+  }
+}
+
+module.exports = new loginView();

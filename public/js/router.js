@@ -3,6 +3,7 @@ var mediator = require('./mediator');
 var routes = {
   login: require('./routes/login'),
   signup: require('./routes/signup'),
+  index: require('./routes/index'),
   me: require('./routes/me')
 };
 
@@ -22,6 +23,7 @@ module.exports = {
         if(context.pathname.indexOf("#!") !== -1) {
           page.redirect(context.pathname.slice(3));
         }
+        routes.index.start();
       });
 
       page('login', routes.login.start);

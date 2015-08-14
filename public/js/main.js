@@ -24,19 +24,13 @@ window.addEventListener("click", (e) => {
 
 window.addEventListener("DOMContentLoaded", () => {
   mediator.subscribe("route_updated", (context) => {
-    var path = context.path.split('/')[0],
-      partial = d.qs("#" + path + '-template');
+    var path = context.path.split('/')[0];
 
     if(!path.length) {
       path = "index";
-      partial = d.qs("#index-template");
     }
 
     d.body.setAttribute("data-active-route", path);
-
-    if(partial) {
-      d.qs("#content").innerHTML = partial.innerHTML;
-    }
   });
 
   router.initialize();
