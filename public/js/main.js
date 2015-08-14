@@ -23,6 +23,14 @@ window.addEventListener("click", (e) => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
+  api.get('/session', (err, data) => {
+    if(data.auth) {
+
+    } else {
+
+    }
+  });
+
   mediator.subscribe("route_updated", (context) => {
     var path = context.path.split('/')[0];
 
