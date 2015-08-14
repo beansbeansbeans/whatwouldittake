@@ -1,8 +1,6 @@
 var gulp = require('gulp'),
   gutil = require('gulp-util'),
   handlebars = require('gulp-compile-handlebars'),
-  fs = require('fs'),
-  connect = require('gulp-connect'),
   config = require('../config'),
   parseArgs = require('minimist')(process.argv.slice(2)),
   gitState = require('../util/gitRevisionState'),
