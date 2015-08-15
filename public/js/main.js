@@ -5,6 +5,11 @@ var api = require('./api');
 var auth = require("./auth");
 var router = require('./router');
 
+// views
+var nav = require('./views/nav');
+
+nav.start();
+
 if(window.location.hostname === "localhost") {
   api.setURL("http://localhost:5500");
 } else {

@@ -13,6 +13,7 @@ class view {
     this.parent = opts.parent || '#content';
 
     this.start = this.start.bind(this);
+    this.mount = this.mount.bind(this);
     this.updateState = this.updateState.bind(this);
   }
 
@@ -21,11 +22,15 @@ class view {
   start() {
     this.tree = this.render();
     this.rootNode = createElement(this.tree);
+    this.mount();
+  }
+
+  mount() {
     if(d.qs(this.parent).hasChildNodes()) {
       d.qs(this.parent).replaceChild(this.rootNode, d.qs(this.parent).childNodes[0]);
     } else {
       d.qs(this.parent).appendChild(this.rootNode);
-    }
+    }    
   }
 
   updateState() {
