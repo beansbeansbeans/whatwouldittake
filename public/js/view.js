@@ -17,8 +17,6 @@ class view {
     this.updateState = this.updateState.bind(this);
   }
 
-  initialize() {}
-
   start() {
     this.tree = this.render();
     this.rootNode = createElement(this.tree);

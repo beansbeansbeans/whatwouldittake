@@ -9,8 +9,6 @@ var routes = {
 
 module.exports = {
   initialize() {
-    Object.keys(routes).forEach(key => routes[key].initialize());
-
     mediator.subscribe("loaded", () => {
       page.base('/');
 

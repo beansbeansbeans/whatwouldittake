@@ -30,8 +30,9 @@ window.addEventListener("click", (e) => {
 
 window.addEventListener("DOMContentLoaded", () => {
   api.get('/session', (err, data) => {
-    if(data.auth) {
+    if(data.data.auth) {
       state.set("user", data.user);
+      auth.authStatusChange(true);
     } else {
 
     }
