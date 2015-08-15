@@ -1,4 +1,5 @@
 var state = {
+  user: null,
   pair_history: [],
   pair: []
 };

@@ -2,6 +2,7 @@ var h = require('virtual-dom/h');
 var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
+var auth = require('../auth');
 
 var state = {
   attemptingSubmission: false,
@@ -39,7 +40,7 @@ class signupView extends view {
             password: password
           }, (data) => {
             if(data.success) {
-              page.redirect('/');
+              auth.authenticated(data.user);
             } else {
               console.log("FAILED TO SIGN UP");
               console.log(data.error);

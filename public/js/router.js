@@ -1,10 +1,10 @@
 var state = require('./state');
 var mediator = require('./mediator');
 var routes = {
-  login: require('./routes/login'),
-  signup: require('./routes/signup'),
-  index: require('./routes/index'),
-  me: require('./routes/me')
+  login: require('./views/login'),
+  signup: require('./views/signup'),
+  index: require('./views/index'),
+  me: require('./views/me')
 };
 
 module.exports = {

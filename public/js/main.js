@@ -2,6 +2,7 @@ var state = require('./state');
 var mediator = require("./mediator");
 var util = require('./util');
 var api = require('./api');
+var auth = require("./auth");
 var router = require('./router');
 
 if(window.location.hostname === "localhost") {
@@ -13,7 +14,7 @@ if(window.location.hostname === "localhost") {
 mediator.subscribe("window_click", (e) => {
   if(e.target.getAttribute("id") === "logout-button") {
     api.post('/logout', {}, () => {
-      page.redirect('/');
+      auth.deauthenticated();
     });
   }
 });
@@ -25,7 +26,7 @@ window.addEventListener("click", (e) => {
 window.addEventListener("DOMContentLoaded", () => {
   api.get('/session', (err, data) => {
     if(data.auth) {
-
+      state.set("user", data.user);
     } else {
 
     }
