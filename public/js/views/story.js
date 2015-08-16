@@ -7,7 +7,7 @@ class storyView extends view {
   start(ctx) {
     super.start();
 
-    api.get('/story/' + ctx.params.id, (data) => {
+    api.get('/story/' + ctx.params.id, (error, data) => {
       console.log("GOT STORY");
       console.log(data);
     });
