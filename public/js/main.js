@@ -16,14 +16,6 @@ if(window.location.hostname === "localhost") {
   api.setURL("https://storiesof-49778.onmodulus.net");
 }
 
-mediator.subscribe("window_click", (e) => {
-  if(e.target.getAttribute("id") === "logout-button") {
-    api.post('/logout', {}, () => {
-      auth.deauthenticated();
-    });
-  }
-});
-
 window.addEventListener("click", (e) => {
   mediator.publish("window_click", e);
 });

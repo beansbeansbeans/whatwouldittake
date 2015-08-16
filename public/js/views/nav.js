@@ -10,6 +10,14 @@ class navView extends view {
     super.start();
 
     mediator.subscribe('auth_status_change', this.updateState);
+
+    mediator.subscribe("window_click", (e) => {
+      if(e.target.getAttribute("id") === "logout-button") {
+        api.post('/logout', {}, () => {
+          auth.deauthenticated();
+        });
+      }
+    });
   }
 
   render() {
@@ -40,7 +48,8 @@ class navView extends view {
       profile,
       login,
       signup,
-      logout
+      logout,
+      h('div#create-story.button', 'Create a story')
     ]);
   }
 }
