@@ -1,3 +1,4 @@
+var Pikaday = require('pikaday');
 var h = require('virtual-dom/h');
 var api = require('../api');
 var mediator = require('../mediator');
@@ -5,6 +6,14 @@ var view = require('../view');
 var createEntrySubview = require('./subviews/create_entry');
 
 class createView extends view {
+  start() {
+    super.start();
+
+    var picker = new Pikaday({ field: d.gbID('datepicker') });
+
+    console.log(picker);
+  }
+
   render() {
     var createEntry = createEntrySubview.render();
 
