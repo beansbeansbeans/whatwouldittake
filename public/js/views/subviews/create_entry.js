@@ -11,13 +11,13 @@ module.exports = {
       ]),
       h('div.feeling-wrapper', [
         h('div.label', 'How are you feeling?'),
-        h('input', {
+        h('input#feeling-picker', {
           type: 'range'
         })
       ]),
       h('div.notes-wrapper', [
         h('div.label', 'Notes (optional)'),
-        h('textarea')
+        h('textarea#notes')
       ])
     ]);
   }

@@ -11,7 +11,21 @@ class createView extends view {
 
     var picker = new Pikaday({ field: d.gbID('datepicker') });
 
-    console.log(picker);
+    mediator.subscribe("window_click", (e) => {
+      if(e.target.getAttribute("id") === "publish-story") {
+        var date = picker.toString('X'),
+          feeling = d.gbID("feeling-picker").value,
+          notes = d.gbID("notes").value;
+
+        api.post('/create_story', {
+          date: date,
+          feeling: feeling,
+          notes: notes
+        }, (data) => {
+          console.log("CREATED A FREAKING STORY");
+        });
+      }
+    });
   }
 
   render() {
@@ -27,7 +41,8 @@ class createView extends view {
       h('div.create-entry-wrapper', [
         h('div.title', 'First entry'),
         createEntry
-      ])
+      ]),
+      h('div#publish-story', 'Publish story')
     ]);
   }
 }
