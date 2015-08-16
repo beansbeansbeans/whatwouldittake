@@ -1,3 +1,20 @@
-input[data-error="true"] {
-  border: solid 1px red;
+%auth-base {
+  .input-wrapper {
+    .error {
+      @include transition(opacity $transition-duration);
+      opacity: 0;
+      color: red;
+    }
+    &[data-error="true"] {
+      input {
+        border: solid 1px red;
+      }
+      .error {
+        opacity: 1;
+      }
+    }
+  }
+  input {
+    display: block;
+  }
 }

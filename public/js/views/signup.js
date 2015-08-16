@@ -9,7 +9,8 @@ var state = {
   fieldStatus: {
     username: false,
     email: false,
-    password: false
+    password: false,
+    confirmPassword: false
   }
 };
 
@@ -23,13 +24,15 @@ class signupView extends view {
         var form = d.gbID("signup-form"),
           username = form.querySelector('[name="username"]').value,
           email = form.querySelector('[name="email"]').value,
-          password = form.querySelector('[name="password"]').value;
+          password = form.querySelector('[name="password"]').value,
+          confirmPassword = form.querySelector('[name="confirm_password"]').value;
 
         state.attemptingSubmission = true;
         state.fieldStatus = {
           username: !username,
           email: !email,
-          password: !password
+          password: !password,
+          confirmPassword: !confirmPassword
         };
         this.updateState();
 
@@ -55,24 +58,46 @@ class signupView extends view {
     return h('div#signup-page', [
       h('div.title', 'signup for the app'),
       h('form#signup-form', { method: "post" }, [
-        h('input', {
-          type: "text",
-          name: "username",
-          placeholder: "username",
+        h('div.input-wrapper', {
           dataset: { error: state.fieldStatus.username }
-        }),
-        h('input', {
-          type: "text",
-          name: "email",
-          placeholder: "email",
+        }, [
+          h('input', {
+            type: "text",
+            name: "username",
+            placeholder: "username"
+          }),
+          h('div.error', 'This field is required.')
+        ]),
+        h('div.input-wrapper', {
           dataset: { error: state.fieldStatus.email }
-        }),
-        h('input', {
-          type: "text",
-          name: "password",
-          placeholder: "password",
+        }, [
+          h('input', {
+            type: "text",
+            name: "email",
+            placeholder: "email"
+          }),
+          h('div.error', 'This field is required.')
+        ]),
+        h('div.input-wrapper', {
           dataset: { error: state.fieldStatus.password }
-        }),
+        }, [
+          h('input', {
+            type: "password",
+            name: "password",
+            placeholder: "password"
+          }),
+          h('div.error', 'This field is required.')
+        ]),
+        h('div.input-wrapper', {
+          dataset: { error: state.fieldStatus.confirmPassword }
+        }, [
+          h('input', {
+            type: "password",
+            name: "confirm_password",
+            placeholder: "confirm password"
+          }),
+          h('div.error', 'This field is required.')
+        ]),
         h('input#signup-button', {
           type: "submit",
           value: "signup"

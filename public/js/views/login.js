@@ -51,18 +51,26 @@ class loginView extends view {
     return h('div#login-page', [
       h('div.title', 'login to the app'),
       h('form#login-form', { method: "post" }, [
-        h('input', {
-          type: "text",
-          name: "username",
-          placeholder: "username",
+        h('div.input-wrapper', {
           dataset: { error: state.fieldStatus.username }
-        }),
-        h('input', {
-          type: "text",
-          name: "password",
-          placeholder: "password",
+        }, [
+          h('input', {
+            type: "text",
+            name: "username",
+            placeholder: "username"
+          }),
+          h('div.error', 'This field is required.')
+        ]),
+        h('div.input-wrapper', {
           dataset: { error: state.fieldStatus.password }
-        }),
+        }, [
+          h('input', {
+            type: "password",
+            name: "password",
+            placeholder: "password"
+          }),
+          h('div.error', 'This field is required.')
+        ]),
         h('input#login-button', {
           type: "submit",
           value: "login"
