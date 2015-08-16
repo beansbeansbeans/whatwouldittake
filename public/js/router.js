@@ -4,7 +4,8 @@ var routes = {
   login: require('./views/login'),
   signup: require('./views/signup'),
   index: require('./views/index'),
-  me: require('./views/me')
+  me: require('./views/me'),
+  create: require('./views/create')
 };
 
 module.exports = {
@@ -27,6 +28,8 @@ module.exports = {
       page('login', routes.login.start);
       page('signup', routes.signup.start);
       page('me', routes.me.start);
+
+      page('create', routes.create.start);
 
       page();
     });
