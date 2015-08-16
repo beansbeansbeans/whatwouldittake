@@ -22,7 +22,11 @@ class createView extends view {
           feeling: feeling,
           notes: notes
         }, (data) => {
-          console.log("CREATED A FREAKING STORY");
+          if(data.error) {
+
+          } else {
+            page('story/' + data._id);
+          }
         });
       }
     });

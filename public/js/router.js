@@ -5,7 +5,8 @@ var routes = {
   signup: require('./views/signup'),
   index: require('./views/index'),
   me: require('./views/me'),
-  create: require('./views/create')
+  create: require('./views/create'),
+  story: require('./views/story')
 };
 
 module.exports = {
@@ -30,6 +31,11 @@ module.exports = {
       page('me', routes.me.start);
 
       page('create', routes.create.start);
+
+      page('story/:id', (context) => {
+        console.log("IN STORY ID");
+        console.log(context);
+      });
 
       page();
     });
