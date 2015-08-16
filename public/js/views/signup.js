@@ -9,8 +9,23 @@ var state = {
   fieldStatus: {
     username: false,
     email: false,
-    password: false,
-    confirmPassword: false
+    password: false
+  }
+};
+
+var errorMessages = {
+  username: {
+    tooShort: 'Usernames must be at least three characters long.',
+    containsSpaces: 'Usernames may not contain spaces.',
+    alreadyExists: 'This username has already been taken.'
+  },
+  email: {
+    alreadyExists: 'A user with this email address already exists.',
+    invalid: 'Sorry, that does not appear to be a valid email address.'
+  },
+  password: {
+    tooShort: 'Passwords must be at least 5 characters long.',
+    containsSpaces: 'Passwords may not contain spaces.'
   }
 };
 
@@ -24,15 +39,13 @@ class signupView extends view {
         var form = d.gbID("signup-form"),
           username = form.querySelector('[name="username"]').value,
           email = form.querySelector('[name="email"]').value,
-          password = form.querySelector('[name="password"]').value,
-          confirmPassword = form.querySelector('[name="confirm_password"]').value;
+          password = form.querySelector('[name="password"]').value;
 
         state.attemptingSubmission = true;
         state.fieldStatus = {
           username: !username,
           email: !email,
-          password: !password,
-          confirmPassword: !confirmPassword
+          password: !password
         };
         this.updateState();
 
@@ -85,16 +98,6 @@ class signupView extends view {
             type: "password",
             name: "password",
             placeholder: "password"
-          }),
-          h('div.error', 'This field is required.')
-        ]),
-        h('div.input-wrapper', {
-          dataset: { error: state.fieldStatus.confirmPassword }
-        }, [
-          h('input', {
-            type: "password",
-            name: "confirm_password",
-            placeholder: "confirm password"
           }),
           h('div.error', 'This field is required.')
         ]),
