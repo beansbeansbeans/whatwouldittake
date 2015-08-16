@@ -32,10 +32,7 @@ module.exports = {
 
       page('create', routes.create.start);
 
-      page('story/:id', (context) => {
-        console.log("IN STORY ID");
-        console.log(context);
-      });
+      page('story/:id', routes.story.start);
 
       page();
     });

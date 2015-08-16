@@ -5,15 +5,17 @@ var view = require('../view');
 
 class storyView extends view {
   start(ctx) {
-    console.log("IN STORY");
-    console.log(ctx)
-    // super.start();
+    super.start();
 
-
-    // api.get('/story/' + )
+    api.get('/story/' + ctx.params.id, (data) => {
+      console.log("GOT STORY");
+      console.log(data);
+    });
   }
 
   render() {
     return h('div#story-view', 'HEY HERE IS THE STORY');
   }
 }
+
+module.exports = new storyView();
