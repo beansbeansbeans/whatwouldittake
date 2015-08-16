@@ -1,0 +1,12 @@
+#create-story {
+  #hide-identity {
+    width: 20px;
+    height: 20px;
+    &[data-hide="true"] {
+      background: blue;
+    }
+    &[data-hide="false"] {
+      background: green;
+    }
+  }
+}

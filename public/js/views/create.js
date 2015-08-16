@@ -5,6 +5,10 @@ var mediator = require('../mediator');
 var view = require('../view');
 var createEntrySubview = require('./subviews/create_entry');
 
+var viewState = {
+  hideIdentity: false
+};
+
 class createView extends view {
   start() {
     super.start();
@@ -15,12 +19,14 @@ class createView extends view {
       if(e.target.getAttribute("id") === "publish-story") {
         var date = picker.toString('X'),
           feeling = d.gbID("feeling-picker").value,
-          notes = d.gbID("notes").value;
+          notes = d.gbID("notes").value,
+          hideIdentity = viewState.hideIdentity;
 
         api.post('/create_story', {
           date: date,
           feeling: feeling,
-          notes: notes
+          notes: notes,
+          hideIdentity: hideIdentity
         }, (data) => {
           if(data.error) {
 
@@ -28,6 +34,10 @@ class createView extends view {
             page('story/' + data._id);
           }
         });
+      } else if(e.target.getAttribute("id") === "hide-identity") {
+        viewState.hideIdentity = !viewState.hideIdentity;
+
+        this.updateState();
       }
     });
   }
@@ -39,7 +49,11 @@ class createView extends view {
       h('div.title', 'New story'),
       h('div.explanation', 'A story is a collection of entries'),
       h('div.checkbox-wrapper', [
-        h('div.checkbox'),
+        h('div.checkbox#hide-identity', {
+          dataset: {
+            hide: viewState.hideIdentity
+          }
+        }),
         h('div.label', 'Show my name with this story')
       ]),
       h('div.create-entry-wrapper', [
