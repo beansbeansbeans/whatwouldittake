@@ -17,12 +17,12 @@ class storyView extends view {
 
   render() {
     if(!storyState.story) { return h('div'); }
-    
+
     return h('div#story-view', [
       h('div.user', storyState.story.user.username),
       storyState.story.entries.map((entry) => {
         return h('div.entry', [
-          h('div.date', entry.date),
+          h('div.date', moment.utc(entry.date, 'X').format('YYYY')),
           h('div.feeling', entry.feeling)
         ])
       })
