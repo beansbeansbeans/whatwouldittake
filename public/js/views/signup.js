@@ -88,8 +88,8 @@ class signupView extends view {
             if(data.success) {
               auth.authenticated(data.user);
             } else {
-              console.log("FAILED TO SIGN UP");
-              console.log(data.error);
+              state.fieldStatus[data.error.field] = data.error.message;
+              this.updateState();
             }
           });
         }
