@@ -24,7 +24,7 @@ class indexView extends view {
         return h('li', [
           h('div.user', story.user.username),
           h('a', {
-            href: story._id
+            href: 'story/' + story._id
           }, 'goto')
         ])
       }))
