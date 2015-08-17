@@ -30,7 +30,13 @@ module.exports = {
       page('signup', routes.signup.start);
       page('me', routes.me.start);
 
-      page('create', routes.create.start);
+      page('create', (context) => {
+        if(state.get('user')) {
+          routes.create.start(context);
+        } else {
+          routes.signup.start(context);
+        }
+      });
 
       page('story/:id', routes.story.start);
 
