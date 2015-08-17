@@ -12,7 +12,48 @@ var state = {
   }
 };
 
+var errorMessages = {
+  username: {
+    invalid(val) {
+      if(val.length) { return true; }
+      return 'This field is required.';
+    }
+  },
+  password: {
+    invalid(val) {
+      if(val.length) { return true; }
+      return 'This field is required.';
+    }
+  }
+};
+
 class loginView extends view {
+
+  validate() {
+    state.attemptingSubmission = true;
+    state.fieldStatus = {
+      username: false,
+      password: false
+    };
+
+    Object.keys(errorMessages).forEach((field) => {
+      var displayMsg;
+
+      Object.keys(errorMessages[field]).every((error) => {
+        var result = errorMessages[field][error](d.querySelector('[name="' + field + '"]').value);
+        if(result !== true) {
+          state.fieldStatus[field] = result;
+        }
+
+        return result === true;
+      });
+    });
+
+    this.updateState();
+
+    return Object.keys(state.fieldStatus).every(x => !state.fieldStatus[x]);
+  }
+
   start() {
     super.start();
 
@@ -23,14 +64,7 @@ class loginView extends view {
           username = form.querySelector('[name="username"]').value,
           password = form.querySelector('[name="password"]').value;
         
-        state.attemptingSubmission = true;
-        state.fieldStatus = {
-          username: !username,
-          password: !password
-        };
-        this.updateState();
-
-        if(Object.keys(state.fieldStatus).every(x => !state.fieldStatus[x])) {
+        if(this.validate()) {
           api.post('/login', {
             username: username,
             password: password
@@ -38,8 +72,8 @@ class loginView extends view {
             if(data.success) {
               auth.authenticated(data.user);
             } else {
-              console.log("FAILED TO SIGN UP");
-              console.log(data.error);
+              state.fieldStatus[data.error.field] = data.error.message;
+              this.updateState();
             }
           });
         }
@@ -52,24 +86,24 @@ class loginView extends view {
       h('div.title', 'login to the app'),
       h('form#login-form', { method: "post" }, [
         h('div.input-wrapper', {
-          dataset: { error: state.fieldStatus.username }
+          dataset: { error: state.fieldStatus.username !== false }
         }, [
           h('input', {
             type: "text",
             name: "username",
-            placeholder: "username"
+            placeholder: "username or email address"
           }),
-          h('div.error', 'This field is required.')
+          h('div.error', state.fieldStatus.username)
         ]),
         h('div.input-wrapper', {
-          dataset: { error: state.fieldStatus.password }
+          dataset: { error: state.fieldStatus.password !== false }
         }, [
           h('input', {
             type: "password",
             name: "password",
             placeholder: "password"
           }),
-          h('div.error', 'This field is required.')
+          h('div.error', state.fieldStatus.password)
         ]),
         h('input#login-button', {
           type: "submit",
