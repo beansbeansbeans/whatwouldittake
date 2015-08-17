@@ -18,8 +18,14 @@ class storyView extends view {
   render() {
     if(!storyState.story) { return h('div'); }
 
+    var userDisplay;
+
+    if(!storyState.story.hideIdentity) {
+      userDisplay = h('div.user', storyState.story.user.username);
+    }
+
     return h('div#story-view', [
-      h('div.user', storyState.story.user.username),
+      userDisplay,
       storyState.story.entries.map((entry) => {
         return h('div.entry', [
           h('div.date', moment.utc(entry.date, 'X').format('YYYY')),
