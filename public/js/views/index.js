@@ -3,24 +3,31 @@ var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
 
+var viewState = {
+  stories: []
+}
+
 class indexView extends view {
   start() {
     super.start();
 
     api.get('/stories', (err, data) => {
-      console.log("GOT STORIES");
-      console.log(data);
+      viewState.stories = data.data;
+      this.updateState();
     });
   }
 
   render() {
     return h('div#index', [
       h('h1', 'STORIES OF'),
-      h('ul', [
-        h('li', 'story one'),
-        h('li', 'story two'),
-        h('li', 'story three')
-      ])
+      h('ul', viewState.stories.map((story) => {
+        return h('li', [
+          h('div.user', story.user.username),
+          h('a', {
+            href: story._id
+          }, 'goto')
+        ])
+      }))
     ]);
   }
 }
