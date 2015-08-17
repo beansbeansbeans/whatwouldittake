@@ -22,7 +22,7 @@ gulp.task('copy', function() {
     .pipe(minify())
     .pipe(gulp.dest(config.buildAssetsDir + 'css/'));
 
-  gulp.src(config.buildAssetsDir + 'fonts/*')
+  gulp.src(config.sourceAssetsDir + 'fonts/*')
     .pipe(plumber())
     .pipe(gulp.dest(config.buildAssetsDir + 'fonts/'));
 
