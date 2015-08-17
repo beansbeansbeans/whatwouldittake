@@ -4,6 +4,15 @@ var mediator = require('../mediator');
 var view = require('../view');
 
 class indexView extends view {
+  start() {
+    super.start();
+
+    api.get('/stories', (err, data) => {
+      console.log("GOT STORIES");
+      console.log(data);
+    });
+  }
+
   render() {
     return h('div#index', [
       h('h1', 'STORIES OF'),
