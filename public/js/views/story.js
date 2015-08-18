@@ -2,6 +2,7 @@ var h = require('virtual-dom/h');
 var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
+var state = require('../state');
 
 var storyState = {};
 
@@ -18,15 +19,22 @@ class storyView extends view {
   render() {
     if(!storyState.story) { return h('div'); }
 
-    var userDisplay;
+    var userDisplay, edit;
 
     if(!storyState.story.hideIdentity) {
       userDisplay = h('div.user', storyState.story.user.username);
     }
 
+    if(state.get('user') && state.get('user')._id === storyState.story.user._id) {
+      edit = h('div.edit', [
+        h('div', 'Add an entry!')
+      ]);
+    }
+
     return h('div#story-view', [
       h('div.title', 'It is a story!!!!!'),
       userDisplay,
+      edit,
       storyState.story.entries.map((entry) => {
         return h('div.entry', [
           h('div.date', moment.utc(entry.date, 'X').format('YYYY')),
