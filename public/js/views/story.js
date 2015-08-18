@@ -25,12 +25,14 @@ class storyView extends view {
     }
 
     return h('div#story-view', [
+      h('div.title', 'It is a story!!!!!'),
       userDisplay,
       storyState.story.entries.map((entry) => {
         return h('div.entry', [
           h('div.date', moment.utc(entry.date, 'X').format('YYYY')),
-          h('div.feeling', entry.feeling)
-        ])
+          h('div.feeling', entry.feeling),
+          h('div.notes', entry.notes)
+        ]);
       })
     ]);
   }
