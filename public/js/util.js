@@ -9,5 +9,17 @@ module.exports = {
     }
 
     return obj;
+  },
+  async(tasks, callback) {
+    var count = 0, n = tasks.length;
+
+    function complete() {
+      count += 1;
+      if (count === n) {
+        callback();
+      }
+    }
+
+    tasks.forEach(x => x(complete));
   }
 };

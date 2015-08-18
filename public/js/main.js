@@ -20,15 +20,27 @@ window.addEventListener("click", (e) => {
   mediator.publish("window_click", e);
 });
 
-window.addEventListener("DOMContentLoaded", () => {
-  api.get('/session', (err, data) => {
-    if(data.data.auth) {
-      state.set("user", data.data.user);
-      auth.authStatusChange(true);
-    } else {
+var loaded = () => {
+  router.initialize();
 
+  mediator.publish("loaded");
+  d.documentElement.classList.remove('loading');
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  util.async([
+    (done) => {
+      api.get('/session', (err, data) => {
+        if(data.data.auth) {
+          state.set("user", data.data.user);
+          auth.authStatusChange(true);
+        } else {
+
+        }
+        done();
+      });
     }
-  });
+  ], loaded);
 
   mediator.subscribe("route_updated", (context) => {
     var path = context.path.split('/')[0];
@@ -39,9 +51,4 @@ window.addEventListener("DOMContentLoaded", () => {
 
     d.body.setAttribute("data-active-route", path);
   });
-
-  router.initialize();
-
-  mediator.publish("loaded");
-  d.documentElement.classList.remove('loading');
 });
