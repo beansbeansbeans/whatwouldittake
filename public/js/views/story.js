@@ -45,8 +45,10 @@ class storyView extends view {
                 feeling: feeling,
                 notes: notes
               }, (data) => {
-                console.log("SUCCESSFULLY EDITED");
-                console.log(data);
+                if(data.success) {
+                  storyState.story.entries = data.entries;
+                  this.updateState();                  
+                }
               });             
             }
           }
