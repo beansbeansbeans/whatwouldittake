@@ -22,7 +22,9 @@ module.exports = {
       ]),
       h('div.notes-wrapper', [
         h('div.label', 'Notes (optional)'),
-        h('textarea#notes')
+        h('textarea#notes', {
+          name: 'notes'
+        })
       ])
     ]);
   }

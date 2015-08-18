@@ -29,6 +29,22 @@ class storyView extends view {
       storyState.story = data.data;
       storyState.isOwnStory = state.get('user') && state.get('user')._id === storyState.story.user._id;
       this.updateState();
+
+      if(storyState.isOwnStory) {
+        var picker = new Pikaday({ field: d.gbID('datepicker') });
+        mediator.subscribe("window_click", (e) => {
+          if(e.target.getAttribute("id") === "update-story-button") {
+            var date = picker.toString('X'),
+              feeling = d.qs('[name="feeling"]').value,
+              notes = d.qs('[name="notes"]').value;
+
+            if(this.validate()) {
+              console.log("READY TO UPDATE");
+              console.log(date, feeling, notes);              
+            }
+          }
+        });
+      }
     });
   }
 
