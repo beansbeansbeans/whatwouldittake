@@ -3,6 +3,7 @@ var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
 var auth = require('../auth');
+var formHelpers = require('../util/form_helpers');
 
 var state = {
   attemptingSubmission: false,
@@ -49,22 +50,7 @@ class signupView extends view {
       password: false
     };
 
-    Object.keys(errorMessages).forEach((field) => {
-      var displayMsg;
-
-      Object.keys(errorMessages[field]).every((error) => {
-        var result = errorMessages[field][error](d.querySelector('[name="' + field + '"]').value);
-        if(result !== true) {
-          state.fieldStatus[field] = result;
-        }
-
-        return result === true;
-      });
-    });
-
-    this.updateState();
-
-    return Object.keys(state.fieldStatus).every(x => !state.fieldStatus[x]);
+    return formHelpers.validate(this, errorMessages, state);
   }
 
   start() {
