@@ -39,8 +39,15 @@ class storyView extends view {
               notes = d.qs('[name="notes"]').value;
 
             if(this.validate()) {
-              console.log("READY TO UPDATE");
-              console.log(date, feeling, notes);              
+              api.post('/edit_story', {
+                id: storyState.story._id,
+                date: date,
+                feeling: feeling,
+                notes: notes
+              }, (data) => {
+                console.log("SUCCESSFULLY EDITED");
+                console.log(data);
+              });             
             }
           }
         });
