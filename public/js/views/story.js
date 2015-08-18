@@ -1,17 +1,33 @@
 var h = require('virtual-dom/h');
 var api = require('../api');
+var Pikaday = require('pikaday');
 var mediator = require('../mediator');
 var view = require('../view');
 var state = require('../state');
+var createEntrySubview = require('./subviews/create_entry');
+var formHelpers = require('../util/form_helpers');
 
-var storyState = {};
+var storyState = {
+  isOwnStory: false,
+  fieldStatus: { date: false }
+};
+
+var errorMessages = { date: formHelpers.errorMessages.date };
 
 class storyView extends view {
+
+  validate() {
+    storyState.fieldStatus = { date: false };
+
+    return formHelpers.validate(this, errorMessages, storyState);
+  }
+
   start(ctx) {
     super.start();
 
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;
+      storyState.isOwnStory = state.get('user') && state.get('user')._id === storyState.story.user._id;
       this.updateState();
     });
   }
@@ -25,9 +41,11 @@ class storyView extends view {
       userDisplay = h('div.user', storyState.story.user.username);
     }
 
-    if(state.get('user') && state.get('user')._id === storyState.story.user._id) {
+    if(storyState.isOwnStory) {
       edit = h('div.edit', [
-        h('div', 'Add an entry!')
+        h('div', 'Add an entry!'),
+        createEntrySubview.render(storyState.fieldStatus),
+        h('div#update-story-button', 'Update')
       ]);
     }
 
