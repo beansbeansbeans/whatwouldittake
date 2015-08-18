@@ -9,4 +9,16 @@
       background: green;
     }
   }
+  .date-wrapper {
+    &[data-error="true"] {
+      input {
+        border-color: red !important;
+      }
+    }
+    &:not([data-error="true"]) {
+      .error {
+        display: none;
+      }
+    }
+  }
 }

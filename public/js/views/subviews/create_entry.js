@@ -1,18 +1,23 @@
 var h = require('virtual-dom/h');
 
 module.exports = {
-  render() {
+  render(fieldStatus) {
     return h('div#create-entry', [
-      h('div.date-wrapper', [
+      h('div.date-wrapper', {
+        dataset: { error: fieldStatus.date !== false }
+      }, [
         h('div.label', 'Date'),
         h('input#datepicker', {
-          type: 'text'
-        })
+          type: 'text',
+          name: 'date'
+        }),
+        h('div.error', fieldStatus.date)
       ]),
       h('div.feeling-wrapper', [
         h('div.label', 'How are you feeling?'),
         h('input#feeling-picker', {
-          type: 'range'
+          type: 'range',
+          name: 'feeling'
         })
       ]),
       h('div.notes-wrapper', [

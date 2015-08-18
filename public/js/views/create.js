@@ -6,10 +6,43 @@ var view = require('../view');
 var createEntrySubview = require('./subviews/create_entry');
 
 var viewState = {
-  hideIdentity: false
+  hideIdentity: false,
+  fieldStatus: {
+    date: false
+  }
 };
 
+var errorMessages = {
+  date: {
+    invalid(val) {
+      if(val.length && moment.utc(val, 'YYYY-MM-DD').isValid()) { return true; }
+      return 'Invalid date.'
+    }
+  }
+}
+
 class createView extends view {
+
+  validate() {
+    viewState.fieldStatus = {
+      date: false
+    };
+
+    Object.keys(errorMessages).forEach((field) => {
+      Object.keys(errorMessages[field]).every((error) => {
+        var result = errorMessages[field][error](d.qs('[name="' + field + '"]').value);
+        if(result !== true) {
+          viewState.fieldStatus[field] = result;
+        }
+        return result === true;
+      })
+    });
+
+    this.updateState();
+
+    return Object.keys(viewState.fieldStatus).every(x => !viewState.fieldStatus[x]);
+  }
+
   start() {
     super.start();
 
@@ -22,18 +55,20 @@ class createView extends view {
           notes = d.gbID("notes").value,
           hideIdentity = viewState.hideIdentity;
 
-        api.post('/create_story', {
-          date: date,
-          feeling: feeling,
-          notes: notes,
-          hideIdentity: hideIdentity
-        }, (data) => {
-          if(data.error) {
+        if(this.validate()) {
+          api.post('/create_story', {
+            date: date,
+            feeling: feeling,
+            notes: notes,
+            hideIdentity: hideIdentity
+          }, (data) => {
+            if(data.error) {
 
-          } else {
-            page('story/' + data._id);
-          }
-        });
+            } else {
+              page('story/' + data._id);
+            }
+          });
+        }
       } else if(e.target.getAttribute("id") === "hide-identity") {
         viewState.hideIdentity = !viewState.hideIdentity;
 
@@ -43,7 +78,7 @@ class createView extends view {
   }
 
   render() {
-    var createEntry = createEntrySubview.render();
+    var createEntry = createEntrySubview.render(viewState.fieldStatus);
 
     return h('div#create-story', [
       h('div.title', 'New story'),

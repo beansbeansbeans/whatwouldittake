@@ -37,10 +37,8 @@ class loginView extends view {
     };
 
     Object.keys(errorMessages).forEach((field) => {
-      var displayMsg;
-
       Object.keys(errorMessages[field]).every((error) => {
-        var result = errorMessages[field][error](d.querySelector('[name="' + field + '"]').value);
+        var result = errorMessages[field][error](d.qs('[name="' + field + '"]').value);
         if(result !== true) {
           state.fieldStatus[field] = result;
         }
