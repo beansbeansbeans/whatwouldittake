@@ -3,6 +3,7 @@ var h = require('virtual-dom/h');
 var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
+var formHelpers = require('../util/form_helpers');
 var createEntrySubview = require('./subviews/create_entry');
 
 var viewState = {
@@ -28,19 +29,7 @@ class createView extends view {
       date: false
     };
 
-    Object.keys(errorMessages).forEach((field) => {
-      Object.keys(errorMessages[field]).every((error) => {
-        var result = errorMessages[field][error](d.qs('[name="' + field + '"]').value);
-        if(result !== true) {
-          viewState.fieldStatus[field] = result;
-        }
-        return result === true;
-      })
-    });
-
-    this.updateState();
-
-    return Object.keys(viewState.fieldStatus).every(x => !viewState.fieldStatus[x]);
+    return formHelpers.validate(this, errorMessages, viewState);
   }
 
   start() {
