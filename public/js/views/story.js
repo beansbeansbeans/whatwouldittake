@@ -78,12 +78,17 @@ class storyView extends view {
       h('div.title', 'It is a story!!!!!'),
       userDisplay,
       edit,
-      storyState.story.entries.map((entry) => {
-        return h('div.entry', [
-          h('div.date', moment.utc(entry.date, 'X').format('YYYY')),
-          h('div.feeling', entry.feeling),
-          h('div.notes', entry.notes)
-        ]);
+      storyState.story.entries
+        .sort((a, b) => {
+          if(a.date > b.date) { return -1; }
+          if(a.date < b.date) { return 1; }
+          return 0;
+        }).map((entry) => {
+          return h('div.entry', [
+            h('div.date', moment.utc(entry.date, 'X').format('YYYY MM DD')),
+            h('div.feeling', entry.feeling),
+            h('div.notes', entry.notes)
+          ]);
       })
     ]);
   }
