@@ -8,26 +8,15 @@ var createEntrySubview = require('./subviews/create_entry');
 
 var viewState = {
   hideIdentity: false,
-  fieldStatus: {
-    date: false
-  }
+  fieldStatus: { date: false }
 };
 
-var errorMessages = {
-  date: {
-    invalid(val) {
-      if(val.length && moment.utc(val, 'YYYY-MM-DD').isValid()) { return true; }
-      return 'Invalid date.'
-    }
-  }
-}
+var errorMessages = { date: formHelpers.errorMessages.date };
 
 class createView extends view {
 
   validate() {
-    viewState.fieldStatus = {
-      date: false
-    };
+    viewState.fieldStatus = { date: false };
 
     return formHelpers.validate(this, errorMessages, viewState);
   }
