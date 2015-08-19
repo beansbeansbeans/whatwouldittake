@@ -73,9 +73,9 @@ class storyView extends view {
   }
 
   renderSVG() {
-    if(!storyState.story) { return; }
+    if(!storyState.story || storyState.story.entries.length === 1) { return; }
 
-    var svgBuffer = 6;
+    var svgBuffer = 10;
 
     var yScale = d3.scale.linear().domain([storyState.minFeeling, storyState.maxFeeling])
       .range([svgBuffer, svgDimensions.height - svgBuffer * 2]);
@@ -102,7 +102,7 @@ class storyView extends view {
   }
 
   handleResize() {
-    svgDimensions.width = Math.max(window.innerWidth, svgDimensions.minWidth);
+    svgDimensions.width = Math.max(window.innerWidth - 10, svgDimensions.minWidth);
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, svgDimensions.maxHeight);
 
     this.renderSVG();
