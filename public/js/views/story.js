@@ -35,6 +35,9 @@ class storyView extends view {
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;
       storyState.isOwnStory = state.get('user') && state.get('user')._id === storyState.story.user._id;
+      storyState.minFeeling = Math.min.apply(Math, storyState.story.entries.map(x => x.feeling));
+      storyState.maxFeeling = Math.max.apply(Math, storyState.story.entries.map(x => x.feeling));
+
       this.updateState();
 
       if(storyState.isOwnStory) {
@@ -67,10 +70,13 @@ class storyView extends view {
   renderSVG() {
     if(!storyState.story) { return; }
 
+    var yScale = d3.scale.linear().domain([storyState.minFeeling, storyState.maxFeeling])
+      .range([0, svgDimensions.height])
+
     var line = d3.svg.line().x((d, i) => {
       return i * svgDimensions.width / storyState.story.entries.length;
     }).y((d) => {
-      return svgDimensions.height - d;
+      return svgDimensions.height - yScale(d);
     });
 
     var container = d3.select("svg").attr("width", svgDimensions.width)
