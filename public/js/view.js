@@ -14,6 +14,7 @@ class view {
     this.parent = opts.parent || '#content';
 
     this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
     this.didRender = this.didRender.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.mount = this.mount.bind(this);
@@ -24,10 +25,13 @@ class view {
 
   handleResize() {}
 
+  stop() {}
+  
   start() {
     this.tree = this.render();
     this.rootNode = createElement(this.tree);
     this.mount();
+    mediator.publish("last_route", this);
   }
 
   mount() {

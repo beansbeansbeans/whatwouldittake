@@ -9,12 +9,22 @@ var routes = {
   story: require('./views/story')
 };
 
+var previousRoute;
+
 module.exports = {
   initialize() {
     mediator.subscribe("loaded", () => {
+
+      mediator.subscribe("last_route", (data) => {
+        previousRoute = data;
+      })
       page.base('/');
 
       page((context, next) => {
+        if(typeof previousRoute !== 'undefined') {
+          previousRoute.stop();
+        }
+
         mediator.publish("route_updated", context);
         next();
       });
