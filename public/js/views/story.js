@@ -64,7 +64,7 @@ class storyView extends view {
 
   didRender() {
     if(!storyState.story) { return; }
-    var container = d3.select("svg").attr("width", window.innerWidth).attr("height", 200);
+    var container = d3.select("svg");
 
     var sparklines = container.selectAll("path")
       .data([storyState.story.entries.map(x => x.feeling)]);
@@ -94,7 +94,10 @@ class storyView extends view {
     return h('div#story-view', [
       h('div.title', 'It is a story!!!!!'),
       h('div.header', [
-        svg('svg')
+        svg('svg', {
+          width: window.innerWidth,
+          height: 200
+        })
       ]),
       userDisplay,
       edit,
