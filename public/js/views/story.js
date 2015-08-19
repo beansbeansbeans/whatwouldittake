@@ -21,6 +21,11 @@ var svgDimensions = {
   maxHeight: 300
 };
 
+var setFeelingBounds = () => {
+  storyState.minFeeling = Math.min.apply(Math, storyState.story.entries.map(x => x.feeling));
+  storyState.maxFeeling = Math.max.apply(Math, storyState.story.entries.map(x => x.feeling));
+}
+
 class storyView extends view {
 
   validate() {
@@ -35,8 +40,7 @@ class storyView extends view {
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;
       storyState.isOwnStory = state.get('user') && state.get('user')._id === storyState.story.user._id;
-      storyState.minFeeling = Math.min.apply(Math, storyState.story.entries.map(x => x.feeling));
-      storyState.maxFeeling = Math.max.apply(Math, storyState.story.entries.map(x => x.feeling));
+      setFeelingBounds();
 
       this.updateState();
 
@@ -57,6 +61,7 @@ class storyView extends view {
               }, (data) => {
                 if(data.success) {
                   storyState.story.entries = data.entries;
+                  setFeelingBounds();
                   this.updateState();                  
                 }
               });             
@@ -126,7 +131,6 @@ class storyView extends view {
     }
 
     return h('div#story-view', [
-      h('div.title', 'It is a story!!!!!'),
       h('div.header', [
         svg('svg')
       ]),
