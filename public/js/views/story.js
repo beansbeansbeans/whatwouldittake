@@ -68,10 +68,13 @@ class storyView extends view {
     if(!storyState.story) { return; }
 
     var line = d3.svg.line().x((d, i) => {
-      return i * window.innerWidth / storyState.story.entries.length;
-    }).y(_.identity);
+      return i * svgDimensions.width / storyState.story.entries.length;
+    }).y((d) => {
+      return svgDimensions.height - d;
+    });
 
-    var container = d3.select("svg");
+    var container = d3.select("svg").attr("width", svgDimensions.width)
+      .attr("height", svgDimensions.height);
 
     var sparklines = container.selectAll("path")
       .data([storyState.story.entries.map(x => x.feeling)]);
@@ -86,7 +89,15 @@ class storyView extends view {
   }
 
   handleResize() {
+    svgDimensions.width = Math.max(window.innerWidth, svgDimensions.minWidth);
+    svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, svgDimensions.maxHeight);
+
     this.renderSVG();
+  }
+
+  mount() {
+    super.mount();
+    this.handleResize();
   }
 
   render() {
@@ -109,10 +120,7 @@ class storyView extends view {
     return h('div#story-view', [
       h('div.title', 'It is a story!!!!!'),
       h('div.header', [
-        svg('svg', {
-          width: window.innerWidth,
-          height: 200
-        })
+        svg('svg')
       ]),
       userDisplay,
       edit,
