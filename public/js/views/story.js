@@ -16,9 +16,9 @@ var storyState = {
 var errorMessages = { date: formHelpers.errorMessages.date };
 
 var svgDimensions = {
-  widthOverHeight: 7,
+  widthOverHeight: 10,
   minWidth: 300,
-  maxHeight: 400
+  maxHeight: 300
 };
 
 class storyView extends view {
@@ -70,11 +70,13 @@ class storyView extends view {
   renderSVG() {
     if(!storyState.story) { return; }
 
+    var svgBuffer = 6;
+
     var yScale = d3.scale.linear().domain([storyState.minFeeling, storyState.maxFeeling])
-      .range([0, svgDimensions.height])
+      .range([svgBuffer, svgDimensions.height - svgBuffer * 2]);
 
     var line = d3.svg.line().x((d, i) => {
-      return i * svgDimensions.width / storyState.story.entries.length;
+      return svgBuffer + i * (svgDimensions.width - svgBuffer * 2) / (storyState.story.entries.length - 1);
     }).y((d) => {
       return svgDimensions.height - yScale(d);
     });
