@@ -15,9 +15,11 @@ var storyState = {
 
 var errorMessages = { date: formHelpers.errorMessages.date };
 
-var line = d3.svg.line().x((d, i) => {
-  return i * window.innerWidth / storyState.story.entries.length;
-}).y(_.identity);
+var svgDimensions = {
+  widthOverHeight: 7,
+  minWidth: 300,
+  maxHeight: 400
+};
 
 class storyView extends view {
 
@@ -62,8 +64,13 @@ class storyView extends view {
     });
   }
 
-  didRender() {
+  renderSVG() {
     if(!storyState.story) { return; }
+
+    var line = d3.svg.line().x((d, i) => {
+      return i * window.innerWidth / storyState.story.entries.length;
+    }).y(_.identity);
+
     var container = d3.select("svg");
 
     var sparklines = container.selectAll("path")
@@ -72,6 +79,14 @@ class storyView extends view {
     sparklines.enter().append("path");
 
     sparklines.attr("d", line);
+  }
+
+  didRender() {
+    this.renderSVG();
+  }
+
+  handleResize() {
+    this.renderSVG();
   }
 
   render() {

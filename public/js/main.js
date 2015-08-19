@@ -27,6 +27,10 @@ var loaded = () => {
   d.documentElement.classList.remove('loading');
 }
 
+window.addEventListener("resize", _.debounce(() => {
+  mediator.publish("resize");
+}, 300));
+
 window.addEventListener("DOMContentLoaded", () => {
   util.async([
     (done) => {

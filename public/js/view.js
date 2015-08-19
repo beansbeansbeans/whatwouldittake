@@ -3,6 +3,7 @@ var h = require('virtual-dom/h');
 var diff = require('virtual-dom/diff');
 var patch = require('virtual-dom/patch');
 var createElement = require('virtual-dom/create-element');
+var mediator = require('./mediator');
 
 class view {
   constructor(opts) {
@@ -14,11 +15,14 @@ class view {
 
     this.start = this.start.bind(this);
     this.didRender = this.didRender.bind(this);
+    this.handleResize = this.handleResize.bind(this);
     this.mount = this.mount.bind(this);
     this.updateState = this.updateState.bind(this);
   }
 
   didRender() {}
+
+  handleResize() {}
 
   start() {
     this.tree = this.render();
@@ -32,6 +36,8 @@ class view {
     } else {
       d.qs(this.parent).appendChild(this.rootNode);
     }    
+
+    mediator.subscribe("resize", this.handleResize);
   }
 
   updateState() {
