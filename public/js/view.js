@@ -13,9 +13,12 @@ class view {
     this.parent = opts.parent || '#content';
 
     this.start = this.start.bind(this);
+    this.didRender = this.didRender.bind(this);
     this.mount = this.mount.bind(this);
     this.updateState = this.updateState.bind(this);
   }
+
+  didRender() {}
 
   start() {
     this.tree = this.render();
@@ -36,6 +39,7 @@ class view {
     var patches = diff(this.tree, newTree);
     this.rootNode = patch(this.rootNode, patches);
     this.tree = newTree;
+    this.didRender();
   }  
 }
 

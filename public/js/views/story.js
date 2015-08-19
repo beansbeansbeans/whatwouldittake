@@ -1,4 +1,5 @@
 var h = require('virtual-dom/h');
+var svg = require('virtual-dom/virtual-hyperscript/svg');
 var api = require('../api');
 var Pikaday = require('pikaday');
 var mediator = require('../mediator');
@@ -13,6 +14,10 @@ var storyState = {
 };
 
 var errorMessages = { date: formHelpers.errorMessages.date };
+
+var line = d3.svg.line().x((d, i) => {
+  return i * window.innerWidth / storyState.story.entries.length;
+}).y(_.identity);
 
 class storyView extends view {
 
@@ -57,6 +62,18 @@ class storyView extends view {
     });
   }
 
+  didRender() {
+    if(!storyState.story) { return; }
+    var container = d3.select("svg").attr("width", window.innerWidth).attr("height", 200);
+
+    var sparklines = container.selectAll("path")
+      .data([storyState.story.entries.map(x => x.feeling)]);
+
+    sparklines.enter().append("path");
+
+    sparklines.attr("d", line);
+  }
+
   render() {
     if(!storyState.story) { return h('div'); }
 
@@ -76,6 +93,9 @@ class storyView extends view {
 
     return h('div#story-view', [
       h('div.title', 'It is a story!!!!!'),
+      h('div.header', [
+        svg('svg')
+      ]),
       userDisplay,
       edit,
       storyState.story.entries
