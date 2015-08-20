@@ -8,6 +8,7 @@ var state = require('../state');
 var createEntrySubview = require('./subviews/create_entry');
 var sparklineSubview = require('./subviews/sparkline');
 var formHelpers = require('../util/form_helpers');
+var config = require('../config');
 
 var storyState = {
   isOwnStory: false,
@@ -38,7 +39,7 @@ class storyView extends view {
       this.updateState();
 
       if(storyState.isOwnStory) {
-        picker = new Pikaday({ field: d.gbID('datepicker') });
+        picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
         mediator.subscribe("window_click", (e) => {
           if(e.target.getAttribute("id") === "update-story-button") {
             var date = picker.toString('X'),

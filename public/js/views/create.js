@@ -5,6 +5,7 @@ var mediator = require('../mediator');
 var view = require('../view');
 var formHelpers = require('../util/form_helpers');
 var createEntrySubview = require('./subviews/create_entry');
+var config = require('../config');
 
 var viewState = {
   hideIdentity: false,
@@ -26,7 +27,7 @@ class createView extends view {
   start() {
     super.start();
 
-    picker = new Pikaday({ field: d.gbID('datepicker') });
+    picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
 
     mediator.subscribe("window_click", (e) => {
       if(e.target.getAttribute("id") === "publish-story") {
