@@ -10,6 +10,8 @@ var viewState = {
   stories: []
 }
 
+var dimensions = { widthOverHeight: 8 };
+
 class indexView extends view {
   start() {
     super.start();
@@ -21,16 +23,23 @@ class indexView extends view {
   }
 
   didRender() {
-    var dimensions = {
-      widthOverHeight: 8,
-      width: Math.max(window.innerWidth - 10, 250)
-    };
+    viewState.stories.forEach((story, storyIndex) => {
+      sparklineSubview.render(d3.select("#svg_" + storyIndex), story, dimensions);
+    });
+  }
 
+  handleResize() {
+    dimensions.width = Math.max(window.innerWidth - 10, 250);
     dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
 
     viewState.stories.forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), story, dimensions);
     });
+  }
+
+  mount() {
+    super.mount();
+    this.handleResize();
   }
 
   render() {
