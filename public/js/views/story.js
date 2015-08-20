@@ -16,11 +16,7 @@ var storyState = {
 
 var errorMessages = { date: formHelpers.errorMessages.date };
 
-var svgDimensions = {
-  widthOverHeight: 10,
-  minWidth: 300,
-  maxHeight: 300
-};
+var svgDimensions = { widthOverHeight: 10 };
 
 var picker;
 
@@ -77,8 +73,8 @@ class storyView extends view {
   }
 
   handleResize() {
-    svgDimensions.width = Math.max(window.innerWidth - 10, svgDimensions.minWidth);
-    svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, svgDimensions.maxHeight);
+    svgDimensions.width = Math.max(window.innerWidth - 10, 300);
+    svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, 300);
 
     sparklineSubview.render(d3.select("svg"), storyState.story, svgDimensions);
   }

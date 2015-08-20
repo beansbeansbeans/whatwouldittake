@@ -1,8 +1,10 @@
 var h = require('virtual-dom/h');
+var svg = require('virtual-dom/virtual-hyperscript/svg');
 var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
+var sparklineSubview = require('./subviews/sparkline');
 
 var viewState = {
   stories: []
@@ -18,16 +20,30 @@ class indexView extends view {
     });
   }
 
+  didRender() {
+    var dimensions = {
+      widthOverHeight: 8,
+      width: Math.max(window.innerWidth - 10, 250)
+    };
+
+    dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
+
+    viewState.stories.forEach((story, storyIndex) => {
+      sparklineSubview.render(d3.select("#svg_" + storyIndex), story, dimensions);
+    });
+  }
+
   render() {
     return h('div#index', [
       h('h1', 'STORIES OF'),
-      h('ul', viewState.stories.map((story) => {
+      h('ul', viewState.stories.map((story, storyIndex) => {
         var username;
         if(!story.hideIdentity) {
           username = h('div.user', story.user.username);
         }
 
         return h('li', [
+          svg('svg#svg_' + storyIndex),
           username,
           h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries')),
           h('div.date', moment.utc(story.entries.sort((a, b) => {

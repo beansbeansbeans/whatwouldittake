@@ -4,5 +4,12 @@
     li {
       margin-bottom: 30px;
     }
+    svg {
+      path {
+        fill: none;
+        stroke: red;
+        stroke-width: 3px;
+      }
+    }
   }
 }
