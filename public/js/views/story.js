@@ -26,6 +26,8 @@ var setFeelingBounds = () => {
   storyState.maxFeeling = Math.max.apply(Math, storyState.story.entries.map(x => x.feeling));
 }
 
+var picker;
+
 class storyView extends view {
 
   validate() {
@@ -45,7 +47,7 @@ class storyView extends view {
       this.updateState();
 
       if(storyState.isOwnStory) {
-        var picker = new Pikaday({ field: d.gbID('datepicker') });
+        picker = new Pikaday({ field: d.gbID('datepicker') });
         mediator.subscribe("window_click", (e) => {
           if(e.target.getAttribute("id") === "update-story-button") {
             var date = picker.toString('X'),
@@ -70,6 +72,10 @@ class storyView extends view {
         });
       }
     });
+  }
+
+  stop() {
+    picker.destroy();
   }
 
   renderSVG() {

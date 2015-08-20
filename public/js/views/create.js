@@ -13,6 +13,8 @@ var viewState = {
 
 var errorMessages = { date: formHelpers.errorMessages.date };
 
+var picker;
+
 class createView extends view {
 
   validate() {
@@ -24,7 +26,7 @@ class createView extends view {
   start() {
     super.start();
 
-    var picker = new Pikaday({ field: d.gbID('datepicker') });
+    picker = new Pikaday({ field: d.gbID('datepicker') });
 
     mediator.subscribe("window_click", (e) => {
       if(e.target.getAttribute("id") === "publish-story") {
@@ -53,6 +55,10 @@ class createView extends view {
         this.updateState();
       }
     });
+  }
+
+  stop() {
+    picker.destroy();
   }
 
   render() {
