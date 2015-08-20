@@ -10,7 +10,7 @@ var viewState = {
   stories: []
 }
 
-var dimensions = { widthOverHeight: 8 };
+var dimensions = { widthOverHeight: 10 };
 
 class indexView extends view {
   start() {
@@ -29,7 +29,7 @@ class indexView extends view {
   }
 
   handleResize() {
-    dimensions.width = Math.max(window.innerWidth - 10, 250);
+    dimensions.width = Math.max(window.innerWidth - 50, 250);
     dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
 
     viewState.stories.forEach((story, storyIndex) => {

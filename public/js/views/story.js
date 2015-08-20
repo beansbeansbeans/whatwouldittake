@@ -108,7 +108,7 @@ class storyView extends view {
       ]),
       userDisplay,
       edit,
-      storyState.story.entries
+      h('div.entry-list', storyState.story.entries
         .sort((a, b) => {
           if(a.date > b.date) { return -1; }
           if(a.date < b.date) { return 1; }
@@ -119,7 +119,7 @@ class storyView extends view {
             h('div.feeling', entry.feeling),
             h('div.notes', entry.notes)
           ]);
-      })
+      }))
     ]);
   }
 }
