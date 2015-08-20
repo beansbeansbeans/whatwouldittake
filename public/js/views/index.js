@@ -2,6 +2,7 @@ var h = require('virtual-dom/h');
 var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
+var util = require('../util');
 
 var viewState = {
   stories: []
@@ -25,9 +26,10 @@ class indexView extends view {
         if(!story.hideIdentity) {
           username = h('div.user', story.user.username);
         }
-        
+
         return h('li', [
           username,
+          h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries')),
           h('a', {
             href: 'story/' + story._id
           }, 'goto')

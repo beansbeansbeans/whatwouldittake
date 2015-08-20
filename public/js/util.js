@@ -10,6 +10,13 @@ module.exports = {
 
     return obj;
   },
+  pluralize(count, singular, plural) {
+    plural = plural || singular + 's';
+    if(count === 1) {
+      return count + ' ' + singular;
+    }
+    return count + ' ' + plural;
+  },
   async(tasks, callback) {
     var count = 0, n = tasks.length;
 
