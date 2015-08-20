@@ -6,6 +6,7 @@ var mediator = require('../mediator');
 var view = require('../view');
 var state = require('../state');
 var createEntrySubview = require('./subviews/create_entry');
+var sparklineSubview = require('./subviews/sparkline');
 var formHelpers = require('../util/form_helpers');
 
 var storyState = {
@@ -20,11 +21,6 @@ var svgDimensions = {
   minWidth: 300,
   maxHeight: 300
 };
-
-var setFeelingBounds = () => {
-  storyState.minFeeling = Math.min.apply(Math, storyState.story.entries.map(x => x.feeling));
-  storyState.maxFeeling = Math.max.apply(Math, storyState.story.entries.map(x => x.feeling));
-}
 
 var picker;
 
@@ -42,7 +38,6 @@ class storyView extends view {
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;
       storyState.isOwnStory = state.get('user') && state.get('user')._id === storyState.story.user._id;
-      setFeelingBounds();
 
       this.updateState();
 
@@ -63,7 +58,6 @@ class storyView extends view {
               }, (data) => {
                 if(data.success) {
                   storyState.story.entries = data.entries;
-                  setFeelingBounds();
                   this.updateState();                  
                 }
               });             
@@ -78,40 +72,15 @@ class storyView extends view {
     picker.destroy();
   }
 
-  renderSVG() {
-    if(!storyState.story || storyState.story.entries.length === 1) { return; }
-
-    var svgBuffer = 10;
-
-    var yScale = d3.scale.linear().domain([storyState.minFeeling, storyState.maxFeeling])
-      .range([svgBuffer, svgDimensions.height - svgBuffer * 2]);
-
-    var line = d3.svg.line().x((d, i) => {
-      return svgBuffer + i * (svgDimensions.width - svgBuffer * 2) / (storyState.story.entries.length - 1);
-    }).y((d) => {
-      return svgDimensions.height - yScale(d);
-    });
-
-    var container = d3.select("svg").attr("width", svgDimensions.width)
-      .attr("height", svgDimensions.height);
-
-    var sparklines = container.selectAll("path")
-      .data([storyState.story.entries.map(x => x.feeling)]);
-
-    sparklines.enter().append("path");
-
-    sparklines.attr("d", line);
-  }
-
   didRender() {
-    this.renderSVG();
+    sparklineSubview.render(d3.select("svg"), storyState.story, svgDimensions);
   }
 
   handleResize() {
     svgDimensions.width = Math.max(window.innerWidth - 10, svgDimensions.minWidth);
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, svgDimensions.maxHeight);
 
-    this.renderSVG();
+    sparklineSubview.render(d3.select("svg"), storyState.story, svgDimensions);
   }
 
   mount() {
