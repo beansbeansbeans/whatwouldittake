@@ -66,7 +66,9 @@ class storyView extends view {
   }
 
   stop() {
-    picker.destroy();
+    if(picker) {
+      picker.destroy();
+    }
   }
 
   didRender() {
