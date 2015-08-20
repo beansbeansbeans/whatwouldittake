@@ -21,8 +21,13 @@ class indexView extends view {
     return h('div#index', [
       h('h1', 'STORIES OF'),
       h('ul', viewState.stories.map((story) => {
+        var username;
+        if(!story.hideIdentity) {
+          username = h('div.user', story.user.username);
+        }
+        
         return h('li', [
-          h('div.user', story.user.username),
+          username,
           h('a', {
             href: 'story/' + story._id
           }, 'goto')
