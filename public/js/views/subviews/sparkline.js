@@ -26,8 +26,6 @@ module.exports = {
 
     container.selectAll("circle").data(feelings)
       .enter().append("circle")
-      .attr("r", 5)
-      .attr("cy", y)
-      .attr("cx", x);
+      .attr("r", 5).attr("cy", y).attr("cx", x);
   }
 }

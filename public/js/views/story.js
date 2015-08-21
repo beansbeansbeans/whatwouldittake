@@ -40,27 +40,28 @@ class storyView extends view {
 
       if(storyState.isOwnStory) {
         picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
-        mediator.subscribe("window_click", (e) => {
-          if(e.target.getAttribute("id") === "update-story-button") {
-            var date = picker.toString('X'),
-              feeling = d.qs('[name="feeling"]').value,
-              notes = d.qs('[name="notes"]').value;
+      }
+    });
 
-            if(this.validate()) {
-              api.post('/edit_story', {
-                id: storyState.story._id,
-                date: date,
-                feeling: feeling,
-                notes: notes
-              }, (data) => {
-                if(data.success) {
-                  storyState.story.entries = data.entries;
-                  this.updateState();                  
-                }
-              });             
+    mediator.subscribe("window_click", (e) => {
+      if(e.target.getAttribute("id") === "update-story-button" && storyState.isOwnStory) {
+        var date = picker.toString('X'),
+          feeling = d.qs('[name="feeling"]').value,
+          notes = d.qs('[name="notes"]').value;
+
+        if(this.validate()) {
+          api.post('/edit_story', {
+            id: storyState.story._id,
+            date: date,
+            feeling: feeling,
+            notes: notes
+          }, (data) => {
+            if(data.success) {
+              storyState.story.entries = data.entries;
+              this.updateState();                  
             }
-          }
-        });
+          });             
+        }
       }
     });
   }
