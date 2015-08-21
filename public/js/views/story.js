@@ -8,6 +8,7 @@ var state = require('../state');
 var createEntrySubview = require('./subviews/create_entry');
 var sparklineSubview = require('./subviews/sparkline');
 var formHelpers = require('../util/form_helpers');
+var scrollHelpers = require('../util/scroll_helpers');
 var config = require('../config');
 
 var storyState = {
@@ -20,28 +21,6 @@ var errorMessages = { date: formHelpers.errorMessages.date };
 var svgDimensions = { widthOverHeight: 10 };
 
 var picker;
-var scrollTop = 0;
-var easeOut = (t) => {
-  return yPos + (dest - yPos) * Math.exp(timeConstant * t);
-}
-var scrollRafID = null;
-var yPos = 0;
-var ticksToComplete = Math.round(200/16);
-var ticks = ticksToComplete;
-var timeConstant = -3 / ticksToComplete;
-var dest = 0;
-
-var move = () => {
-  scrollTop = easeOut(ticks);
-  ticks--;
-  body.scrollTop = scrollTop;
-  if(ticks > 0) {
-    scrollRafID = requestAnimationFrame(move);
-  } else {
-    ticks = ticksToComplete;
-    window.cancelAnimationFrame(scrollRafID);
-  }
-}
 
 class storyView extends view {
 
@@ -86,22 +65,13 @@ class storyView extends view {
         }
       } else if(e.target.nodeName === "circle") {
         var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
-        this.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
+        scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
       }
     });
   }
 
-  scrollTo(distance) {
-    scrollTop = body.scrollTop;
-    yPos = scrollTop;
-    dest = distance;
-    scrollRafID = requestAnimationFrame(move);
-  }
-
   stop() {
-    if(picker) {
-      picker.destroy();
-    }
+    if(picker) { picker.destroy(); }
   }
 
   didRender() {
