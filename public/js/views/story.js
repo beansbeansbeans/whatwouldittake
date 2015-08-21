@@ -21,22 +21,24 @@ var svgDimensions = { widthOverHeight: 10 };
 
 var picker;
 var scrollTop = 0;
-var easeOut = t => Math.exp(timeConstant * t) * yPos; // goes from 1 -> 0 as ticks go from 0 -> 200/16
+var easeOut = (t) => {
+  return yPos + (dest - yPos) * Math.exp(timeConstant * t);
+}
 var scrollRafID = null;
 var yPos = 0;
-var ticks = 0;
-var ticksToComplete = 200/16;
+var ticksToComplete = Math.round(200/16);
+var ticks = ticksToComplete;
 var timeConstant = -3 / ticksToComplete;
 var dest = 0;
 
 var move = () => {
   scrollTop = easeOut(ticks);
-  ticks++;
-  document.body.scrollTop = scrollTop;
-  if(document.body.scrollTop > dest) {
+  ticks--;
+  body.scrollTop = scrollTop;
+  if(ticks > 0) {
     scrollRafID = requestAnimationFrame(move);
   } else {
-    ticks = 0;
+    ticks = ticksToComplete;
     window.cancelAnimationFrame(scrollRafID);
   }
 }
@@ -84,13 +86,13 @@ class storyView extends view {
         }
       } else if(e.target.nodeName === "circle") {
         var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
-        this.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + document.body.scrollTop);
+        this.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
       }
     });
   }
 
   scrollTo(distance) {
-    scrollTop = document.body.scrollTop;
+    scrollTop = body.scrollTop;
     yPos = scrollTop;
     dest = distance;
     scrollRafID = requestAnimationFrame(move);
