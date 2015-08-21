@@ -62,6 +62,8 @@ class storyView extends view {
             }
           });             
         }
+      } else if(e.target.nodeName === "circle") {
+        var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
       }
     });
   }
