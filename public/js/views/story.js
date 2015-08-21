@@ -20,6 +20,26 @@ var errorMessages = { date: formHelpers.errorMessages.date };
 var svgDimensions = { widthOverHeight: 10 };
 
 var picker;
+var scrollTop = 0;
+var easeOut = t => Math.exp(timeConstant * t) * yPos; // goes from 1 -> 0 as ticks go from 0 -> 200/16
+var scrollRafID = null;
+var yPos = 0;
+var ticks = 0;
+var ticksToComplete = 200/16;
+var timeConstant = -3 / ticksToComplete;
+var dest = 0;
+
+var move = () => {
+  scrollTop = easeOut(ticks);
+  ticks++;
+  document.body.scrollTop = scrollTop;
+  if(document.body.scrollTop > dest) {
+    scrollRafID = requestAnimationFrame(move);
+  } else {
+    ticks = 0;
+    window.cancelAnimationFrame(scrollRafID);
+  }
+}
 
 class storyView extends view {
 
@@ -64,8 +84,16 @@ class storyView extends view {
         }
       } else if(e.target.nodeName === "circle") {
         var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
+        this.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + document.body.scrollTop);
       }
     });
+  }
+
+  scrollTo(distance) {
+    scrollTop = document.body.scrollTop;
+    yPos = scrollTop;
+    dest = distance;
+    scrollRafID = requestAnimationFrame(move);
   }
 
   stop() {
@@ -82,7 +110,7 @@ class storyView extends view {
     svgDimensions.width = Math.max(window.innerWidth - 10, 300);
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, 300);
 
-    sparklineSubview.render(d3.select("svg"), storyState.story, svgDimensions);
+    this.updateState();
   }
 
   mount() {
@@ -108,9 +136,11 @@ class storyView extends view {
     }
 
     return h('div#story-view', [
-      h('div.header', [
-        svg('svg')
-      ]),
+      h('div.header', {
+        style: { height: svgDimensions.height + "px" }
+      }, [ svg('svg', {
+        style: { top: '100px' }
+      }) ]),
       userDisplay,
       edit,
       h('div.entry-list', storyState.story.entries
