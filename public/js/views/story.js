@@ -44,34 +44,37 @@ class storyView extends view {
       }
     });
 
-    mediator.subscribe("window_click", (e) => {
-      if(e.target.getAttribute("id") === "update-story-button" && storyState.isOwnStory) {
-        var date = picker.toString('X'),
-          feeling = d.qs('[name="feeling"]').value,
-          notes = d.qs('[name="notes"]').value;
+    mediator.subscribe("window_click", this.handleClick);
+  }
 
-        if(this.validate()) {
-          api.post('/edit_story', {
-            id: storyState.story._id,
-            date: date,
-            feeling: feeling,
-            notes: notes
-          }, (data) => {
-            if(data.success) {
-              storyState.story.entries = data.entries;
-              this.updateState();                  
-            }
-          });             
-        }
-      } else if(e.target.nodeName === "circle") {
-        var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
-        scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
+  handleClick(e) {
+    if(e.target.getAttribute("id") === "update-story-button" && storyState.isOwnStory) {
+      var date = picker.toString('X'),
+        feeling = d.qs('[name="feeling"]').value,
+        notes = d.qs('[name="notes"]').value;
+
+      if(this.validate()) {
+        api.post('/edit_story', {
+          id: storyState.story._id,
+          date: date,
+          feeling: feeling,
+          notes: notes
+        }, (data) => {
+          if(data.success) {
+            storyState.story.entries = data.entries;
+            this.updateState();                  
+          }
+        });             
       }
-    });
+    } else if(e.target.nodeName === "circle") {
+      var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
+      scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
+    }
   }
 
   stop() {
     if(picker) { picker.destroy(); }
+    mediator.unsubscribe("window_click", this.handleClick);
   }
 
   didRender() {
