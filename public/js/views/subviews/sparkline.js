@@ -25,8 +25,12 @@ module.exports = {
       .selectAll("path").data([feelings])
       .enter().append("path").attr("d", line);
 
-    container.selectAll("circle").data(feelings)
-      .enter().append("circle")
+    var circles = container.selectAll("circle").data(feelings);
+
+    circles.enter().append("circle");
+    
+    circles
+      .classed("selected", (_, i) => { return i === state.firstVisibleStoryIndex; })
       .attr("r", 5).attr("cy", y).attr("cx", x);
   }
 }

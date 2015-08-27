@@ -11,5 +11,8 @@
       stroke: red;
       stroke-width: 3px;
     }
+    circle.selected {
+      fill: orange;
+    }
   }
 }
