@@ -32,12 +32,13 @@ class storyView extends view {
 
   start(ctx) {
     super.start();
+    document.body.scrollTop = 0;
 
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;
       storyState.isOwnStory = state.get('user') && state.get('user')._id === storyState.story.user._id;
 
-      this.updateState();
+      this.handleResize();
 
       if(storyState.isOwnStory) {
         picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
@@ -45,6 +46,7 @@ class storyView extends view {
     });
 
     mediator.subscribe("window_click", this.handleClick);
+    window.addEventListener("scroll", this.handleScroll);
   }
 
   handleClick(e) {
@@ -72,6 +74,10 @@ class storyView extends view {
     }
   }
 
+  handleScroll(e) {
+
+  }
+
   stop() {
     if(picker) { picker.destroy(); }
     mediator.unsubscribe("window_click", this.handleClick);
@@ -79,11 +85,22 @@ class storyView extends view {
 
   didRender() {
     sparklineSubview.render(d3.select("svg"), storyState.story, svgDimensions);
+    if(storyState.story) {
+      storyState.entryPositions = storyState.story.entries.map((_, i) => {
+        return d.qs('.entry:nth-of-type(' + (i + 1) + 'n)').getBoundingClientRect().top;
+      });
+    }
+
+    if(d.qs("svg")) {
+      var svgRect = d.qs("svg").getBoundingClientRect();
+      storyState.svgBottom = svgRect.top + svgRect.height;      
+    }
   }
 
   handleResize() {
     svgDimensions.width = Math.max(window.innerWidth - 10, 300);
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, 300);
+
 
     this.updateState();
   }
