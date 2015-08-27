@@ -13,7 +13,8 @@ var config = require('../config');
 
 var storyState = {
   isOwnStory: false,
-  fieldStatus: { date: false }
+  fieldStatus: { date: false },
+  firstVisibleStoryIndex: 0
 };
 
 var errorMessages = { date: formHelpers.errorMessages.date };
@@ -33,6 +34,8 @@ class storyView extends view {
   start(ctx) {
     super.start();
     document.body.scrollTop = 0;
+
+    _.bindAll(this, 'handleScroll');
 
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;
@@ -75,7 +78,19 @@ class storyView extends view {
   }
 
   handleScroll(e) {
+    var previousFirstVisibleStoryIndex = storyState.firstVisibleStoryIndex;
 
+    storyState.entryPositions.some((d, i) => {
+      if((d - document.body.scrollTop) > storyState.svgBottom) {
+        storyState.firstVisibleStoryIndex = i;
+        return true;
+      }
+      return false;
+    });
+
+    if(previousFirstVisibleStoryIndex !== storyState.firstVisibleStoryIndex) {
+      this.updateState();
+    }
   }
 
   stop() {
@@ -84,7 +99,7 @@ class storyView extends view {
   }
 
   didRender() {
-    sparklineSubview.render(d3.select("svg"), storyState.story, svgDimensions);
+    sparklineSubview.render(d3.select("svg"), storyState, svgDimensions);
     if(storyState.story) {
       storyState.entryPositions = storyState.story.entries.map((_, i) => {
         return d.qs('.entry:nth-of-type(' + (i + 1) + 'n)').getBoundingClientRect().top;
@@ -100,7 +115,6 @@ class storyView extends view {
   handleResize() {
     svgDimensions.width = Math.max(window.innerWidth - 10, 300);
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, 300);
-
 
     this.updateState();
   }

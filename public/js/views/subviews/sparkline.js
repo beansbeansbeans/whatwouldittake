@@ -1,5 +1,6 @@
 module.exports = {
-  render(container, story, dimensions) {
+  render(container, state, dimensions) {
+    var story = state.story;
     if(!story || story.entries.length === 1) { return; }
 
     var svgBuffer = 10,
