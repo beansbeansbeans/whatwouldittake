@@ -24,7 +24,7 @@ class indexView extends view {
 
   didRender() {
     viewState.stories.forEach((story, storyIndex) => {
-      sparklineSubview.render(d3.select("#svg_" + storyIndex), story, dimensions);
+      sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, dimensions);
     });
   }
 
@@ -33,7 +33,9 @@ class indexView extends view {
     dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
 
     viewState.stories.forEach((story, storyIndex) => {
-      sparklineSubview.render(d3.select("#svg_" + storyIndex), story, dimensions);
+      sparklineSubview.render(d3.select("#svg_" + storyIndex), {
+        story: story
+      }, dimensions);
     });
   }
 
