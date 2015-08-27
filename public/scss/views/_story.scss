@@ -1,9 +1,11 @@
 #story-view {
   .entry {
+    border: solid 1px green;
     padding: 100px 0;
   }
   svg {
     position: fixed;
+    z-index: 1;
     path {
       fill: none;
       stroke: red;

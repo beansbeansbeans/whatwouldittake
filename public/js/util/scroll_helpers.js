@@ -13,7 +13,7 @@ var move = () => {
   scrollTop = easeOut(ticks);
   ticks--;
   body.scrollTop = scrollTop;
-  if(ticks > 0) {
+  if(ticks > -1) {
     scrollRafID = requestAnimationFrame(move);
   } else {
     ticks = ticksToComplete;
