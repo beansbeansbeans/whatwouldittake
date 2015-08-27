@@ -81,7 +81,7 @@ class storyView extends view {
     var previousFirstVisibleStoryIndex = storyState.firstVisibleStoryIndex;
 
     storyState.entryPositions.some((d, i) => {
-      if((d - document.body.scrollTop) > storyState.svgBottom) {
+      if((d + 50 - document.body.scrollTop) > storyState.svgBottom) {
         storyState.firstVisibleStoryIndex = i;
         return true;
       }
@@ -102,7 +102,7 @@ class storyView extends view {
     sparklineSubview.render(d3.select("svg"), storyState, svgDimensions);
     if(storyState.story) {
       storyState.entryPositions = storyState.story.entries.map((_, i) => {
-        return d.qs('.entry:nth-of-type(' + (i + 1) + 'n)').getBoundingClientRect().top;
+        return document.body.scrollTop + d.qs('.entry:nth-of-type(' + (i + 1) + 'n)').getBoundingClientRect().top;
       });
     }
 
