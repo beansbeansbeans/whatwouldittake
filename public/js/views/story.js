@@ -18,6 +18,8 @@ var storyState = {
   nextIndex: -1
 };
 
+var isLastStory = thisIndex => state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
+
 var debugIterationCount = 0;
 
 var errorMessages = { date: formHelpers.errorMessages.date };
@@ -52,9 +54,7 @@ class storyView extends view {
     });
 
     var thisIndex = _.findIndex(state.get('stories'), d => d._id === +ctx.params.id);
-    var isLastStory = state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
-
-    if(!isLastStory) {
+    if(!isLastStory(thisIndex)) {
       if(thisIndex !== -1 && (thisIndex + 1) < state.get('stories').length) {
         storyState.nextIndex = thisIndex + 1;
       } else {
@@ -80,9 +80,7 @@ class storyView extends view {
         }
 
         var thisIndex = _.findIndex(state.get('stories'), d => d._id === +id);
-        var isLastStory = state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
-
-        if(!isLastStory) {
+        if(!isLastStory(thisIndex)) {
           if(thisIndex !== -1 && (thisIndex + 1) < state.get('stories').length) {
             storyState.nextIndex = thisIndex + 1;
             this.updateState();
