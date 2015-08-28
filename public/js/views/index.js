@@ -11,7 +11,9 @@ var scrollBottomThreshold = 50;
 
 var viewState = {
   stories: [],
-  pageHeight: 0
+  pageHeight: 0,
+  page: 0,
+  gettingMoreStories: false
 }
 
 var dimensions = { widthOverHeight: 10 };
@@ -20,14 +22,23 @@ class indexView extends view {
   start() {
     super.start();
 
-    _.bindAll(this, 'handleScroll');
+    _.bindAll(this, 'handleScroll', 'getMoreStories');
 
     window.addEventListener("scroll", this.handleScroll);
 
-    api.get('/stories/0', (err, data) => {
-      viewState.stories = data.data;
+    this.getMoreStories();
+  }
+
+  getMoreStories() {
+    viewState.gettingMoreStories = true;
+    api.get('/stories/' + viewState.page, (err, data) => {
+      if(data.data) {
+        viewState.stories = viewState.stories.concat(data.data);
+        viewState.page++;
+      }
+      viewState.gettingMoreStories = false;
       this.updateState();
-    });
+    });    
   }
 
   didRender() {
@@ -39,8 +50,9 @@ class indexView extends view {
 
   handleScroll() {
     if((viewState.pageHeight - (document.body.scrollTop + state.get('dimensions').windowHeight)) < scrollBottomThreshold) {
-      console.log("ask");
-      // ask for more stories
+      if(!viewState.gettingMoreStories) {
+        this.getMoreStories();
+      }
     }
   }
 
@@ -58,6 +70,10 @@ class indexView extends view {
   mount() {
     super.mount();
     this.handleResize();
+  }
+
+  stop() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   render() {
