@@ -16,7 +16,7 @@ class indexView extends view {
   start() {
     super.start();
 
-    api.get('/stories', (err, data) => {
+    api.get('/stories/0', (err, data) => {
       viewState.stories = data.data;
       this.updateState();
     });

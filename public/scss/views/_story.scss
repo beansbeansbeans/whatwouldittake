@@ -4,6 +4,9 @@
     padding: 100px 0;
   }
   svg {
+    &:empty {
+      display: none;
+    }
     position: fixed;
     z-index: 1;
     path {

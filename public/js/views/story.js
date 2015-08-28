@@ -35,7 +35,7 @@ class storyView extends view {
     super.start();
     document.body.scrollTop = 0;
 
-    _.bindAll(this, 'handleScroll');
+    _.bindAll(this, 'handleScroll', 'handleClick');
 
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;

@@ -21,9 +21,13 @@ module.exports = {
 
     container
       .attr("width", dimensions.width)
-      .attr("height", dimensions.height)
-      .selectAll("path").data([feelings])
-      .enter().append("path").attr("d", line);
+      .attr("height", dimensions.height);
+
+    var path = container.selectAll("path").data([feelings]);
+    
+    path.enter().append("path");
+
+    path.attr("d", line);
 
     var circles = container.selectAll("circle").data(feelings);
 
