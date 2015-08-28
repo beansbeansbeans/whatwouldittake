@@ -96,6 +96,7 @@ class storyView extends view {
   stop() {
     if(picker) { picker.destroy(); }
     mediator.unsubscribe("window_click", this.handleClick);
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   didRender() {

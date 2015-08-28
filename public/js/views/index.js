@@ -1,13 +1,17 @@
 var h = require('virtual-dom/h');
 var svg = require('virtual-dom/virtual-hyperscript/svg');
 var api = require('../api');
+var state = require('../state');
 var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
 var sparklineSubview = require('./subviews/sparkline');
 
+var scrollBottomThreshold = 50;
+
 var viewState = {
-  stories: []
+  stories: [],
+  pageHeight: 0
 }
 
 var dimensions = { widthOverHeight: 10 };
@@ -15,6 +19,10 @@ var dimensions = { widthOverHeight: 10 };
 class indexView extends view {
   start() {
     super.start();
+
+    _.bindAll(this, 'handleScroll');
+
+    window.addEventListener("scroll", this.handleScroll);
 
     api.get('/stories/0', (err, data) => {
       viewState.stories = data.data;
@@ -26,6 +34,14 @@ class indexView extends view {
     viewState.stories.forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, dimensions);
     });
+    viewState.pageHeight = util.getDocumentHeight();
+  }
+
+  handleScroll() {
+    if((viewState.pageHeight - (document.body.scrollTop + state.get('dimensions').windowHeight)) < scrollBottomThreshold) {
+      console.log("ask");
+      // ask for more stories
+    }
   }
 
   handleResize() {

@@ -27,9 +27,18 @@ var loaded = () => {
   d.documentElement.classList.remove('loading');
 }
 
-window.addEventListener("resize", _.debounce(() => {
-  mediator.publish("resize");
-}, 300));
+var handleResize = () => {
+  var dimensions = state.get('dimensions') || {};
+  dimensions.windowWidth = window.innerWidth;
+  dimensions.windowHeight = window.innerHeight;
+
+  state.set("dimensions", dimensions);
+  mediator.publish("resize");  
+}
+
+handleResize();
+
+window.addEventListener("resize", _.debounce(handleResize, 300));
 
 window.addEventListener("DOMContentLoaded", () => {
   util.async([
