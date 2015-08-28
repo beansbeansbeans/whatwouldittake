@@ -97,7 +97,7 @@ class indexView extends view {
             if(a.date > b.date) { return -1; }
             if(a.date < b.date) { return 1; }
             return 0;
-          })[0].date, 'X').format('YYYY MM DD')),
+          })[0].date, 'x').format('YYYY MM DD')),
           h('a', {
             href: 'story/' + story._id
           }, 'goto')
