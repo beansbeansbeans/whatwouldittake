@@ -85,13 +85,15 @@ class storyView extends view {
   handleScroll(e) {
     var previousFirstVisibleStoryIndex = storyState.firstVisibleStoryIndex;
 
-    storyState.entryPositions.some((d, i) => {
-      if((d + 50 - document.body.scrollTop) > storyState.svgBottom) {
-        storyState.firstVisibleStoryIndex = i;
-        return true;
-      }
-      return false;
-    });
+    if(storyState.entryPositions) {
+      storyState.entryPositions.some((d, i) => {
+        if((d + 50 - document.body.scrollTop) > storyState.svgBottom) {
+          storyState.firstVisibleStoryIndex = i;
+          return true;
+        }
+        return false;
+      });      
+    }
 
     if(previousFirstVisibleStoryIndex !== storyState.firstVisibleStoryIndex) {
       this.updateState();

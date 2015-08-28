@@ -93,11 +93,7 @@ class indexView extends view {
             h('div', moment.utc(story.lastUpdated, 'x').format('h:mm:ss a'))
           ]),
           h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries')),
-          h('div.date', moment.utc(story.entries.sort((a, b) => {
-            if(a.date > b.date) { return -1; }
-            if(a.date < b.date) { return 1; }
-            return 0;
-          })[0].date, 'x').format('YYYY MM DD')),
+          h('div.date', moment.utc(story.entries[0].date, 'x').format('YYYY MM DD')),
           h('a', {
             href: 'story/' + story._id
           }, 'goto')
