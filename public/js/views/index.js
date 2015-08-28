@@ -10,10 +10,7 @@ var sparklineSubview = require('./subviews/sparkline');
 var scrollBottomThreshold = 50;
 
 var viewState = {
-  stories: [],
   pageHeight: 0,
-  page: 0,
-  pageLimit: Infinity,
   gettingMoreStories: false
 }
 
@@ -32,12 +29,12 @@ class indexView extends view {
 
   getMoreStories() {
     viewState.gettingMoreStories = true;
-    api.get('/stories/' + viewState.page, (err, data) => {
+    api.get('/stories/' + state.get('page'), (err, data) => {
       if(data.data && data.data.length) {
-        viewState.stories = viewState.stories.concat(data.data);
-        viewState.page++;
+        state.set('stories', state.get('stories').concat(data.data));
+        state.set('page', state.get('page') + 1);
       } else {
-        viewState.pageLimit = viewState.page;
+        state.set('page_limit', state.get('page'));
       }
       viewState.gettingMoreStories = false;
       this.updateState();
@@ -45,7 +42,7 @@ class indexView extends view {
   }
 
   didRender() {
-    viewState.stories.forEach((story, storyIndex) => {
+    state.get('stories').forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, dimensions);
     });
     viewState.pageHeight = util.getDocumentHeight();
@@ -53,7 +50,7 @@ class indexView extends view {
 
   handleScroll() {
     if((viewState.pageHeight - (document.body.scrollTop + state.get('dimensions').windowHeight)) < scrollBottomThreshold) {
-      if(!viewState.gettingMoreStories && viewState.page !== viewState.pageLimit) {
+      if(!viewState.gettingMoreStories && state.get('page') !== state.get('page_limit')) {
         this.getMoreStories();
       }
     }
@@ -63,7 +60,7 @@ class indexView extends view {
     dimensions.width = Math.max(window.innerWidth - 50, 250);
     dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
 
-    viewState.stories.forEach((story, storyIndex) => {
+    state.get('stories').forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {
         story: story
       }, dimensions);
@@ -82,7 +79,7 @@ class indexView extends view {
   render() {
     return h('div#index', [
       h('h1', 'STORIES OF'),
-      h('ul', viewState.stories.map((story, storyIndex) => {
+      h('ul', state.get('stories').map((story, storyIndex) => {
         var username;
         if(!story.hideIdentity) {
           username = h('div.user', story.user.username);

@@ -1,7 +1,10 @@
 var state = {
-  user: null,
+  page: 0,
+  page_limit: Infinity,
+  pair: [],
   pair_history: [],
-  pair: []
+  stories: [],
+  user: null
 };
 
 module.exports = {
