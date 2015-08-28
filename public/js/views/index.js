@@ -13,6 +13,7 @@ var viewState = {
   stories: [],
   pageHeight: 0,
   page: 0,
+  pageLimit: Infinity,
   gettingMoreStories: false
 }
 
@@ -32,9 +33,11 @@ class indexView extends view {
   getMoreStories() {
     viewState.gettingMoreStories = true;
     api.get('/stories/' + viewState.page, (err, data) => {
-      if(data.data) {
+      if(data.data && data.data.length) {
         viewState.stories = viewState.stories.concat(data.data);
         viewState.page++;
+      } else {
+        viewState.pageLimit = viewState.page;
       }
       viewState.gettingMoreStories = false;
       this.updateState();
@@ -50,7 +53,7 @@ class indexView extends view {
 
   handleScroll() {
     if((viewState.pageHeight - (document.body.scrollTop + state.get('dimensions').windowHeight)) < scrollBottomThreshold) {
-      if(!viewState.gettingMoreStories) {
+      if(!viewState.gettingMoreStories && viewState.page !== viewState.pageLimit) {
         this.getMoreStories();
       }
     }
