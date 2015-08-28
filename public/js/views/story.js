@@ -14,8 +14,11 @@ var config = require('../config');
 var storyState = {
   isOwnStory: false,
   fieldStatus: { date: false },
-  firstVisibleStoryIndex: 0
+  firstVisibleStoryIndex: 0,
+  nextIndex: -1
 };
+
+var debugIterationCount = 0;
 
 var errorMessages = { date: formHelpers.errorMessages.date };
 
@@ -35,7 +38,7 @@ class storyView extends view {
     super.start();
     document.body.scrollTop = 0;
 
-    _.bindAll(this, 'handleScroll', 'handleClick');
+    _.bindAll(this, 'handleScroll', 'handleClick', 'findNextIndex');
 
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;
@@ -48,12 +51,51 @@ class storyView extends view {
       }
     });
 
+    var thisIndex = _.findIndex(state.get('stories'), d => d._id === +ctx.params.id);
+    var isLastStory = state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
+
+    if(!isLastStory) {
+      if(thisIndex !== -1 && (thisIndex + 1) < state.get('stories').length) {
+        storyState.nextIndex = thisIndex + 1;
+      } else {
+        this.findNextIndex(ctx.params.id);
+      }      
+    }
+
     mediator.subscribe("window_click", this.handleClick);
     window.addEventListener("scroll", this.handleScroll);
   }
 
+  findNextIndex(id) {
+
+    debugIterationCount++;
+    
+    if(debugIterationCount < 20) {
+      api.get('/stories/' + state.get('page'), (err, data) => {
+        if(data.data && data.data.length) {
+          state.set('stories', state.get('stories').concat(data.data));
+          state.set('page', state.get('page') + 1);
+        } else {
+          state.set('page_limit', state.get('page'));
+        }
+
+        var thisIndex = _.findIndex(state.get('stories'), d => d._id === +id);
+        var isLastStory = state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
+
+        if(!isLastStory) {
+          if(thisIndex !== -1 && (thisIndex + 1) < state.get('stories').length) {
+            storyState.nextIndex = thisIndex + 1;
+            this.updateState();
+          } else {
+            this.findNextIndex(id);
+          }        
+        }
+      });      
+    }
+  }
+
   handleClick(e) {
-    if(e.target.getAttribute("id") === "update-story-button" && storyState.isOwnStory) {
+    if(e.target.id === "update-story-button" && storyState.isOwnStory) {
       var date = picker.toString('x'),
         feeling = d.qs('[name="feeling"]').value,
         notes = d.qs('[name="notes"]').value;
@@ -74,6 +116,8 @@ class storyView extends view {
     } else if(e.target.nodeName === "circle") {
       var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
       scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
+    } else if(e.target.id === "next-story") {
+      page('story/' + state.get('stories')[storyState.nextIndex]._id);
     }
   }
 
@@ -144,7 +188,9 @@ class storyView extends view {
       ]);
     }
 
-    var indexOfStory = _.findIndex(state.get('stories'), d => d._id === storyState.story._id);
+    if(storyState.nextIndex !== -1) {
+      nextStory = h('div#next-story', 'NEXT STORY');
+    }
 
     return h('div#story-view', [
       h('div.header', {
@@ -152,20 +198,15 @@ class storyView extends view {
       }, [ svg('svg', {
         style: { top: '100px' }
       }) ]),
-      h('div.next-story', 'NEXT STORY'),
+      nextStory,
       userDisplay,
       edit,
-      h('div.entry-list', storyState.story.entries
-        .sort((a, b) => {
-          if(a.date > b.date) { return -1; }
-          if(a.date < b.date) { return 1; }
-          return 0;
-        }).map((entry) => {
-          return h('div.entry', [
-            h('div.date', moment.utc(entry.date, 'x').format('YYYY MM DD')),
-            h('div.feeling', entry.feeling),
-            h('div.notes', entry.notes)
-          ]);
+      h('div.entry-list', storyState.story.entries.map((entry) => {
+        return h('div.entry', [
+          h('div.date', moment.utc(entry.date, 'x').format('YYYY MM DD')),
+          h('div.feeling', entry.feeling),
+          h('div.notes', entry.notes)
+        ]);
       }))
     ]);
   }
