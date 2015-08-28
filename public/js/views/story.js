@@ -46,11 +46,6 @@ class storyView extends view {
       if(storyState.isOwnStory) {
         picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
       }
-  
-      api.get('/next_story/' + storyState.story.entries[0].date, (error, data) => {
-        console.log("GOT NEXT STORY");
-        console.log(data);
-      });
     });
 
     mediator.subscribe("window_click", this.handleClick);
