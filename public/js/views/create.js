@@ -31,14 +31,14 @@ class createView extends view {
 
     mediator.subscribe("window_click", (e) => {
       if(e.target.getAttribute("id") === "publish-story") {
-        var date = picker.toString('X'),
+        var date = picker.toString('x'),
           feeling = d.gbID("feeling-picker").value,
           notes = d.gbID("notes").value,
           hideIdentity = viewState.hideIdentity;
 
         if(this.validate()) {
           api.post('/create_story', {
-            date: date,
+            date: +date,
             feeling: feeling,
             notes: notes,
             hideIdentity: hideIdentity

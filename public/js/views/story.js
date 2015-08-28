@@ -46,6 +46,11 @@ class storyView extends view {
       if(storyState.isOwnStory) {
         picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
       }
+  
+      api.get('/next_story/' + storyState.story.entries[0].date, (error, data) => {
+        console.log("GOT NEXT STORY");
+        console.log(data);
+      });
     });
 
     mediator.subscribe("window_click", this.handleClick);
@@ -54,14 +59,14 @@ class storyView extends view {
 
   handleClick(e) {
     if(e.target.getAttribute("id") === "update-story-button" && storyState.isOwnStory) {
-      var date = picker.toString('X'),
+      var date = picker.toString('x'),
         feeling = d.qs('[name="feeling"]').value,
         notes = d.qs('[name="notes"]').value;
 
       if(this.validate()) {
         api.post('/edit_story', {
           id: storyState.story._id,
-          date: date,
+          date: +date,
           feeling: feeling,
           notes: notes
         }, (data) => {
@@ -128,7 +133,7 @@ class storyView extends view {
   render() {
     if(!storyState.story) { return h('div'); }
 
-    var userDisplay, edit;
+    var userDisplay, edit, nextStory;
 
     if(!storyState.story.hideIdentity) {
       userDisplay = h('div.user', storyState.story.user.username);
@@ -142,12 +147,15 @@ class storyView extends view {
       ]);
     }
 
+    var indexOfStory = _.findIndex(state.get('stories'), d => d._id === storyState.story._id);
+
     return h('div#story-view', [
       h('div.header', {
         style: { height: svgDimensions.height + "px" }
       }, [ svg('svg', {
         style: { top: '100px' }
       }) ]),
+      h('div.next-story', 'NEXT STORY'),
       userDisplay,
       edit,
       h('div.entry-list', storyState.story.entries
@@ -157,7 +165,7 @@ class storyView extends view {
           return 0;
         }).map((entry) => {
           return h('div.entry', [
-            h('div.date', moment.utc(entry.date, 'X').format('YYYY MM DD')),
+            h('div.date', moment.utc(entry.date, 'x').format('YYYY MM DD')),
             h('div.feeling', entry.feeling),
             h('div.notes', entry.notes)
           ]);
