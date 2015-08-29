@@ -7,6 +7,7 @@ var view = require('../view');
 var state = require('../state');
 var createEntrySubview = require('./subviews/create_entry');
 var sparklineSubview = require('./subviews/sparkline');
+var modalSubview = require('./subviews/modal');
 var formHelpers = require('../util/form_helpers');
 var scrollHelpers = require('../util/scroll_helpers');
 var config = require('../config');
@@ -15,8 +16,30 @@ var storyState = {
   isOwnStory: false,
   fieldStatus: { date: false },
   firstVisibleStoryIndex: 0,
-  nextIndex: -1
+  nextIndex: -1,
+  confirming: false
 };
+
+var modalOptions = {
+  DELETE_STORY: {
+    title: "Are you sure you want to delete your story?",
+    buttons: [
+      {
+        dataset: {
+          type: 'severe',
+          action: 'delete-story'
+        },
+        text: 'Yes, delete'
+      },
+      {
+        dataset: {
+          action: 'cancel-delete-story'
+        },
+        text: 'Cancel'
+      }
+    ]
+  }
+}
 
 var isLastStory = thisIndex => state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
 
@@ -117,12 +140,18 @@ class storyView extends view {
     } else if(e.target.id === "next-story") {
       page('story/' + state.get('stories')[storyState.nextIndex]._id);
     } else if(e.target.id === "delete-story") {
+      storyState.confirming = 'DELETE_STORY';
+      this.updateState();
+    } else if(e.target.dataset.action === 'delete-story') {
       api.post('/delete_story', {
         id: storyState.story._id
       }, () => {
         api.clearCache('stories*');
         page('/');
       });
+    } else if(e.target.dataset.action === 'cancel-delete-story') {
+      storyState.confirming = false;
+      this.updateState();
     } else if(e.target.classList.contains('delete-entry')) {
       api.post('/delete_entry', {
         id: storyState.story._id,
@@ -193,7 +222,7 @@ class storyView extends view {
   render() {
     if(!storyState.story) { return h('div'); }
 
-    var userDisplay, edit, nextStory, deleteStory, svgContainer;
+    var userDisplay, edit, nextStory, deleteStory, svgContainer, modal;
 
     if(!storyState.story.hideIdentity) {
       userDisplay = h('div.user', storyState.story.user.username);
@@ -214,6 +243,10 @@ class storyView extends view {
 
     if(storyState.story.entries.length > 1) {
       svgContainer = svg('svg', { style: { top: '100px' } });
+    }
+
+    if(storyState.confirming !== false) {
+      modal = modalSubview.render(modalOptions[storyState.confirming]);
     }
 
     return h('div#story-view', [
@@ -238,7 +271,8 @@ class storyView extends view {
           h('div.feeling', entry.feeling),
           h('div.notes', entry.notes)
         ]);
-      }))
+      })),
+      modal
     ]);
   }
 }
