@@ -5,6 +5,10 @@ var view = require('../view');
 var auth = require('../auth');
 var state = require('../state');
 
+var navState = {
+  height: 0
+};
+
 class navView extends view {
   start() {
     super.start();
@@ -20,6 +24,16 @@ class navView extends view {
         page('create');
       }
     });
+  }
+
+  handleResize() {
+    navState.height = d.qs('nav .contents').getBoundingClientRect().height;
+    this.updateState();
+  }
+
+  mount() {
+    super.mount();
+    this.handleResize();
   }
 
   render() {
@@ -44,14 +58,19 @@ class navView extends view {
     }
 
     return h('nav', [
-      h('li#logo', [
-        h('a', { href: './'}, 'stories of')
-      ]),
-      profile,
-      login,
-      signup,
-      logout,
-      h('div#create-story.button', 'Create a story')
+      h('div.spacer', {
+        style: { height: navState.height + 'px' }
+      }),
+      h('div.contents', [
+        h('li#logo', [
+          h('a', { href: './'}, 'stories of')
+        ]),
+        profile,
+        login,
+        signup,
+        logout,
+        h('div#create-story.button', 'Create a story')
+      ])
     ]);
   }
 }

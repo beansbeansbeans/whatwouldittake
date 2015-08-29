@@ -1,4 +1,11 @@
 nav {
-  border-bottom: solid 2px blue;
   margin-bottom: 20px;
+  .contents {
+    border-bottom: solid 2px blue;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+  }
 }
