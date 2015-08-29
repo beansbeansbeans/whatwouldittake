@@ -120,6 +120,7 @@ class storyView extends view {
       api.post('/delete_story', {
         id: storyState.story._id
       }, () => {
+        api.clearCache('stories*');
         page('/');
       });
     } else if(e.target.classList.contains('delete-entry')) {
