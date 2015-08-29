@@ -164,7 +164,7 @@ class storyView extends view {
       this.updateState();
     } else if(e.target.nodeName === "circle") {
       var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
-      scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
+      scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop - svgDimensions.height - state.get('dimensions').headerHeight);
     } else if(e.target.id === "next-story") {
       page('story/' + state.get('stories')[storyState.nextIndex]._id);
     } else if(e.target.id === "delete-story") {
