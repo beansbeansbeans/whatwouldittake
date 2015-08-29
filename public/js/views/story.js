@@ -122,6 +122,15 @@ class storyView extends view {
       }, () => {
         page('/');
       });
+    } else if(e.target.classList.contains('delete-entry')) {
+      api.post('/delete_entry', {
+        id: storyState.story._id,
+        date: storyState.story.entries[e.target.dataset.entryId].date
+      }, (data) => {
+        if(data.success) {
+          this.updateState();
+        }
+      });
     }
   }
 
@@ -207,8 +216,16 @@ class storyView extends view {
       userDisplay,
       deleteStory,
       edit,
-      h('div.entry-list', storyState.story.entries.map((entry) => {
+      h('div.entry-list', storyState.story.entries.map((entry, i) => {
+        var deleteEntry;
+        if(storyState.isOwnStory) {
+          deleteEntry = h('div.button.delete-entry', {
+            dataset: { entryId: i }
+          }, 'Delete entry');
+        }
+
         return h('div.entry', [
+          deleteEntry,
           h('div.date', moment.utc(entry.date, 'x').format('YYYY MM DD')),
           h('div.feeling', entry.feeling),
           h('div.notes', entry.notes)
