@@ -17,7 +17,8 @@ var storyState = {
   fieldStatus: { date: false },
   firstVisibleStoryIndex: 0,
   nextIndex: -1,
-  confirming: false
+  confirming: false,
+  lastClickedDeleteEntry: -1
 };
 
 var modalOptions = {
@@ -38,8 +39,26 @@ var modalOptions = {
         text: 'Cancel'
       }
     ]
+  },
+  DELETE_ENTRY: {
+    title: "Are you sure you want to delete this entry?",
+    buttons: [
+      {
+        dataset: {
+          type: 'severe',
+          action: 'delete-entry'
+        },
+        text: 'Yes, delete'
+      },
+      {
+        dataset: {
+          action: 'cancel-delete-entry'
+        },
+        text: 'Cancel'
+      }
+    ]
   }
-}
+};
 
 var isLastStory = thisIndex => state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
 
@@ -153,14 +172,22 @@ class storyView extends view {
       storyState.confirming = false;
       this.updateState();
     } else if(e.target.classList.contains('delete-entry')) {
+      storyState.confirming = 'DELETE_ENTRY';
+      storyState.lastClickedDeleteEntry = e.target.dataset.entryId;
+      this.updateState();
+    } else if(e.target.dataset.action === 'cancel-delete-entry') {
+      storyState.confirming = false;
+      this.updateState();
+    } else if(e.target.dataset.action === 'delete-entry') {
       api.post('/delete_entry', {
         id: storyState.story._id,
-        date: storyState.story.entries[e.target.dataset.entryId].date
+        date: storyState.story.entries[storyState.lastClickedDeleteEntry].date
       }, (data) => {
         if(data.success) {
           api.clearCache('stories*');
           api.clearCache('/story/' + storyState.story._id);
           storyState.story.entries = data.entries;
+          storyState.confirming = false;
           this.updateState();
         }
       });
