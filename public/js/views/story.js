@@ -116,6 +116,12 @@ class storyView extends view {
       scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
     } else if(e.target.id === "next-story") {
       page('story/' + state.get('stories')[storyState.nextIndex]._id);
+    } else if(e.target.id === "delete-story") {
+      api.post('/delete_story', {
+        id: storyState.story._id
+      }, () => {
+        page('/');
+      });
     }
   }
 
@@ -179,7 +185,7 @@ class storyView extends view {
     }
 
     if(storyState.isOwnStory) {
-      deleteStory = h('div.button', 'Delete story'),
+      deleteStory = h('div.button#delete-story', 'Delete story'),
       edit = h('div.edit', [
         h('div', 'Add an entry!'),
         createEntrySubview.render(storyState.fieldStatus),
