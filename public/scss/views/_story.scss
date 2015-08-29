@@ -19,4 +19,16 @@
       fill: orange;
     }
   }
+  .edit {
+    &[data-editing="false"] {
+      .form {
+        display: none;
+      }
+    }
+    &[data-editing="true"] {
+      #open-update-story {
+        display: none;
+      }
+    }
+  }
 }

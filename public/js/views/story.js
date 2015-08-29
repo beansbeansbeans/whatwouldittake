@@ -18,7 +18,8 @@ var storyState = {
   firstVisibleStoryIndex: 0,
   nextIndex: -1,
   confirming: false,
-  lastClickedDeleteEntry: -1
+  lastClickedDeleteEntry: -1,
+  addingEntry: false
 };
 
 var modalOptions = {
@@ -90,9 +91,11 @@ class storyView extends view {
 
       this.handleResize();
 
-      if(storyState.isOwnStory) {
-        picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
-      }
+      _.defer(() => {
+        if(storyState.isOwnStory) {
+          picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
+        }                
+      });
     });
 
     var thisIndex = _.findIndex(state.get('stories'), d => d._id === +ctx.params.id);
@@ -153,6 +156,12 @@ class storyView extends view {
           }
         });             
       }
+    } else if(e.target.id === 'open-update-story') {
+      storyState.addingEntry = true;
+      this.updateState();
+    } else if(e.target.id === 'cancel-update-story') {
+      storyState.addingEntry = false;
+      this.updateState();
     } else if(e.target.nodeName === "circle") {
       var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
       scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop);
@@ -256,11 +265,16 @@ class storyView extends view {
     }
 
     if(storyState.isOwnStory) {
-      deleteStory = h('div.button#delete-story', 'Delete story'),
-      edit = h('div.edit', [
-        h('div', 'Add an entry!'),
-        createEntrySubview.render(storyState.fieldStatus),
-        h('div#update-story-button', 'Update')
+      deleteStory = h('div.button#delete-story', 'Delete story');
+      edit = h('div.edit', {
+        dataset: { editing: storyState.addingEntry }
+      }, [
+        h('div.button#open-update-story', 'Add entry'),
+        h('div.form', [
+          createEntrySubview.render(storyState.fieldStatus),
+          h('div#update-story-button', 'Update'),
+          h('div.button#cancel-update-story', 'Cancel')
+        ])
       ]);
     }
 
