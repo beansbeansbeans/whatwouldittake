@@ -269,7 +269,9 @@ class storyView extends view {
     }
 
     if(storyState.story.entries.length > 1) {
-      svgContainer = svg('svg', { style: { top: '100px' } });
+      svgContainer = svg('svg', { 
+        style: { top: state.get('dimensions').headerHeight + 'px' } 
+      });
     }
 
     if(storyState.confirming !== false) {
