@@ -128,6 +128,9 @@ class storyView extends view {
         date: storyState.story.entries[e.target.dataset.entryId].date
       }, (data) => {
         if(data.success) {
+          api.clearCache('stories*');
+          api.clearCache('/story/' + storyState.story._id);
+          storyState.story.entries = data.entries;
           this.updateState();
         }
       });

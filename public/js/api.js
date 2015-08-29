@@ -5,6 +5,24 @@ module.exports = {
   setURL(url) {
     baseURL = url;
   },
+  clearCache(prop) {
+    if(typeof prop === 'undefined') {
+      cache = {};
+    } else if(prop.indexOf("*") === -1) {
+      delete cache[prop];
+    } else {
+      var keysToDelete = [];
+      Object.keys(cache).forEach((k) => {
+        if(k.indexOf(prop.substring(0, prop.length - 1)) !== -1) {
+          keysToDelete.push(k);
+        }
+      });
+
+      keysToDelete.forEach((k) => {
+        delete cache[k];
+      });
+    }
+  },
   get(url, callback, cacheReq) {
     if(typeof cache[url] !== 'undefined') {
       return callback(null, cache[url]);
