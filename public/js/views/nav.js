@@ -5,15 +5,14 @@ var view = require('../view');
 var auth = require('../auth');
 var state = require('../state');
 
-var navState = {
-  height: 0
-};
-
 class navView extends view {
   start() {
     super.start();
 
-    mediator.subscribe('auth_status_change', this.updateState);
+    mediator.subscribe('auth_status_change', () => {
+      this.updateState();
+      this.handleResize();
+    });
 
     mediator.subscribe("window_click", (e) => {
       if(e.target.getAttribute("id") === "logout-button") {
@@ -27,7 +26,10 @@ class navView extends view {
   }
 
   handleResize() {
-    navState.height = d.qs('nav .contents').getBoundingClientRect().height;
+    var dimensions = state.get('dimensions') || {};
+    dimensions.headerHeight = d.qs('nav .contents').getBoundingClientRect().height;
+
+    state.set('dimensions', dimensions);
     this.updateState();
   }
 
@@ -59,7 +61,7 @@ class navView extends view {
 
     return h('nav', [
       h('div.spacer', {
-        style: { height: navState.height + 'px' }
+        style: { height: state.get('dimensions').headerHeight + 'px' }
       }),
       h('div.contents', [
         h('li#logo', [

@@ -1,4 +1,5 @@
 var state = {
+  dimensions: {},
   page: 0,
   page_limit: Infinity,
   pair: [],
