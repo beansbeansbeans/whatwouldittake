@@ -172,13 +172,14 @@ class storyView extends view {
   render() {
     if(!storyState.story) { return h('div'); }
 
-    var userDisplay, edit, nextStory;
+    var userDisplay, edit, nextStory, deleteStory;
 
     if(!storyState.story.hideIdentity) {
       userDisplay = h('div.user', storyState.story.user.username);
     }
 
     if(storyState.isOwnStory) {
+      deleteStory = h('div.button', 'Delete story'),
       edit = h('div.edit', [
         h('div', 'Add an entry!'),
         createEntrySubview.render(storyState.fieldStatus),
@@ -198,6 +199,7 @@ class storyView extends view {
       }) ]),
       nextStory,
       userDisplay,
+      deleteStory,
       edit,
       h('div.entry-list', storyState.story.entries.map((entry) => {
         return h('div.entry', [

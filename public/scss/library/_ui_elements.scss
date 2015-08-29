@@ -18,3 +18,13 @@
     display: block;
   }
 }
+
+.button {
+  font-size: 1rem;
+  border: solid 1px $tuna;
+  color: $tuna;
+  display: inline-block;
+  line-height: 2;
+  padding: 0 1rem;
+  @include border-radius(3px);
+}
