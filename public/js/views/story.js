@@ -162,8 +162,10 @@ class storyView extends view {
   }
 
   didRender() {
-    sparklineSubview.render(d3.select("svg"), storyState, svgDimensions);
     if(storyState.story) {
+      if(storyState.story.entries.length > 1) {
+        sparklineSubview.render(d3.select("svg"), storyState, svgDimensions);
+      }
       storyState.entryPositions = storyState.story.entries.map((_, i) => {
         return document.body.scrollTop + d.qs('.entry:nth-of-type(' + (i + 1) + 'n)').getBoundingClientRect().top;
       });
@@ -190,7 +192,7 @@ class storyView extends view {
   render() {
     if(!storyState.story) { return h('div'); }
 
-    var userDisplay, edit, nextStory, deleteStory;
+    var userDisplay, edit, nextStory, deleteStory, svgContainer;
 
     if(!storyState.story.hideIdentity) {
       userDisplay = h('div.user', storyState.story.user.username);
@@ -209,12 +211,14 @@ class storyView extends view {
       nextStory = h('div#next-story', 'NEXT STORY');
     }
 
+    if(storyState.story.entries.length > 1) {
+      svgContainer = svg('svg', { style: { top: '100px' } });
+    }
+
     return h('div#story-view', [
       h('div.header', {
         style: { height: svgDimensions.height + "px" }
-      }, [ svg('svg', {
-        style: { top: '100px' }
-      }) ]),
+      }, [ svgContainer ]),
       nextStory,
       userDisplay,
       deleteStory,

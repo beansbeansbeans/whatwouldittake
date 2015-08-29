@@ -43,7 +43,9 @@ class indexView extends view {
 
   didRender() {
     state.get('stories').forEach((story, storyIndex) => {
-      sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, dimensions);
+      if(story.entries.length > 1) {
+        sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, dimensions);
+      }
     });
     viewState.pageHeight = util.getDocumentHeight();
   }
@@ -61,9 +63,11 @@ class indexView extends view {
     dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
 
     state.get('stories').forEach((story, storyIndex) => {
-      sparklineSubview.render(d3.select("#svg_" + storyIndex), {
-        story: story
-      }, dimensions);
+      if(story.entries.length > 1) {
+        sparklineSubview.render(d3.select("#svg_" + storyIndex), {
+          story: story
+        }, dimensions);        
+      }
     });
   }
 
