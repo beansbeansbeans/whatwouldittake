@@ -222,6 +222,7 @@ class storyView extends view {
   }
 
   stop() {
+    super.stop();
     if(picker) { picker.destroy(); }
     mediator.unsubscribe("window_click", this.handleClick);
     window.removeEventListener("scroll", this.handleScroll);
@@ -244,7 +245,8 @@ class storyView extends view {
   }
 
   handleResize() {
-    svgDimensions.width = Math.max(window.innerWidth - 10, 300);
+    var svgPadding = 50;
+    svgDimensions.width = Math.max(window.innerWidth - (svgPadding * 2), 300);
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, 300);
 
     this.updateState();
@@ -283,9 +285,11 @@ class storyView extends view {
     }
 
     if(storyState.story.entries.length > 1) {
-      svgContainer = svg('svg', { 
-        style: { top: state.get('dimensions').headerHeight + 'px' } 
-      });
+      svgContainer = h('div.header-contents', [
+        svg('svg', { 
+          style: { top: state.get('dimensions').headerHeight + 'px' } 
+        })
+      ]);
     }
 
     if(storyState.confirming !== false) {

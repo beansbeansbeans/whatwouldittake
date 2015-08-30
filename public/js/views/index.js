@@ -85,6 +85,7 @@ class indexView extends view {
   }
 
   stop() {
+    super.stop();
     window.removeEventListener("scroll", this.handleScroll);
     mediator.unsubscribe('window_click', this.handleClick);
   }

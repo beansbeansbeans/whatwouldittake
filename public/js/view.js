@@ -25,7 +25,9 @@ class view {
 
   handleResize() {}
 
-  stop() {}
+  stop() {
+    mediator.unsubscribe("resize", this.handleResize);
+  }
   
   start() {
     this.tree = this.render();

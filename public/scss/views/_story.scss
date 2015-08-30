@@ -1,11 +1,20 @@
 #story-view {
   .entry {
     padding: 3rem 0;
-    width: 90vw;
+    width: 80vw;
     margin-left: auto;
     margin-right: auto;
     &:not(:last-of-type) {
       border-bottom: solid 1px $smoke;
+    }
+  }
+  .header {
+    .header-contents {
+      position: fixed;
+      z-index: 1;      
+      left: 0;
+      right: 0;
+      text-align: center;
     }
   }
   svg {
@@ -13,8 +22,6 @@
     &:empty {
       display: none;
     }
-    position: fixed;
-    z-index: 1;
     path {
       fill: none;
       stroke: red;
