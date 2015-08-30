@@ -16,7 +16,7 @@ module.exports = {
         return svgBuffer + i * (dimensions.width - svgBuffer * 2) / (story.entries.length - 1);
       };
 
-    var line = d3.svg.line().x(x).y(y);
+    var line = d3.svg.line().x(x).y(y).interpolate("cardinal");
 
     container
       .attr("width", dimensions.width)
