@@ -67,7 +67,7 @@ class indexView extends view {
   }
 
   handleResize() {
-    dimensions.width = Math.max(window.innerWidth - 50, 250);
+    dimensions.width = Math.max(d.gbID('index').offsetWidth, 250);
     dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
 
     state.get('stories').forEach((story, storyIndex) => {
@@ -91,7 +91,7 @@ class indexView extends view {
 
   render() {
     return h('div#index', [
-      h('h1', 'STORIES OF'),
+      h('h1', 'Latest'),
       h('ul', state.get('stories').map((story, storyIndex) => {
         var username;
         if(!story.hideIdentity) {
