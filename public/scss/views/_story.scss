@@ -10,11 +10,30 @@
   }
   .header {
     .header-contents {
+      background: $tuna;
       position: fixed;
       z-index: 1;      
       left: 0;
       right: 0;
       text-align: center;
+    }
+    svg {
+      &:empty {
+        display: none;
+      }
+      path {
+        fill: none;
+        stroke: $downy;
+        stroke-width: 2px;
+      }
+      circle {
+        fill: $harp;
+      }
+      circle.selected {
+        fill: $amaranth;
+        stroke: $amaranth;
+        stroke-width: 3px;
+      }
     }
   }
   #next-story {
@@ -29,20 +48,6 @@
     i {
       line-height: 3rem;
       font-size: 1.75rem;
-    }
-  }
-  svg {
-    background: white;
-    &:empty {
-      display: none;
-    }
-    path {
-      fill: none;
-      stroke: red;
-      stroke-width: 3px;
-    }
-    circle.selected {
-      fill: orange;
     }
   }
   .edit {
