@@ -49,7 +49,7 @@ class navView extends view {
       profile = h('li#me', [
         h('a', { href: './me' }, 'me')
       ]);
-      logout = h('div#logout-button.button', 'logout');
+      logout = h('div#logout-button', 'logout');
     } else {
       login = h('li#login', [
         h('a', { href: './login' }, 'login')
@@ -68,10 +68,10 @@ class navView extends view {
           h('a', { href: './'}, 'stories of')
         ]),
         h('div#create-story.button', 'Create a story'),
+        logout,
         profile,
         login,
-        signup,
-        logout
+        signup
       ])
     ]);
   }

@@ -23,10 +23,10 @@ nav {
     #create-story {
       margin-left: 1.5rem;
     }
-    #login, #signup {
+    #login, #signup, #logout-button, #me {
       margin-left: 1rem;
       text-transform: uppercase;
-      a {
+      &, a {
         line-height: 2.25rem;
         font-size: 0.8rem; 
         color: $tuna;       
