@@ -5,7 +5,8 @@
     margin-right: auto;    
   }
   .user {
-    padding: 3rem 0 0 0;
+    padding: 3rem 0;
+    border-bottom: solid 1px $smoke;
   }
   .entry {
     padding: 3rem 0;
@@ -32,9 +33,7 @@
     }    
   }
   .edit-visibility {
-    border-top: solid 1px $smoke;
     border-bottom: solid 1px $smoke;
-    padding-top: 2rem;
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     .display {
@@ -108,6 +107,8 @@
     }
   }
   .edit {
+    padding-bottom: 2rem;
+    border-bottom: solid 1px $smoke;
     &[data-editing="false"] {
       .form {
         display: none;

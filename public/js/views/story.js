@@ -20,7 +20,8 @@ var storyState = {
   confirming: false,
   lastClickedDeleteEntry: -1,
   addingEntry: false,
-  editingVisibility: false
+  editingVisibility: false,
+  editedHideIdentitySetting: false
 };
 
 var modalOptions = {
@@ -93,6 +94,7 @@ class storyView extends view {
     api.get('/story/' + ctx.params.id, (error, data) => {
       storyState.story = data.data;
       storyState.isOwnStory = state.get('user') && state.get('user')._id === storyState.story.user._id;
+      storyState.editedHideIdentitySetting = storyState.story.hideIdentity;
 
       this.handleResize();
 
@@ -203,6 +205,21 @@ class storyView extends view {
       storyState.editingVisibility = true;
     } else if(e.target.id === 'cancel-update-visibility') {
       storyState.editingVisibility = false;
+    } else if(e.target.id === 'hide-identity') {
+      storyState.editedHideIdentitySetting = !storyState.editedHideIdentitySetting;
+    } else if(e.target.id === 'update-visibility') {
+      api.post('/change_story_visibility', {
+        id: storyState.story._id,
+        hideIdentity: storyState.editedHideIdentitySetting
+      }, (data) => {
+        if(data.success) {
+          api.clearCache('stories*');
+          api.clearCache('/story/' + storyState.story._id);
+          storyState.story.hideIdentity = data.hideIdentity;
+          storyState.editingVisibility = false;
+          this.updateState();
+        }
+      });
     } else {
       return;
     }
@@ -295,7 +312,7 @@ class storyView extends view {
           h('div.checkbox-wrapper', [
             h('div.checkbox#hide-identity', {
               dataset: {
-                hide: storyState.story.hideIdentity
+                hide: storyState.editedHideIdentitySetting
               }
             }, [
               h('i.material-icons', 'check')
