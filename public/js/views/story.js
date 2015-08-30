@@ -153,6 +153,7 @@ class storyView extends view {
         }, (data) => {
           if(data.success) {
             storyState.story.entries = data.entries;
+            storyState.addingEntry = false;
             this.updateState();                  
           }
         });             
