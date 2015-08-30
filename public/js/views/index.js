@@ -68,7 +68,7 @@ class indexView extends view {
 
   handleResize() {
     dimensions.width = Math.max(d.gbID('index').offsetWidth, 250);
-    dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
+    dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 250)
 
     state.get('stories').forEach((story, storyIndex) => {
       if(story.entries.length > 1) {
@@ -77,6 +77,8 @@ class indexView extends view {
         }, dimensions);        
       }
     });
+
+    this.updateState();
   }
 
   mount() {
@@ -100,16 +102,19 @@ class indexView extends view {
         }
 
         return h('li.story-item', {
+          style: { height: dimensions.height + 'px' },
           dataset: { storyId: story._id }
         }, [
           svg('svg#svg_' + storyIndex),
-          username,
-          h('div.last-updated', [
-            h('div', 'last updated: '),
-            h('div', moment.utc(story.lastUpdated, 'x').format('h:mm:ss a'))
-          ]),
-          h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries')),
-          h('div.date', moment.utc(story.entries[0].date, 'x').format('YYYY MM DD'))
+          h('div.above', [
+            username,
+            h('div.last-updated', [
+              h('div', 'last updated: '),
+              h('div', moment.utc(story.lastUpdated, 'x').format('h:mm:ss a'))
+            ]),
+            h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries')),
+            h('div.date', moment.utc(story.entries[0].date, 'x').format('YYYY MM DD'))
+          ])
         ])
       }))
     ]);

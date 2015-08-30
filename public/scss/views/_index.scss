@@ -1,8 +1,8 @@
 #index {
-  width: $content-width * 1vw;
-  margin-left: auto;
-  margin-right: auto;
   h1 {
+    width: $content-width * 1vw;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 4rem;
     font-weight: 100;
   }
@@ -10,18 +10,37 @@
     list-style: none;
     padding: 0;
     li {
-      margin-bottom: 30px;
+      position: relative;
       cursor: pointer;
+      &:not(:last-of-type) {
+        margin-bottom: 3rem;
+      }
+      .last-updated {
+        * {
+          display: inline-block;
+          margin-right: .5rem;
+        }
+      }
     }
     svg {
+      position: absolute;
       path {
         fill: none;
         stroke: $harp;
         stroke-width: 2px;
       }
       circle {
-        fill: $downy;
+        fill: none;
       }
+    }
+    .above {
+      position: relative;
+      z-index: 1;
+      top: 50%;
+      @include transform(translateY(-50%));
+      width: $content-width * 1vw;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 }
