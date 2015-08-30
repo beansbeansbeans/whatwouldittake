@@ -42,6 +42,22 @@
   }
 }
 
+#create-entry {
+  .date-wrapper, .feeling-wrapper, .notes-wrapper {
+    margin-bottom: 1rem;
+  }
+  .date-wrapper {
+    .label {
+      margin-right: 0.5rem;
+    }
+    .label, input {
+      display: inline-block;
+    }
+    input {
+    }
+  }
+}
+
 .button {
   font-size: 1rem;
   border: solid 1px $tuna;
@@ -55,6 +71,10 @@
     border-color: $amaranth;
     color: $amaranth;
   }
+}
+
+input {
+  @extend %body-font;
 }
 
 .modal {

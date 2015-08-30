@@ -37,6 +37,11 @@
   .create-entry-wrapper {
     clear: both;
     margin-top: 2rem;
+    border-top: solid 1px $smoke;
+    padding-top: 2rem;
+    .title {
+      font-size: 2rem;
+    }
   }
   .date-wrapper {
     &[data-error="true"] {
@@ -49,5 +54,8 @@
         display: none;
       }
     }
+  }
+  .button {
+    margin-top: 2rem;
   }
 }
