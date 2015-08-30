@@ -281,7 +281,9 @@ class storyView extends view {
     }
 
     if(storyState.nextIndex !== -1) {
-      nextStory = h('div#next-story', 'NEXT STORY');
+      nextStory = h('div#next-story', [
+        h('i.material-icons', 'keyboard_arrow_right')
+      ]);
     }
 
     if(storyState.story.entries.length > 1) {
