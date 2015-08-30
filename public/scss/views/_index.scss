@@ -16,8 +16,11 @@
     svg {
       path {
         fill: none;
-        stroke: red;
-        stroke-width: 3px;
+        stroke: $harp;
+        stroke-width: 2px;
+      }
+      circle {
+        fill: $downy;
       }
     }
   }

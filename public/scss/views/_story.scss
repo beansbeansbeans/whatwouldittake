@@ -1,7 +1,12 @@
 #story-view {
   .entry {
-    border: solid 1px green;
-    padding: 100px 0;
+    padding: 3rem 0;
+    width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+    &:not(:last-of-type) {
+      border-bottom: solid 1px $smoke;
+    }
   }
   svg {
     background: white;
