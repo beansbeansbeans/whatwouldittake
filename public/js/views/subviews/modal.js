@@ -9,11 +9,11 @@ module.exports = {
       h('div.blackout'),
       h('div.contents', [
         h('div.title', title),
-        buttons.map((b) => {
+        h('div.button-container', buttons.map((b) => {
           return h('div.button', {
             dataset: b.dataset
           }, b.text);
-        })
+        }))
       ])
     ]);
   }
