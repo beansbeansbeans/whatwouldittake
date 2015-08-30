@@ -1,5 +1,7 @@
 module.exports = {
   pikadayConfig: {
-    maxDate: moment().toDate()
+    defaultDate: moment().toDate(),
+    maxDate: moment().toDate(),
+    setDefaultDate: true
   }
 };
