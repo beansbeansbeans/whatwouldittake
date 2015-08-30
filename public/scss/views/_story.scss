@@ -11,6 +11,7 @@
     }
   }
   .header {
+    overflow: hidden;
     .header-contents {
       background: $tuna;
       position: fixed;
@@ -18,8 +19,10 @@
       left: 0;
       right: 0;
       text-align: center;
+      line-height: 0;
     }
     svg {
+      position: relative;
       &:empty {
         display: none;
       }

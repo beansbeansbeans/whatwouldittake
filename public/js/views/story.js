@@ -63,7 +63,8 @@ var modalOptions = {
 
 var svgDimensions = { 
   widthOverHeight: 10,
-  horizontalPadding: 50
+  horizontalPadding: 50,
+  verticalPadding: 25
 };
 
 var isLastStory = thisIndex => state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
@@ -262,7 +263,8 @@ class storyView extends view {
   render() {
     if(!storyState.story) { return h('div'); }
 
-    var userDisplay, edit, nextStory, deleteStory, svgContainer, modal;
+    var userDisplay, edit, nextStory, deleteStory, svgContainer, modal,
+      svgContainerStyle;
 
     if(!storyState.story.hideIdentity) {
       userDisplay = h('div.user', storyState.story.user.username);
@@ -288,10 +290,14 @@ class storyView extends view {
       ]);
     }
 
+    svgContainerStyle = { height: (svgDimensions.height + (2 * svgDimensions.verticalPadding)) + "px" };
+
     if(storyState.story.entries.length > 1) {
-      svgContainer = h('div.header-contents', [
+      svgContainer = h('div.header-contents', {
+        style: svgContainerStyle
+      }, [
         svg('svg', { 
-          style: { top: state.get('dimensions').headerHeight + 'px' } 
+          style: { top: svgDimensions.verticalPadding + 'px' } 
         })
       ]);
     }
@@ -302,7 +308,7 @@ class storyView extends view {
 
     return h('div#story-view', [
       h('div.header', {
-        style: { height: svgDimensions.height + "px" }
+        style: svgContainerStyle
       }, [ svgContainer ]),
       nextStory,
       userDisplay,
