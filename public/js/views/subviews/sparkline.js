@@ -5,7 +5,7 @@ module.exports = {
     var svgBuffer = 10,
       minFeeling = Math.min.apply(Math, story.entries.map(x => x.feeling)),
       maxFeeling = Math.max.apply(Math, story.entries.map(x => x.feeling)),
-      feelings = story.entries.map(x => x.feeling);
+      feelings = story.entries.map(x => x.feeling).slice(0).reverse();
 
     var yScale = d3.scale.linear().domain([minFeeling, maxFeeling])
       .range([svgBuffer, dimensions.height - svgBuffer * 2]),
@@ -33,7 +33,9 @@ module.exports = {
     circles.enter().append("circle");
     
     circles
-      .classed("selected", (_, i) => { return i === state.firstVisibleStoryIndex; })
+      .classed("selected", (_, i) => { 
+        return i === (feelings.length - 1 - state.firstVisibleStoryIndex); 
+      })
       .attr("r", 5).attr("cy", y).attr("cx", x);
   }
 }

@@ -66,7 +66,7 @@
       display: none;
     }
     .header-contents {
-      background: $tuna;
+      background: $harp;
       position: fixed;
       z-index: 1;      
       left: 0;
@@ -82,7 +82,7 @@
         stroke-width: 2px;
       }
       circle {
-        fill: $harp;
+        fill: $downy;
       }
       circle.selected {
         fill: $amaranth;
