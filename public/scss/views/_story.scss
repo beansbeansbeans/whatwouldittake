@@ -4,6 +4,9 @@
     margin-left: auto;
     margin-right: auto;    
   }
+  .user {
+    padding: 3rem 0 0 0;
+  }
   .entry {
     padding: 3rem 0;
     &:not(:last-of-type) {
@@ -12,6 +15,9 @@
   }
   .header {
     overflow: hidden;
+    &:empty {
+      display: none;
+    }
     .header-contents {
       background: $tuna;
       position: fixed;
@@ -23,9 +29,6 @@
     }
     svg {
       position: relative;
-      &:empty {
-        display: none;
-      }
       path {
         fill: none;
         stroke: $downy;
