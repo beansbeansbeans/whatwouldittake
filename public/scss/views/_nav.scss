@@ -8,6 +8,7 @@ nav {
     background: white;
     @extend %clearfix;
     padding: 1rem;
+    z-index: 10;
     #logo {
       float: left;
       font-weight: 100;
