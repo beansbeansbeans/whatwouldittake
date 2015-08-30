@@ -67,11 +67,11 @@ class navView extends view {
         h('li#logo', [
           h('a', { href: './'}, 'stories of')
         ]),
+        h('div#create-story.button', 'Create a story'),
         profile,
         login,
         signup,
-        logout,
-        h('div#create-story.button', 'Create a story')
+        logout
       ])
     ]);
   }

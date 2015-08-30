@@ -4,3 +4,13 @@
 @import "typography";
 @import "mixins";
 @import "ui_elements";
+
+%clearfix {
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}

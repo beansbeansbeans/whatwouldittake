@@ -1,10 +1,36 @@
 nav {
+  list-style: none;
   .contents {
-    border-bottom: solid 2px blue;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     background: white;
+    @extend %clearfix;
+    padding: 1rem;
+    #logo {
+      float: left;
+      font-weight: 100;
+      a {
+        text-transform: uppercase;
+        color: $tuna;
+        font-size: 1.25rem;
+      }
+    }
+    #me, #logout-button, #login, #signup, #create-story {
+      float: right;
+    }
+    #create-story {
+      margin-left: 1.5rem;
+    }
+    #login, #signup {
+      margin-left: 1rem;
+      text-transform: uppercase;
+      a {
+        line-height: 2.25rem;
+        font-size: 0.8rem; 
+        color: $tuna;       
+      }
+    }
   }
 }

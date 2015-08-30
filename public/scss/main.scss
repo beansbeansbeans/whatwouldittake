@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-  color: green;
+  color: $tuna;
   @include border-radius(50%);
   @extend %body-font;
 }
