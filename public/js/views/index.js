@@ -20,11 +20,19 @@ class indexView extends view {
   start() {
     super.start();
 
-    _.bindAll(this, 'handleScroll', 'getMoreStories');
+    _.bindAll(this, 'handleClick', 'handleScroll', 'getMoreStories');
 
     window.addEventListener("scroll", this.handleScroll);
+    mediator.subscribe("window_click", this.handleClick);
 
     this.getMoreStories();
+  }
+
+  handleClick(e) {
+    var storyItem = e.target.classList.contains('story-item') ? e.target : e.target.closest('.story-item');
+    if(storyItem) {
+      page('/story/' + storyItem.dataset.storyId);
+    }
   }
 
   getMoreStories() {
@@ -78,6 +86,7 @@ class indexView extends view {
 
   stop() {
     window.removeEventListener("scroll", this.handleScroll);
+    mediator.unsubscribe('window_click', this.handleClick);
   }
 
   render() {
@@ -89,7 +98,9 @@ class indexView extends view {
           username = h('div.user', story.user.username);
         }
 
-        return h('li', [
+        return h('li.story-item', {
+          dataset: { storyId: story._id }
+        }, [
           svg('svg#svg_' + storyIndex),
           username,
           h('div.last-updated', [
@@ -97,10 +108,7 @@ class indexView extends view {
             h('div', moment.utc(story.lastUpdated, 'x').format('h:mm:ss a'))
           ]),
           h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries')),
-          h('div.date', moment.utc(story.entries[0].date, 'x').format('YYYY MM DD')),
-          h('a', {
-            href: 'story/' + story._id
-          }, 'goto')
+          h('div.date', moment.utc(story.entries[0].date, 'x').format('YYYY MM DD'))
         ])
       }))
     ]);
