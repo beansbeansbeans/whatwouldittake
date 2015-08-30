@@ -61,13 +61,16 @@ var modalOptions = {
   }
 };
 
+var svgDimensions = { 
+  widthOverHeight: 10,
+  horizontalPadding: 50
+};
+
 var isLastStory = thisIndex => state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
 
 var debugIterationCount = 0;
 
 var errorMessages = { date: formHelpers.errorMessages.date };
-
-var svgDimensions = { widthOverHeight: 10 };
 
 var picker;
 
@@ -245,8 +248,7 @@ class storyView extends view {
   }
 
   handleResize() {
-    var svgPadding = 50;
-    svgDimensions.width = Math.max(window.innerWidth - (svgPadding * 2), 300);
+    svgDimensions.width = Math.max(window.innerWidth - (svgDimensions.horizontalPadding * 2), 300);
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, 300);
 
     this.updateState();

@@ -1,9 +1,11 @@
 #story-view {
-  .entry {
-    padding: 3rem 0;
+  .user, .entry {
     width: 80vw;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;    
+  }
+  .entry {
+    padding: 3rem 0;
     &:not(:last-of-type) {
       border-bottom: solid 1px $smoke;
     }
@@ -46,6 +48,7 @@
     text-align: center;
     cursor: pointer;
     i {
+      pointer-events: none;
       line-height: 3rem;
       font-size: 1.75rem;
     }
