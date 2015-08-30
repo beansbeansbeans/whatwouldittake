@@ -69,7 +69,7 @@ class loginView extends view {
 
   render() {
     return h('div#login-page', [
-      h('div.title', 'login to the app'),
+      h('div.title', 'Login'),
       h('form#login-form', { method: "post" }, [
         h('div.input-wrapper', {
           dataset: { error: state.fieldStatus.username !== false }

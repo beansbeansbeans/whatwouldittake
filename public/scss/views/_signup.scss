@@ -1,5 +1,3 @@
 #signup-page {
-  form {
-    @extend %auth-base;
-  }
+  @extend %auth-base;
 }

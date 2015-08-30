@@ -85,7 +85,7 @@ class signupView extends view {
 
   render() {
     return h('div#signup-page', [
-      h('div.title', 'signup for the app'),
+      h('div.title', 'Signup'),
       h('form#signup-form', { method: "post" }, [
         h('div.input-wrapper', {
           dataset: { error: state.fieldStatus.username !== false }

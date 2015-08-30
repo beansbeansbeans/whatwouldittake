@@ -1,5 +1,15 @@
 %auth-base {
+  width: 50vw;
+  padding-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  .title {
+    font-size: 3rem;
+    font-weight: 100;
+    margin-bottom: 2rem;
+  }
   .input-wrapper {
+    margin-bottom: 1rem;
     .error {
       @include transition(opacity $transition-duration);
       opacity: 0;
@@ -10,12 +20,25 @@
         border: solid 1px red;
       }
       .error {
+        margin-top: .5rem;
         opacity: 1;
       }
+    }
+    input {
+      width: 100%;
+      font-size: 1rem;
+      padding: .5rem;
     }
   }
   input {
     display: block;
+    &[type="submit"] {
+      margin-top: 2rem;
+      @extend .button;
+      background: none;
+      text-transform: capitalize;
+      @extend %body-font;
+    }
   }
 }
 
