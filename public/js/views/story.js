@@ -19,7 +19,8 @@ var storyState = {
   nextIndex: -1,
   confirming: false,
   lastClickedDeleteEntry: -1,
-  addingEntry: false
+  addingEntry: false,
+  editingVisibility: false
 };
 
 var modalOptions = {
@@ -162,10 +163,8 @@ class storyView extends view {
       }
     } else if(e.target.id === 'open-update-story') {
       storyState.addingEntry = true;
-      this.updateState();
     } else if(e.target.id === 'cancel-update-story') {
       storyState.addingEntry = false;
-      this.updateState();
     } else if(e.target.nodeName === "circle") {
       var indexOfCircle = [].indexOf.call(e.target.parentNode.children, e.target);
       scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop - svgDimensions.height - state.get('dimensions').headerHeight);
@@ -173,7 +172,6 @@ class storyView extends view {
       page('story/' + state.get('stories')[storyState.nextIndex]._id);
     } else if(e.target.id === "delete-story") {
       storyState.confirming = 'DELETE_STORY';
-      this.updateState();
     } else if(e.target.dataset.action === 'delete-story') {
       api.post('/delete_story', {
         id: storyState.story._id
@@ -183,14 +181,11 @@ class storyView extends view {
       });
     } else if(e.target.dataset.action === 'cancel-delete-story') {
       storyState.confirming = false;
-      this.updateState();
     } else if(e.target.classList.contains('delete-entry')) {
       storyState.confirming = 'DELETE_ENTRY';
       storyState.lastClickedDeleteEntry = e.target.dataset.entryId;
-      this.updateState();
     } else if(e.target.dataset.action === 'cancel-delete-entry') {
       storyState.confirming = false;
-      this.updateState();
     } else if(e.target.dataset.action === 'delete-entry') {
       api.post('/delete_entry', {
         id: storyState.story._id,
@@ -204,7 +199,15 @@ class storyView extends view {
           this.updateState();
         }
       });
+    } else if(e.target.id === 'open-edit-visibility') {
+      storyState.editingVisibility = true;
+    } else if(e.target.id === 'cancel-update-visibility') {
+      storyState.editingVisibility = false;
+    } else {
+      return;
     }
+
+    this.updateState();
   }
 
   handleScroll(e) {
@@ -264,6 +267,7 @@ class storyView extends view {
     if(!storyState.story) { return h('div'); }
 
     var userDisplay, edit, nextStory, deleteStory, svgContainer, modal,
+      editVisibility,
       svgContainerStyle;
 
     if(!storyState.story.hideIdentity) {
@@ -271,7 +275,38 @@ class storyView extends view {
     }
 
     if(storyState.isOwnStory) {
-      deleteStory = h('div.button#delete-story', 'Delete story');
+      deleteStory = h('div.button#delete-story', {
+        dataset: { type: 'severe' }
+      }, 'Delete story');
+
+      var editVisibilityDisplay = 'Your name is displayed with this story.';
+      if(storyState.story.hideIdentity) {
+        editVisibilityDisplay = 'Your name is hidden.';
+      }
+
+      editVisibility = h('div.edit-visibility', {
+        dataset: { editing: storyState.editingVisibility }
+      }, [
+        h('div.display', [
+          h('div.status', editVisibilityDisplay),
+          h('div.button#open-edit-visibility', 'Change')
+        ]),
+        h('div.edit-visibility-form', [
+          h('div.checkbox-wrapper', [
+            h('div.checkbox#hide-identity', {
+              dataset: {
+                hide: storyState.story.hideIdentity
+              }
+            }, [
+              h('i.material-icons', 'check')
+            ]),
+            h('div.label', 'Show my name with this story')
+          ]),
+          h('div.button#update-visibility', 'Update'),
+          h('div.button#cancel-update-visibility', 'Cancel')
+        ])
+      ]);
+
       edit = h('div.edit', {
         dataset: { editing: storyState.addingEntry }
       }, [
@@ -313,7 +348,7 @@ class storyView extends view {
       nextStory,
       userDisplay,
       h('div.utilities', [
-        deleteStory,
+        editVisibility,
         edit
       ]),
       h('div.entry-list', storyState.story.entries.map((entry, i) => {
@@ -331,6 +366,7 @@ class storyView extends view {
           h('div.notes', entry.notes)
         ]);
       })),
+      h('div.delete-story-container', [ deleteStory ]),
       modal
     ]);
   }

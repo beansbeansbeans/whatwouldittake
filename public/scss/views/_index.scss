@@ -21,10 +21,18 @@
           margin-right: .5rem;
         }
       }
+      &:hover {
+        svg {
+          path {
+            stroke: $downy;
+          }
+        }
+      }
     }
     svg {
       position: absolute;
       path {
+        @include transition(stroke $transition-duration);
         fill: none;
         stroke: $harp;
         stroke-width: 2px;

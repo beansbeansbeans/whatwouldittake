@@ -18,9 +18,11 @@
   }
   .utilities {
     padding-top: 3rem;
-    #delete-story {
-      float: right;
-    }
+  }
+  .delete-story-container {
+    margin-top: 8rem;
+    text-align: center;
+    padding-bottom: 5rem;
   }
   .form {
     #create-entry {
@@ -28,6 +30,36 @@
     .button {
       margin-right: 1rem;
     }    
+  }
+  .edit-visibility {
+    border-top: solid 1px $smoke;
+    border-bottom: solid 1px $smoke;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    .display {
+      .status {
+        margin-bottom: 1rem;
+      }
+    }
+    .edit-visibility-form {
+      .checkbox-wrapper {
+        margin-bottom: 1.5rem;
+      }
+      .button {
+        margin-right: 1rem;
+      }
+    }
+    &[data-editing="true"] {
+      .display {
+        display: none;
+      }
+    }
+    &[data-editing="false"] {
+      .edit-visibility-form {
+        display: none;
+      }
+    }
   }
   .header {
     overflow: hidden;
