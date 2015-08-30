@@ -1,6 +1,6 @@
 #story-view {
   .user, .entry, .utilities {
-    width: 80vw;
+    width: $content-width * 1vw;
     margin-left: auto;
     margin-right: auto;    
   }

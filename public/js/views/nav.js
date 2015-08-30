@@ -19,7 +19,7 @@ class navView extends view {
         api.post('/logout', {}, () => {
           auth.deauthenticated();
         });
-      } else if(e.target.getAttribute("id") === "create-story") {
+      } else if(e.target.getAttribute("id") === "create-story-button") {
         page('create');
       }
     });
@@ -67,7 +67,7 @@ class navView extends view {
         h('li#logo', [
           h('a', { href: './'}, 'stories of')
         ]),
-        h('div#create-story.button', 'Create a story'),
+        h('div#create-story-button.button', 'Create a story'),
         logout,
         profile,
         login,
