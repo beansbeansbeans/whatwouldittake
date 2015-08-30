@@ -278,7 +278,7 @@ class storyView extends view {
         h('div.button#open-update-story', 'Add entry'),
         h('div.form', [
           createEntrySubview.render(storyState.fieldStatus),
-          h('div#update-story-button', 'Update'),
+          h('div#update-story-button.button', 'Update'),
           h('div.button#cancel-update-story', 'Cancel')
         ])
       ]);
@@ -312,8 +312,10 @@ class storyView extends view {
       }, [ svgContainer ]),
       nextStory,
       userDisplay,
-      deleteStory,
-      edit,
+      h('div.utilities', [
+        deleteStory,
+        edit
+      ]),
       h('div.entry-list', storyState.story.entries.map((entry, i) => {
         var deleteEntry;
         if(storyState.isOwnStory) {
