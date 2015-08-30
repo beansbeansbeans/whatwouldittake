@@ -2,15 +2,41 @@
   width: $content-width * 1vw;
   margin-left: auto;
   margin-right: auto;
-  #hide-identity {
-    width: 20px;
-    height: 20px;
-    &[data-hide="true"] {
-      background: blue;
+  padding-top: 3rem;
+  .title {
+    font-size: 3rem;
+    font-weight: 100;
+    margin-bottom: 1.5rem;
+  }
+  .explanation {
+    margin-bottom: 1.5rem;
+  }
+  .checkbox-wrapper {
+    #hide-identity {
+      cursor: pointer;
+      float: left;
+      border: solid 1px $gray;
+      @include square(1.5rem);
+      margin-right: .5rem;
+      .material-icons {
+        pointer-events: none;
+      }
+      &[data-hide="true"] {
+        .material-icons {
+          display: none;
+        }
+      }
+      &[data-hide="false"] {
+
+      }
     }
-    &[data-hide="false"] {
-      background: green;
+    .label {
+      line-height: 1.75rem;
     }
+  }
+  .create-entry-wrapper {
+    clear: both;
+    margin-top: 2rem;
   }
   .date-wrapper {
     &[data-error="true"] {

@@ -67,20 +67,22 @@ class createView extends view {
 
     return h('div#create-story', [
       h('div.title', 'New story'),
-      h('div.explanation', 'A story is a collection of entries'),
+      h('div.explanation', 'A story is a collection of entries.'),
       h('div.checkbox-wrapper', [
         h('div.checkbox#hide-identity', {
           dataset: {
             hide: viewState.hideIdentity
           }
-        }),
+        }, [
+          h('i.material-icons', 'check')
+        ]),
         h('div.label', 'Show my name with this story')
       ]),
       h('div.create-entry-wrapper', [
         h('div.title', 'First entry'),
         createEntry
       ]),
-      h('div#publish-story', 'Publish story')
+      h('div#publish-story.button', 'Publish story')
     ]);
   }
 }
