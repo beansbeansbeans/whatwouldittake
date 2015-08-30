@@ -97,12 +97,6 @@ class storyView extends view {
       storyState.editedHideIdentitySetting = storyState.story.hideIdentity;
 
       this.handleResize();
-
-      _.defer(() => {
-        if(storyState.isOwnStory) {
-          picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
-        }                
-      });
     });
 
     var thisIndex = _.findIndex(state.get('stories'), d => d._id === +ctx.params.id);
@@ -265,6 +259,13 @@ class storyView extends view {
     if(d.qs("svg")) {
       var svgRect = d.qs("svg").getBoundingClientRect();
       storyState.svgBottom = svgRect.top + svgRect.height;      
+    }
+
+    if(storyState.addingEntry) {
+      if(storyState.isOwnStory) {
+        if(picker) { picker.destroy(); }
+        picker = new Pikaday(_.defaults({ field: d.gbID('datepicker') }, config.pikadayConfig ));
+      }                
     }
   }
 
