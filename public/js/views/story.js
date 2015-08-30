@@ -151,7 +151,7 @@ class storyView extends view {
         notes = d.qs('[name="notes"]').value;
 
       if(this.validate()) {
-        api.post('/edit_story', {
+        return api.post('/edit_story', {
           id: storyState.story._id,
           date: +date,
           feeling: feeling,
@@ -189,7 +189,7 @@ class storyView extends view {
     } else if(e.target.dataset.action === 'cancel-delete-entry') {
       storyState.confirming = false;
     } else if(e.target.dataset.action === 'delete-entry') {
-      api.post('/delete_entry', {
+      return api.post('/delete_entry', {
         id: storyState.story._id,
         date: storyState.story.entries[storyState.lastClickedDeleteEntry].date
       }, (data) => {
@@ -208,7 +208,7 @@ class storyView extends view {
     } else if(e.target.id === 'hide-identity') {
       storyState.editedHideIdentitySetting = !storyState.editedHideIdentitySetting;
     } else if(e.target.id === 'update-visibility') {
-      api.post('/change_story_visibility', {
+      return api.post('/change_story_visibility', {
         id: storyState.story._id,
         hideIdentity: storyState.editedHideIdentitySetting
       }, (data) => {
