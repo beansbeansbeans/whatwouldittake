@@ -37,14 +37,16 @@ var draw = (e) => {
   ctx.strokeStyle = '#c0392b';
 
   ctx.moveTo(pos.x * 2, pos.y * 2);
+
   setPosition(e);
+
   ctx.lineTo(pos.x * 2, pos.y * 2);
 
   ctx.stroke();
 }
 
 var setPosition = (e) => {
-  pos.x = e.clientX - offset.x;
+  pos.x = Math.max(e.clientX - offset.x, pos.x);
   pos.y = e.clientY - offset.y;
 }
 
