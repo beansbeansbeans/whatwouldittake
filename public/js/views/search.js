@@ -9,7 +9,7 @@ var sparklineSubview = require('./subviews/sparkline');
 
 var dimensions = {
   canvas: {
-    width: 600,
+    width: 600, // default
     widthOverHeight: 3
   }
 }
@@ -67,6 +67,11 @@ class searchView extends view {
     window.addEventListener('mouseup', handleMouseUp);
   }
 
+  handleResize() {
+    dimensions.canvas.width = d.qs('#search').offsetWidth;
+    this.updateState();
+  }
+
   stop() {
     super.stop();
 
@@ -84,6 +89,8 @@ class searchView extends view {
     var rect = d.qs('.canvas-container').getBoundingClientRect();
     offset.x = rect.left;
     offset.y = rect.top;
+
+    this.handleResize();
   }
 
   render() {

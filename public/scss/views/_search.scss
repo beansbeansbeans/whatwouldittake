@@ -9,5 +9,6 @@
     border: solid 2px $amaranth;
     @include transform(scale(0.5));
     transform-origin: top left;
+    cursor: default;
   }
 }
