@@ -7,6 +7,13 @@ var view = require('../view');
 var util = require('../util');
 var sparklineSubview = require('./subviews/sparkline');
 
+var dimensions = {
+  canvas: {
+    width: 600,
+    widthOverHeight: 3
+  }
+}
+
 var pos = {
   x: 0,
   y: 0
@@ -29,9 +36,9 @@ var draw = (e) => {
   ctx.lineCap = 'round';
   ctx.strokeStyle = '#c0392b';
 
-  ctx.moveTo(pos.x, pos.y);
+  ctx.moveTo(pos.x * 2, pos.y * 2);
   setPosition(e);
-  ctx.lineTo(pos.x, pos.y);
+  ctx.lineTo(pos.x * 2, pos.y * 2);
 
   ctx.stroke();
 }
@@ -74,18 +81,28 @@ class searchView extends view {
     var canvas = d.qs('canvas');
     ctx = canvas.getContext('2d');
 
-    var rect = canvas.getBoundingClientRect();
+    var rect = d.qs('.canvas-container').getBoundingClientRect();
     offset.x = rect.left;
     offset.y = rect.top;
   }
 
   render() {
+    var canvasWidth = dimensions.canvas.width;
+    var canvasHeight = canvasWidth / dimensions.canvas.widthOverHeight;
+
     return h('div#search', [
       h('div.title', 'this is the search page'),
-      h('canvas', {
-        width: 600,
-        height: 300
-      })
+      h('div.canvas-container', {
+        style: {
+          width: canvasWidth + 'px',
+          height: canvasHeight + 'px'
+        }
+      }, [
+        h('canvas', {
+          width: canvasWidth * 2,
+          height: canvasHeight * 2
+        })
+      ])
     ]);
   }
 }
