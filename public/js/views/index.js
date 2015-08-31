@@ -32,6 +32,8 @@ class indexView extends view {
     var storyItem = e.target.classList.contains('story-item') ? e.target : e.target.closest('.story-item');
     if(storyItem) {
       page('/story/' + storyItem.dataset.storyId);
+    } else if(e.target.id === 'go-to-search') {
+      page('/search');
     }
   }
 
@@ -96,7 +98,7 @@ class indexView extends view {
     return h('div#index', [
       h('div.hero', [
         h('div.title', 'This is a place to share stories.'),
-        h('div.button', {
+        h('div.button#go-to-search', {
           dataset: { type: 'critical' }
         }, 'Search')
       ]),
