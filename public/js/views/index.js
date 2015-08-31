@@ -68,7 +68,7 @@ class indexView extends view {
 
   handleResize() {
     dimensions.width = Math.max(d.gbID('index').offsetWidth, 250);
-    dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 250)
+    dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
 
     state.get('stories').forEach((story, storyIndex) => {
       if(story.entries.length > 1) {
@@ -94,7 +94,13 @@ class indexView extends view {
 
   render() {
     return h('div#index', [
-      h('h1', 'Latest'),
+      h('div.hero', [
+        h('div.title', 'This is a place to share stories.'),
+        h('div.button', {
+          dataset: { type: 'critical' }
+        }, 'Search')
+      ]),
+      h('h1', 'Latest stories'),
       h('ul', state.get('stories').map((story, storyIndex) => {
         var username;
         if(!story.hideIdentity) {

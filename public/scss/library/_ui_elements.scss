@@ -126,6 +126,11 @@
     border-color: $amaranth;
     color: $amaranth;
   }
+  &[data-type="critical"] {
+    color: white;
+    border-color: $downy;
+    background: $downy;
+  }
 }
 
 input, textarea {
