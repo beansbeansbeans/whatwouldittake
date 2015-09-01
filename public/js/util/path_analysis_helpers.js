@@ -4,15 +4,9 @@ module.exports = {
   analyze(arr) {
     var percentChange, 
       inflectionPoints = [],
-      lastDirection,
-      minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
+      lastDirection;
 
     arr.forEach((point, i) => {
-      if(point[0] < minX) { minX = point[0]; }
-      if(point[0] > maxX) { maxX = point[0]; }
-      if(point[1] < minY) { minY = point[1]; }
-      if(point[1] > maxY) { maxY = point[1]; }
-
       if(i > 0) {
         var diff = point[1] - arr[i - 1][1];
         if(i === 1) {
@@ -27,7 +21,7 @@ module.exports = {
       }
     });
 
-    percentChange = (maxY - minY) / (maxX - minX);
+    percentChange = arr[arr.length - 1][1] - arr[0][1];
 
     return {
       percentChange: percentChange,

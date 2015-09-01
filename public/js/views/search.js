@@ -60,7 +60,10 @@ var handleMouseDown = (e) => {
 
 var handleMouseUp = (e) => {
   dragging = false;
-  console.log(pathUtil.analyze(points));
+  var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
+  console.log(pathUtil.analyze(points.map((p) => {
+    return [p[0], 100 * ((canvasHeight - p[1]) / canvasHeight)];
+  })));
 }
 
 class searchView extends view {
