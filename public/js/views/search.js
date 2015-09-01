@@ -80,7 +80,7 @@ class searchView extends view {
     var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
     var analysis = pathUtil.analyze(points.map((p) => {
       return [p[0], 100 * ((canvasHeight - p[1]) / canvasHeight)];
-    }));
+    }).reverse());
 
     api.post('/search_stories_by_path', {
       inflectionPoints: analysis.inflectionPoints,
