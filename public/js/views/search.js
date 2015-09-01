@@ -124,6 +124,17 @@ class searchView extends view {
     this.handleResize();
   }
 
+  didRender() {
+    var width = dimensions.canvas.width;
+
+    viewState.results.forEach((story, storyIndex) => {
+      sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
+        width: width,
+        height: width / dimensions.canvas.widthOverHeight
+      });
+    });
+  }
+
   render() {
     var canvasWidth = dimensions.canvas.width;
     var canvasHeight = canvasWidth / dimensions.canvas.widthOverHeight;
@@ -141,16 +152,17 @@ class searchView extends view {
           height: canvasHeight * 2
         })
       ]),
-      h('div.results', viewState.results.map((d) => {
+      h('div.results', viewState.results.map((d, i) => {
         var username;
         if(!d.hideIdentity) {
           username = h('div.user', d.user.username);
         }
 
-        return h('li', {
+        return h('div.result', {
           style: { height: dimensions.height + 'px' },
           dataset: { storyId: d._id }
         }, [
+          svg('svg#svg_' + i),
           username,
           h('div.last-updated', [
             h('div', 'last updated: '),

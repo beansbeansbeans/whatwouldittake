@@ -12,4 +12,16 @@
     transform-origin: top left;
     cursor: default;
   }
+  .results {
+    svg {
+      path {
+        fill: none;
+        stroke: $downy;
+        stroke-width: 2px;
+      }
+      circle {
+        fill: none;
+      }
+    }
+  }
 }
