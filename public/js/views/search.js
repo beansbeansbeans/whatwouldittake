@@ -30,7 +30,7 @@ var draw = (e) => {
 
   ctx.lineWidth = 5;
   ctx.lineCap = 'round';
-  ctx.strokeStyle = '#c0392b';
+  ctx.strokeStyle = '#77C4D3';
 
   ctx.moveTo(pos.x * 2, pos.y * 2);
 

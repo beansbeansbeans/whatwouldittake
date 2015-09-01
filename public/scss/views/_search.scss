@@ -6,7 +6,8 @@
     margin-bottom: 1rem;
   }
   canvas {
-    border: solid 2px $amaranth;
+    border-top: solid 2px $smoke;
+    border-bottom: solid 2px $smoke;
     @include transform(scale(0.5));
     transform-origin: top left;
     cursor: default;
