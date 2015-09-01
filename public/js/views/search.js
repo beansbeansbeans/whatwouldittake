@@ -62,15 +62,6 @@ var handleMouseUp = (e) => {
   console.log(analyze(points));
 }
 
-var getSign = (x) => {
-  if(x > 0) {
-    return 1;
-  } else if(x < 0) {
-    return -1;
-  }
-  return 0;
-}
-
 var analyze = (arr) => {
   var percentChange, 
     inflectionPoints = [],
@@ -86,13 +77,13 @@ var analyze = (arr) => {
     if(i > 0) {
       var diff = point[1] - arr[i - 1][1];
       if(i === 1) {
-        lastDirection = getSign(diff);
+        lastDirection = util.getSign(diff);
       } else {
-        if(getSign(diff) !== lastDirection && getSign(diff) !== 0) {
+        if(util.getSign(diff) !== lastDirection && util.getSign(diff) !== 0) {
           inflectionPoints.push(point);
         }
 
-        lastDirection = getSign(diff);
+        lastDirection = util.getSign(diff);
       }
     }
   });
