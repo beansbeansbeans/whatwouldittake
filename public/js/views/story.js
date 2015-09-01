@@ -4,6 +4,7 @@ var api = require('../api');
 var Pikaday = require('pikaday');
 var mediator = require('../mediator');
 var view = require('../view');
+var util = require('../util');
 var state = require('../state');
 var createEntrySubview = require('./subviews/create_entry');
 var sparklineSubview = require('./subviews/sparkline');
@@ -145,8 +146,16 @@ class storyView extends view {
         notes = d.qs('[name="notes"]').value;
 
       if(this.validate()) {
+        var points = storyState.story.entries.map((d, i) => {
+          return [i, d.feeling];
+        }).concat([storyState.story.entries.length, feeling]);
+
+        var analysis = util.analyze(points);
+
         return api.post('/edit_story', {
           id: storyState.story._id,
+          percentChange: analysis.percentChange,
+          inflectionPoints: analysis.inflectionPoints,
           date: +date,
           feeling: feeling,
           notes: notes
