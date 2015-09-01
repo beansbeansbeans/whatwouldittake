@@ -167,7 +167,7 @@ class storyView extends view {
           notes: notes
         }, (data) => {
           if(data.success) {
-            storyState.story.entries = data.entries;
+            storyState.story.entries = data.data.entries;
             storyState.addingEntry = false;
             this.updateState();                  
           }
@@ -206,7 +206,7 @@ class storyView extends view {
         if(data.success) {
           api.clearCache('stories*');
           api.clearCache('/story/' + storyState.story._id);
-          storyState.story.entries = data.entries;
+          storyState.story.entries = data.data.entries;
           storyState.confirming = false;
           this.updateState();
         }
@@ -225,7 +225,7 @@ class storyView extends view {
         if(data.success) {
           api.clearCache('stories*');
           api.clearCache('/story/' + storyState.story._id);
-          storyState.story.hideIdentity = data.hideIdentity;
+          storyState.story.hideIdentity = data.data.hideIdentity;
           storyState.editingVisibility = false;
           this.updateState();
         }

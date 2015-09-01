@@ -46,7 +46,7 @@ class createView extends view {
             if(data.error) {
 
             } else {
-              page('story/' + data._id);
+              page('story/' + data.data._id);
             }
           });
         }

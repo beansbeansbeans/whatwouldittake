@@ -74,7 +74,7 @@ module.exports = {
 
       if(request.responseText) {
         try {
-          data = JSON.parse(request.responseText);
+          data.data = JSON.parse(request.responseText);
         } catch(e) {
           data = {};
         }

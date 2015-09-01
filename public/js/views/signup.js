@@ -72,9 +72,9 @@ class signupView extends view {
             password: password
           }, (data) => {
             if(data.success) {
-              auth.authenticated(data.user);
+              auth.authenticated(data.data.user);
             } else {
-              state.fieldStatus[data.error.field] = data.error.message;
+              state.fieldStatus[data.data.error.field] = data.data.error.message;
               this.updateState();
             }
           });
