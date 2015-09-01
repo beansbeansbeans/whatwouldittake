@@ -5,6 +5,7 @@ var Pikaday = require('pikaday');
 var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
+var pathUtil = require('../util/path_analysis_helpers');
 var state = require('../state');
 var createEntrySubview = require('./subviews/create_entry');
 var sparklineSubview = require('./subviews/sparkline');
@@ -150,7 +151,7 @@ class storyView extends view {
           return [i, d.feeling];
         }).concat([storyState.story.entries.length, feeling]);
 
-        var analysis = util.analyze(points);
+        var analysis = pathUtil.analyze(points);
 
         return api.post('/edit_story', {
           id: storyState.story._id,

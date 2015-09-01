@@ -5,6 +5,7 @@ var state = require('../state');
 var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
+var pathUtil = require('../util/path_analysis_helpers');
 var sparklineSubview = require('./subviews/sparkline');
 
 var dimensions = {
@@ -59,7 +60,7 @@ var handleMouseDown = (e) => {
 
 var handleMouseUp = (e) => {
   dragging = false;
-  console.log(util.analyze(points));
+  console.log(pathUtil.analyze(points));
 }
 
 class searchView extends view {
