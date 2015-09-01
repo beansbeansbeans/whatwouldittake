@@ -147,9 +147,9 @@ class storyView extends view {
         notes = d.qs('[name="notes"]').value;
 
       if(this.validate()) {
-        var points = storyState.story.entries.map((d, i) => {
-          return [i, d.feeling];
-        }).concat([storyState.story.entries.length, feeling]);
+        var points = [0, feeling].concat(storyState.story.entries.map((d, i) => {
+          return [i + 1, d.feeling];
+        }));
 
         var analysis = pathUtil.analyze(points);
 
