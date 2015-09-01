@@ -15,11 +15,10 @@ var dimensions = {
 }
 
 var pos = { x: 0, y: 0 };
-
 var offset = { x: 0, y: 0 }
-
 var ctx;
 var dragging = false;
+var points = [];
 
 var draw = (e) => {
   if(!dragging) { return; }
@@ -50,6 +49,7 @@ var getDistance = (e) => {
 var setPosition = (e) => {
   pos.x = Math.max(e.clientX - offset.x, pos.x);
   pos.y = e.clientY - offset.y;
+  points.push([pos.x, pos.y]);
 }
 
 var handleMouseDown = (e) => {
@@ -59,6 +59,50 @@ var handleMouseDown = (e) => {
 
 var handleMouseUp = (e) => {
   dragging = false;
+  console.log(analyze(points));
+}
+
+var getSign = (x) => {
+  if(x > 0) {
+    return 1;
+  } else if(x < 0) {
+    return -1;
+  }
+  return 0;
+}
+
+var analyze = (arr) => {
+  var percentChange, 
+    inflectionPoints = [],
+    lastDirection,
+    minX = Infinity, minY = Infinity, maxX = 0, maxY = 0;
+
+  arr.forEach((point, i) => {
+    if(point[0] < minX) { minX = point[0]; }
+    if(point[0] > maxX) { maxX = point[0]; }
+    if(point[1] < minY) { minY = point[1]; }
+    if(point[1] > maxY) { maxY = point[1]; }
+
+    if(i > 0) {
+      var diff = point[1] - arr[i - 1][1];
+      if(i === 1) {
+        lastDirection = getSign(diff);
+      } else {
+        if(getSign(diff) !== lastDirection && getSign(diff) !== 0) {
+          inflectionPoints.push(point);
+        }
+
+        lastDirection = getSign(diff);
+      }
+    }
+  });
+
+  percentChange = (maxY - minY) / (maxX - minX);
+
+  return {
+    percentChange: percentChange,
+    inflectionPoints: inflectionPoints
+  };
 }
 
 class searchView extends view {
