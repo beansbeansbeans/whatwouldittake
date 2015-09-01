@@ -14,15 +14,9 @@ var dimensions = {
   }
 }
 
-var pos = {
-  x: 0,
-  y: 0
-};
+var pos = { x: 0, y: 0 };
 
-var offset = {
-  x: 0,
-  y: 0
-}
+var offset = { x: 0, y: 0 }
 
 var ctx;
 var dragging = false;
@@ -76,6 +70,8 @@ class searchView extends view {
 
   stop() {
     super.stop();
+
+    pos = { x: 0, y: 0 };
 
     window.removeEventListener('mousemove', draw);
     window.removeEventListener('mousedown', handleMouseDown);
