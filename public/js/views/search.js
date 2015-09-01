@@ -61,9 +61,17 @@ var handleMouseDown = (e) => {
 var handleMouseUp = (e) => {
   dragging = false;
   var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
-  console.log(pathUtil.analyze(points.map((p) => {
+  var analysis = pathUtil.analyze(points.map((p) => {
     return [p[0], 100 * ((canvasHeight - p[1]) / canvasHeight)];
-  })));
+  }));
+
+  api.post('/search_stories_by_path', {
+    inflectionPoints: analysis.inflectionPoints,
+    percentChange: analysis.percentChange
+  }, (err, data) => {
+    console.log("GOT RESULTS");
+    console.log(err, data);
+  });
 }
 
 class searchView extends view {
@@ -71,9 +79,14 @@ class searchView extends view {
   start() {
     super.start();
 
+    mediator.subscribe("window_click", this.handleClick);
     window.addEventListener('mousemove', draw);
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
+  }
+
+  handleClick(e) {
+
   }
 
   handleResize() {
@@ -86,6 +99,7 @@ class searchView extends view {
 
     pos = { x: 0, y: 0 };
 
+    mediator.unsubscribe("window_click", this.handleClick);
     window.removeEventListener('mousemove', draw);
     window.removeEventListener('mousedown', handleMouseDown);
     window.removeEventListener('mouseup', handleMouseUp);
