@@ -8,6 +8,10 @@ var util = require('../util');
 var pathUtil = require('../util/path_analysis_helpers');
 var sparklineSubview = require('./subviews/sparkline');
 
+var viewState = {
+  results: []  
+};
+
 var dimensions = {
   canvas: {
     width: 600, // default
@@ -21,26 +25,6 @@ var ctx;
 var dragging = false;
 var points = [];
 
-var draw = (e) => {
-  if(!dragging) { return; }
-
-  if(getDistance(e) < 10) { return; }
-
-  ctx.beginPath();
-
-  ctx.lineWidth = 5;
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = '#77C4D3';
-
-  ctx.moveTo(pos.x * 2, pos.y * 2);
-
-  setPosition(e);
-
-  ctx.lineTo(pos.x * 2, pos.y * 2);
-
-  ctx.stroke();
-}
-
 var getDistance = (e) => {
   var a = Math.max(e.clientX - offset.x, pos.x) - pos.x;
   var b = e.clientY - offset.y - pos.y;
@@ -53,36 +37,58 @@ var setPosition = (e) => {
   points.push([pos.x, pos.y]);
 }
 
-var handleMouseDown = (e) => {
-  dragging = true;
-  setPosition(e);
-}
-
-var handleMouseUp = (e) => {
-  dragging = false;
-  var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
-  var analysis = pathUtil.analyze(points.map((p) => {
-    return [p[0], 100 * ((canvasHeight - p[1]) / canvasHeight)];
-  }));
-
-  api.post('/search_stories_by_path', {
-    inflectionPoints: analysis.inflectionPoints,
-    percentChange: analysis.percentChange
-  }, (err, data) => {
-    console.log("GOT RESULTS");
-    console.log(err, data);
-  });
-}
-
 class searchView extends view {
 
   start() {
     super.start();
 
+    _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw');
+
     mediator.subscribe("window_click", this.handleClick);
-    window.addEventListener('mousemove', draw);
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousemove', this.draw);
+    window.addEventListener('mousedown', this.handleMouseDown);
+    window.addEventListener('mouseup', this.handleMouseUp);
+  }
+
+  draw(e) {
+    if(!dragging) { return; }
+
+    if(getDistance(e) < 10) { return; }
+
+    ctx.beginPath();
+
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#77C4D3';
+
+    ctx.moveTo(pos.x * 2, pos.y * 2);
+
+    setPosition(e);
+
+    ctx.lineTo(pos.x * 2, pos.y * 2);
+
+    ctx.stroke();
+  }
+
+  handleMouseDown(e) {
+    dragging = true;
+    setPosition(e);
+  }
+
+  handleMouseUp(e) {
+    dragging = false;
+    var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
+    var analysis = pathUtil.analyze(points.map((p) => {
+      return [p[0], 100 * ((canvasHeight - p[1]) / canvasHeight)];
+    }));
+
+    api.post('/search_stories_by_path', {
+      inflectionPoints: analysis.inflectionPoints,
+      percentChange: analysis.percentChange
+    }, (data) => {
+      viewState.results = data.data;
+      this.updateState();
+    });
   }
 
   handleClick(e) {
@@ -100,9 +106,9 @@ class searchView extends view {
     pos = { x: 0, y: 0 };
 
     mediator.unsubscribe("window_click", this.handleClick);
-    window.removeEventListener('mousemove', draw);
-    window.removeEventListener('mousedown', handleMouseDown);
-    window.removeEventListener('mouseup', handleMouseUp);
+    window.removeEventListener('mousemove', this.draw);
+    window.removeEventListener('mousedown', this.handleMouseDown);
+    window.removeEventListener('mouseup', this.handleMouseUp);
   }
 
   mount() {
@@ -134,7 +140,26 @@ class searchView extends view {
           width: canvasWidth * 2,
           height: canvasHeight * 2
         })
-      ])
+      ]),
+      h('div.results', viewState.results.map((d) => {
+        var username;
+        if(!d.hideIdentity) {
+          username = h('div.user', d.user.username);
+        }
+
+        return h('li', {
+          style: { height: dimensions.height + 'px' },
+          dataset: { storyId: d._id }
+        }, [
+          username,
+          h('div.last-updated', [
+            h('div', 'last updated: '),
+            h('div', moment.utc(d.lastUpdated, 'x').format('h:mm:ss a'))
+          ]),
+          h('div.entries-count', util.pluralize(d.entries.length, 'entry', 'entries')),
+          h('div.date', moment.utc(d.entries[0].date, 'x').format('YYYY MM DD'))
+        ])
+      }))
     ]);
   }
 }
