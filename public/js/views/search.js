@@ -24,6 +24,8 @@ var dragging = false;
 var draw = (e) => {
   if(!dragging) { return; }
 
+  if(getDistance(e) < 10) { return; }
+
   ctx.beginPath();
 
   ctx.lineWidth = 5;
@@ -37,6 +39,12 @@ var draw = (e) => {
   ctx.lineTo(pos.x * 2, pos.y * 2);
 
   ctx.stroke();
+}
+
+var getDistance = (e) => {
+  var a = Math.max(e.clientX - offset.x, pos.x) - pos.x;
+  var b = e.clientY - offset.y - pos.y;
+  return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
 }
 
 var setPosition = (e) => {
