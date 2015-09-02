@@ -134,7 +134,7 @@ class searchView extends view {
   }
 
   didRender() {
-    var width = dimensions.canvas.width;
+    var width = d.qs('.results').offsetWidth;
 
     viewState.results.forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
