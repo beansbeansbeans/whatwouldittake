@@ -159,6 +159,7 @@ class searchView extends view {
   }
 
   didRender() {
+    if(!this.mounted) { return; }
     var width = d.qs('.results').offsetWidth;
 
     viewState.results.forEach((story, storyIndex) => {

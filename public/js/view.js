@@ -8,6 +8,8 @@ var mediator = require('./mediator');
 class view {
   constructor(opts) {
     opts = opts || {};
+    
+    this.mounted = false;
 
     this.tree = null;
     this.rootNode = null;
@@ -26,10 +28,12 @@ class view {
   handleResize() {}
 
   stop() {
+    this.mounted = false;
     mediator.unsubscribe("resize", this.handleResize);
   }
   
   start() {
+    this.mounted = true;
     this.tree = this.render();
     this.rootNode = createElement(this.tree);
     this.mount();
