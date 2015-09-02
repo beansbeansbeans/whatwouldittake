@@ -11,6 +11,7 @@ var sparklineSubview = require('./subviews/sparkline');
 var viewState = {
   results: [],
   searching: false,
+  drawing: false,
   showingPercentChange: false,
   showingInflectionPoints: false,
   analysis: null
@@ -51,6 +52,7 @@ class searchView extends view {
     viewState = {
       results: [],
       searching: false,
+      drawing: false,
       showingPercentChange: false,
       showingInflectionPoints: false,
       analysis: null
@@ -93,8 +95,10 @@ class searchView extends view {
 
   handleMouseDown(e) {
     if(viewState.searching) { return; }
+    viewState.drawing = true;
     dragging = true;
     setPosition(e);
+    this.updateState();
   }
 
   handleMouseUp(e) {
@@ -105,6 +109,7 @@ class searchView extends view {
       return [p[0], 100 * ((canvasHeight - p[1]) / canvasHeight)];
     }));
 
+    viewState.drawing = false;
     viewState.searching = true;
     viewState.showingPercentChange = true;
     viewState.showingInflectionPoints = true;
@@ -216,7 +221,10 @@ class searchView extends view {
     }
 
     return h('div#search', {
-      dataset: { searching: viewState.searching }
+      dataset: { 
+        searching: viewState.searching,
+        drawing: viewState.drawing
+      }
     }, [
       h('div.title', 'Search by mood path.'),
       h('div.canvas-container', {
@@ -229,9 +237,8 @@ class searchView extends view {
           width: canvasWidth * 2,
           height: canvasHeight * 2
         }),
-        h('div.sample-search', {
-
-        }, [
+        h('div.sample-search', [
+          h('div.text', 'E.g.')
         ]),
         h('div.button#clear-search-button', 'Clear search'),
         percentChange,

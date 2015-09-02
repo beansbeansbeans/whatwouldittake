@@ -15,6 +15,11 @@
       opacity: 0;
     }
   }
+  &[data-drawing="true"], &[data-searching="true"] {
+    .sample-search {
+      opacity: 0;
+    }
+  }
   .title {
     font-size: 2rem;
     @extend %search-content-width;
@@ -23,6 +28,13 @@
   .canvas-container {
     position: relative;
     margin-bottom: 1rem;
+    .sample-search {
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include square(100%);
+    }
     .percent-change-display {
       position: absolute;
       top: 0;
