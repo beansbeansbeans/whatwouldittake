@@ -8,7 +8,7 @@ var util = require('../util');
 var pathUtil = require('../util/path_analysis_helpers');
 var sparklineSubview = require('./subviews/sparkline');
 
-var viewState = {
+var initialState = {
   results: [],
   searching: false,
   drawing: false,
@@ -16,6 +16,8 @@ var viewState = {
   showingInflectionPoints: false,
   analysis: null
 };
+
+var viewState = JSON.parse(JSON.stringify(initialState));
 
 var dimensions = {
   canvas: {
@@ -49,14 +51,7 @@ class searchView extends view {
   clearState() {
     ctx.clearRect(0, 0, dimensions.canvas.width * 2, dimensions.canvas.width * 2 / dimensions.canvas.widthOverHeight);
     
-    viewState = {
-      results: [],
-      searching: false,
-      drawing: false,
-      showingPercentChange: false,
-      showingInflectionPoints: false,
-      analysis: null
-    };
+    viewState = JSON.parse(JSON.stringify(initialState));
 
     points = [];
     pos = { x: 0, y: 0 };
