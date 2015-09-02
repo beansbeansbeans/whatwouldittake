@@ -17,6 +17,8 @@ var initialState = {
   analysis: null
 };
 
+var sampleSearchPath;
+
 var viewState = JSON.parse(JSON.stringify(initialState));
 
 var dimensions = {
@@ -63,8 +65,8 @@ class searchView extends view {
     _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw', 'handleClick');
 
     api.get('/sample_search', (err, data) => {
-      console.log("GOT SAMPLE SEARCH");
-      console.log(data);
+      sampleSearchPath = data.data;
+      this.updateState();
     });
 
     mediator.subscribe("window_click", this.handleClick);
@@ -167,6 +169,13 @@ class searchView extends view {
     if(!this.mounted) { return; }
     var width = d.qs('.results').offsetWidth;
 
+    if(!viewState.drawing && !viewState.searching && sampleSearchPath) {
+      sparklineSubview.render(d3.select('#sample_search_svg'), {story: sampleSearchPath}, {
+        width: width,
+        height: width / dimensions.canvas.widthOverHeight
+      });
+    }
+
     viewState.results.forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
         width: width,
@@ -238,6 +247,7 @@ class searchView extends view {
           height: canvasHeight * 2
         }),
         h('div.sample-search', [
+          svg('svg#sample_search_svg'),
           h('div.text', 'E.g.')
         ]),
         h('div.button#clear-search-button', 'Clear search'),
