@@ -88,7 +88,7 @@ class searchView extends view {
     var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
     viewState.analysis = pathUtil.analyze(points.map((p) => {
       return [p[0], 100 * ((canvasHeight - p[1]) / canvasHeight)];
-    }).reverse());
+    }));
 
     viewState.searching = true;
     viewState.showingPercentChange = true;
@@ -169,7 +169,7 @@ class searchView extends view {
 
     if(viewState.showingPercentChange) {
       percentChange = h('div.percent-change-display', [
-        h('div.description', (-1 * analysis.percentChange) + '% change'),
+        h('div.description', analysis.percentChange + '% change'),
         h('div.start', {
           style: {
             left: points[0][0] + 'px',
@@ -200,7 +200,7 @@ class searchView extends view {
     }
 
     if(viewState.searching) {
-      stats = h('div.stats', 'Stats: ' + (-1 * analysis.percentChange) + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
+      stats = h('div.stats', 'Stats: ' + analysis.percentChange + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
     }
 
     return h('div#search', [
