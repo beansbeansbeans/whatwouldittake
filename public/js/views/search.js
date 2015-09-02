@@ -39,7 +39,7 @@ var setPosition = (e) => {
   var edgeOffset = 20;
 
   pos.x = Math.max(edgeOffset, Math.min(Math.max(e.clientX - offset.x, pos.x), dimensions.canvas.width - edgeOffset));
-  pos.y = Math.max(edgeOffset, Math.min(e.clientY - offset.y, (dimensions.canvas.width / dimensions.canvas.widthOverHeight) - edgeOffset));
+  pos.y = Math.max(0, Math.min(e.clientY - offset.y, (dimensions.canvas.width / dimensions.canvas.widthOverHeight)));
   points.push([pos.x, pos.y]);
 }
 
@@ -114,7 +114,6 @@ class searchView extends view {
       ctx.clearRect(0, 0, dimensions.canvas.width * 2, dimensions.canvas.width * 2 / dimensions.canvas.widthOverHeight);
       points = [];
       pos = { x: 0, y: 0 };
-      offset = { x: 0, y: 0 }
 
       this.updateState();
     }
