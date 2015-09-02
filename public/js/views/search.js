@@ -106,6 +106,8 @@ class searchView extends view {
   }
 
   handleClick(e) {
+    var storyItem = e.target.classList.contains('result') ? e.target : e.target.closest('.result');
+
     if(e.target.id === 'clear-search-button') {
       viewState.results = [];
       viewState.searching = false;
@@ -116,6 +118,8 @@ class searchView extends view {
       pos = { x: 0, y: 0 };
 
       this.updateState();
+    } else if(storyItem) {
+      page('/story/' + storyItem.dataset.storyId);
     }
   }
 
