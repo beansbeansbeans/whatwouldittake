@@ -46,6 +46,18 @@
         margin-top: -1rem;
       }
     }
+    #clear-search-button {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      &[data-show="true"] {
+
+      }
+      &[data-show="false"] {
+        pointer-events: none;
+        opacity: 0;
+      }
+    }
   }
   canvas {
     position: absolute;

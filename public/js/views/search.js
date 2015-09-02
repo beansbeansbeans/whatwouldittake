@@ -48,7 +48,7 @@ class searchView extends view {
   start() {
     super.start();
 
-    _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw');
+    _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw', 'handleClick');
 
     mediator.subscribe("window_click", this.handleClick);
     window.addEventListener('mousemove', this.draw);
@@ -106,7 +106,18 @@ class searchView extends view {
   }
 
   handleClick(e) {
+    if(e.target.id === 'clear-search-button') {
+      viewState.results = [];
+      viewState.searching = false;
+      viewState.showingPercentChange = false;
+      viewState.showingInflectionPoints = false;
+      ctx.clearRect(0, 0, dimensions.canvas.width * 2, dimensions.canvas.width * 2 / dimensions.canvas.widthOverHeight);
+      points = [];
+      pos = { x: 0, y: 0 };
+      offset = { x: 0, y: 0 }
 
+      this.updateState();
+    }
   }
 
   handleResize() {
@@ -205,6 +216,11 @@ class searchView extends view {
           width: canvasWidth * 2,
           height: canvasHeight * 2
         }),
+        h('div.button#clear-search-button', {
+          dataset: {
+            show: viewState.searching
+          }
+        }, 'Clear search'),
         percentChange,
         inflectionPoints
       ]),
