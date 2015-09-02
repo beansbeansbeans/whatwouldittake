@@ -35,8 +35,10 @@ var getDistance = (e) => {
 }
 
 var setPosition = (e) => {
-  pos.x = Math.min(Math.max(e.clientX - offset.x, pos.x), dimensions.canvas.width);
-  pos.y = e.clientY - offset.y;
+  var edgeOffset = 20;
+
+  pos.x = Math.max(edgeOffset, Math.min(Math.max(e.clientX - offset.x, pos.x), dimensions.canvas.width - edgeOffset));
+  pos.y = Math.max(edgeOffset, Math.min(e.clientY - offset.y, (dimensions.canvas.width / dimensions.canvas.widthOverHeight) - edgeOffset));
   points.push([pos.x, pos.y]);
 }
 
