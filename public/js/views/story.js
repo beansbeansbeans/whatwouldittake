@@ -263,6 +263,8 @@ class storyView extends view {
   }
 
   didRender() {
+    if(!this.mounted) { return; }
+    
     if(storyState.story) {
       if(storyState.story.entries.length > 1) {
         sparklineSubview.render(d3.select("svg"), storyState, svgDimensions);
