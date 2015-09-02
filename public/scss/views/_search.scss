@@ -6,6 +6,15 @@
 
 #search {
   padding-top: 2rem;
+  &[data-searching="true"] {
+
+  }
+  &[data-searching="false"] {
+    #clear-search-button {
+      pointer-events: none;
+      opacity: 0;
+    }
+  }
   .title {
     font-size: 2rem;
     @extend %search-content-width;
@@ -50,13 +59,6 @@
       position: absolute;
       bottom: 2rem;
       right: 2rem;
-      &[data-show="true"] {
-
-      }
-      &[data-show="false"] {
-        pointer-events: none;
-        opacity: 0;
-      }
     }
   }
   canvas {

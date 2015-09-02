@@ -215,8 +215,10 @@ class searchView extends view {
       stats = h('div.stats', 'Stats: ' + analysis.percentChange + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
     }
 
-    return h('div#search', [
-      h('div.title', 'this is the search page'),
+    return h('div#search', {
+      dataset: { searching: viewState.searching }
+    }, [
+      h('div.title', 'Search by mood path.'),
       h('div.canvas-container', {
         style: {
           width: canvasWidth + 'px',
@@ -227,11 +229,11 @@ class searchView extends view {
           width: canvasWidth * 2,
           height: canvasHeight * 2
         }),
-        h('div.button#clear-search-button', {
-          dataset: {
-            show: viewState.searching
-          }
-        }, 'Clear search'),
+        h('div.sample-search', {
+
+        }, [
+        ]),
+        h('div.button#clear-search-button', 'Clear search'),
         percentChange,
         inflectionPoints
       ]),
