@@ -45,6 +45,21 @@ var setPosition = (e) => {
 
 class searchView extends view {
 
+  clearState() {
+    ctx.clearRect(0, 0, dimensions.canvas.width * 2, dimensions.canvas.width * 2 / dimensions.canvas.widthOverHeight);
+    
+    viewState = {
+      results: [],
+      searching: false,
+      showingPercentChange: false,
+      showingInflectionPoints: false,
+      analysis: null
+    };
+
+    points = [];
+    pos = { x: 0, y: 0 };
+  }
+
   start() {
     super.start();
 
@@ -109,14 +124,7 @@ class searchView extends view {
     var storyItem = e.target.classList.contains('result') ? e.target : e.target.closest('.result');
 
     if(e.target.id === 'clear-search-button') {
-      viewState.results = [];
-      viewState.searching = false;
-      viewState.showingPercentChange = false;
-      viewState.showingInflectionPoints = false;
-      ctx.clearRect(0, 0, dimensions.canvas.width * 2, dimensions.canvas.width * 2 / dimensions.canvas.widthOverHeight);
-      points = [];
-      pos = { x: 0, y: 0 };
-
+      this.clearState();
       this.updateState();
     } else if(storyItem) {
       page('/story/' + storyItem.dataset.storyId);
@@ -129,8 +137,7 @@ class searchView extends view {
 
   stop() {
     super.stop();
-
-    pos = { x: 0, y: 0 };
+    this.clearState();
 
     mediator.unsubscribe("window_click", this.handleClick);
     window.removeEventListener('mousemove', this.draw);
