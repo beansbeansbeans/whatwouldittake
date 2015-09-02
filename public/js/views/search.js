@@ -67,6 +67,11 @@ class searchView extends view {
 
     _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw', 'handleClick');
 
+    api.get('/sample_search', (err, data) => {
+      console.log("GOT SAMPLE SEARCH");
+      console.log(data);
+    });
+
     mediator.subscribe("window_click", this.handleClick);
     window.addEventListener('mousemove', this.draw);
     window.addEventListener('mousedown', this.handleMouseDown);
