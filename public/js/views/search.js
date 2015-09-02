@@ -9,12 +9,15 @@ var pathUtil = require('../util/path_analysis_helpers');
 var sparklineSubview = require('./subviews/sparkline');
 
 var viewState = {
-  results: []  
+  results: [],
+  searching: false,
+  showingPercentChange: false,
+  analysis: null
 };
 
 var dimensions = {
   canvas: {
-    width: 600, // default
+    width: window.innerWidth, // default
     widthOverHeight: 3
   }
 }
@@ -78,13 +81,18 @@ class searchView extends view {
   handleMouseUp(e) {
     dragging = false;
     var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
-    var analysis = pathUtil.analyze(points.map((p) => {
+    viewState.analysis = pathUtil.analyze(points.map((p) => {
       return [p[0], 100 * ((canvasHeight - p[1]) / canvasHeight)];
     }).reverse());
 
+    viewState.searching = true;
+    viewState.showingPercentChange = true;
+
+    this.updateState();
+
     api.post('/search_stories_by_path', {
-      inflectionPoints: analysis.inflectionPoints,
-      percentChange: analysis.percentChange
+      inflectionPoints: viewState.analysis.inflectionPoints,
+      percentChange: viewState.analysis.percentChange
     }, (data) => {
       viewState.results = data.data;
       this.updateState();
@@ -96,7 +104,6 @@ class searchView extends view {
   }
 
   handleResize() {
-    dimensions.canvas.width = d.qs('#search').offsetWidth;
     this.updateState();
   }
 
@@ -139,6 +146,32 @@ class searchView extends view {
     var canvasWidth = dimensions.canvas.width;
     var canvasHeight = canvasWidth / dimensions.canvas.widthOverHeight;
 
+    var analysis = viewState.analysis;
+    var percentChange;
+    var stats;
+
+    if(viewState.showingPercentChange) {
+      percentChange = h('div.percent-change-display', [
+        h('div.description', (-1 * analysis.percentChange) + '% change'),
+        h('div.start', {
+          style: {
+            left: points[0][0] + 'px',
+            top: points[0][1] + 'px'
+          }
+        }),
+        h('div.end', {
+          style: {
+            left: points[points.length - 1][0] + 'px',
+            top: points[points.length - 1][1] + 'px'            
+          }
+        })
+      ]);
+    }
+
+    if(viewState.searching) {
+      stats = h('div.stats', 'Stats: ' + (-1 * analysis.percentChange) + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
+    }
+
     return h('div#search', [
       h('div.title', 'this is the search page'),
       h('div.canvas-container', {
@@ -150,28 +183,32 @@ class searchView extends view {
         h('canvas', {
           width: canvasWidth * 2,
           height: canvasHeight * 2
-        })
+        }),
+        percentChange
       ]),
-      h('div.results', viewState.results.map((d, i) => {
-        var username;
-        if(!d.hideIdentity) {
-          username = h('div.user', d.user.username);
-        }
+      h('div.results-container', [
+        stats,
+        h('div.results', viewState.results.map((d, i) => {
+          var username;
+          if(!d.hideIdentity) {
+            username = h('div.user', d.user.username);
+          }
 
-        return h('div.result', {
-          style: { height: dimensions.height + 'px' },
-          dataset: { storyId: d._id }
-        }, [
-          svg('svg#svg_' + i),
-          username,
-          h('div.last-updated', [
-            h('div', 'last updated: '),
-            h('div', moment.utc(d.lastUpdated, 'x').format('h:mm:ss a'))
-          ]),
-          h('div.entries-count', util.pluralize(d.entries.length, 'entry', 'entries')),
-          h('div.date', moment.utc(d.entries[0].date, 'x').format('YYYY MM DD'))
-        ])
-      }))
+          return h('div.result', {
+            style: { height: dimensions.height + 'px' },
+            dataset: { storyId: d._id }
+          }, [
+            svg('svg#svg_' + i),
+            username,
+            h('div.last-updated', [
+              h('div', 'last updated: '),
+              h('div', moment.utc(d.lastUpdated, 'x').format('h:mm:ss a'))
+            ]),
+            h('div.entries-count', util.pluralize(d.entries.length, 'entry', 'entries')),
+            h('div.date', moment.utc(d.entries[0].date, 'x').format('YYYY MM DD'))
+          ])
+        }))
+      ])
     ]);
   }
 }

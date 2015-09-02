@@ -1,16 +1,42 @@
-#search {
+%search-content-width {
   width: $content-width * 1vw;
   margin-left: auto;
-  margin-right: auto;  
+  margin-right: auto; 
+}
+
+#search {
   .title {
+    font-size: 2rem;
+    @extend %search-content-width;
+    margin-bottom: 2rem;
+  }
+  .canvas-container {
+    position: relative;
     margin-bottom: 1rem;
+    .percent-change-display {
+      position: absolute;
+      top: 0;
+      left: 0; 
+      .start, .end {
+        border-radius: 50%;
+        background: $amaranth;
+        @include square(2rem);
+        position: absolute;
+        margin-left: -1rem;
+        margin-top: -1rem;
+      }    
+    }
   }
   canvas {
+    position: absolute;
     border-top: solid 2px $smoke;
     border-bottom: solid 2px $smoke;
     @include transform(scale(0.5));
     transform-origin: top left;
     cursor: default;
+  }
+  .results-container {
+    @extend %search-content-width;
   }
   .results {
     svg {
