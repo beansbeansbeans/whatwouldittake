@@ -27,6 +27,25 @@
         margin-top: -1rem;
       }    
     }
+    .inflection-points-display {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      .description {
+        position: absolute;
+        top: 2rem;
+        width: auto;
+      }
+      .point {
+        border-radius: 50%;
+        background: $tuna;
+        @include square(2rem);
+        position: absolute;
+        margin-left: -1rem;
+        margin-top: -1rem;
+      }
+    }
   }
   canvas {
     position: absolute;

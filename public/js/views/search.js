@@ -12,6 +12,7 @@ var viewState = {
   results: [],
   searching: false,
   showingPercentChange: false,
+  showingInflectionPoints: false,
   analysis: null
 };
 
@@ -56,7 +57,7 @@ class searchView extends view {
   }
 
   draw(e) {
-    if(!dragging) { return; }
+    if(!dragging || viewState.searching) { return; }
 
     if(getDistance(e) < 10) { return; }
 
@@ -76,11 +77,13 @@ class searchView extends view {
   }
 
   handleMouseDown(e) {
+    if(viewState.searching) { return; }
     dragging = true;
     setPosition(e);
   }
 
   handleMouseUp(e) {
+    if(viewState.searching) { return; }
     dragging = false;
     var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
     viewState.analysis = pathUtil.analyze(points.map((p) => {
@@ -89,6 +92,7 @@ class searchView extends view {
 
     viewState.searching = true;
     viewState.showingPercentChange = true;
+    viewState.showingInflectionPoints = true;
 
     this.updateState();
 
@@ -150,6 +154,7 @@ class searchView extends view {
 
     var analysis = viewState.analysis;
     var percentChange;
+    var inflectionPoints;
     var stats;
 
     if(viewState.showingPercentChange) {
@@ -170,6 +175,20 @@ class searchView extends view {
       ]);
     }
 
+    if(viewState.showingInflectionPoints) {
+      inflectionPoints = h('div.inflection-points-display', [
+        h('div.description', analysis.inflectionPointIndices.length + ' inflection points'),
+        analysis.inflectionPointIndices.map((d) => {
+          return h('div.point', {
+            style: {
+              left: points[d][0] + 'px',
+              top: points[d][1] + 'px'
+            }
+          })
+        })
+      ]);
+    }
+
     if(viewState.searching) {
       stats = h('div.stats', 'Stats: ' + (-1 * analysis.percentChange) + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
     }
@@ -186,7 +205,8 @@ class searchView extends view {
           width: canvasWidth * 2,
           height: canvasHeight * 2
         }),
-        percentChange
+        percentChange,
+        inflectionPoints
       ]),
       h('div.results-container', [
         stats,

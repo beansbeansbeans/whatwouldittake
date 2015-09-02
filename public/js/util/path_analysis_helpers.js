@@ -4,6 +4,7 @@ module.exports = {
   analyze(arr) {
     var percentChange, 
       inflectionPoints = [],
+      inflectionPointIndices = [],
       lastDirection;
 
     arr.forEach((point, i) => {
@@ -14,9 +15,12 @@ module.exports = {
         } else {
           if(util.getSign(diff) !== lastDirection && util.getSign(diff) !== 0) {
             inflectionPoints.push(point);
+            inflectionPointIndices.push(i);
           }
 
-          lastDirection = util.getSign(diff);
+          if(util.getSign(diff) !== 0) {
+            lastDirection = util.getSign(diff);
+          }
         }
       }
     });
@@ -25,7 +29,8 @@ module.exports = {
 
     return {
       percentChange: percentChange,
-      inflectionPoints: inflectionPoints
+      inflectionPoints: inflectionPoints,
+      inflectionPointIndices: inflectionPointIndices
     };
   }
 }
