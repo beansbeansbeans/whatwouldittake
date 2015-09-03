@@ -6,3 +6,12 @@
     opacity: 1;
   }
 }
+
+@include keyframes(fade-in-out) {
+  0%, 100% {
+    opacity: 0;
+  }
+  25%, 75% {
+    opacity: 1;
+  }
+}

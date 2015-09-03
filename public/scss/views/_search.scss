@@ -26,9 +26,10 @@
     }
   }
   .title {
-    font-size: 2rem;
+    text-align: center;
+    font-size: 2.5rem;
     @extend %search-content-width;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
   .canvas-container {
     position: relative;
@@ -55,7 +56,7 @@
         path {
           fill: none;
           stroke: $smoke;
-          stroke-width: 2px;
+          stroke-width: 4px;
           &.animate {
             @include animation(dash 1.5s linear forwards);
           }
@@ -72,10 +73,24 @@
         }
       }
     }
-    .percent-change-display {
+    .percent-change-display, .inflection-points-display {
+      opacity: 0;
       position: absolute;
       top: 0;
       left: 0; 
+      @include square(100%);
+      pointer-events: none;
+      .description {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        top: 50%;
+        @include transform(translateY(-50%));
+      }
+    }
+    .percent-change-display {
+      @include animation(fade-in-out 2s 0.5s forwards);
       .start, .end {
         border-radius: 50%;
         background: $amaranth;
@@ -86,15 +101,7 @@
       }    
     }
     .inflection-points-display {
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      .description {
-        position: absolute;
-        top: 2rem;
-        width: auto;
-      }
+      @include animation(fade-in-out 2s 2.25s forwards);
       .point {
         border-radius: 50%;
         background: $tuna;

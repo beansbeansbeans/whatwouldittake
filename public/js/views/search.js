@@ -193,7 +193,6 @@ class searchView extends view {
   }
 
   render() {
-    console.log("RENDERING");
     var canvasWidth = dimensions.canvas.width;
     var canvasHeight = canvasWidth / dimensions.canvas.widthOverHeight;
 
@@ -201,12 +200,10 @@ class searchView extends view {
     var percentChange;
     var inflectionPoints;
     var stats;
-    console.log(canvasHeight);
-    console.log(dimensions.resultsWidth);
 
     if(viewState.showingPercentChange) {
       percentChange = h('div.percent-change-display', [
-        h('div.description', analysis.percentChange + '% change'),
+        h('div.description', Math.round(analysis.percentChange) + '% change'),
         h('div.start', {
           style: {
             left: points[0][0] + 'px',
@@ -237,7 +234,7 @@ class searchView extends view {
     }
 
     if(viewState.searching) {
-      stats = h('div.stats', 'Stats: ' + analysis.percentChange + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
+      stats = h('div.stats', 'Stats: ' + Math.round(analysis.percentChange) + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
     }
 
     return h('div#search', {
