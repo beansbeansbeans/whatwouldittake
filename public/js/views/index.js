@@ -110,7 +110,7 @@ class indexView extends view {
         }
 
         return h('li.story-item', {
-          style: { height: dimensions.height + 'px' },
+          style: { minHeight: dimensions.height + 'px' },
           dataset: { storyId: story._id }
         }, [
           svg('svg#svg_' + storyIndex),

@@ -65,8 +65,6 @@
     .above {
       position: relative;
       z-index: 1;
-      top: 50%;
-      @include transform(translateY(-50%));
       @extend %index-content-container
     }
   }
