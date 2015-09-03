@@ -15,6 +15,11 @@
       opacity: 0;
     }
   }
+  &[data-drawing="false"][data-searching="false"] {
+    .sample-search {
+      @include animation(fade-in .5s forwards);
+    }
+  }
   &[data-drawing="true"], &[data-searching="true"] {
     .sample-search {
       opacity: 0;
@@ -35,6 +40,7 @@
       left: 0;
       @include square(100%);
       text-align: center;
+      opacity: 0;
       .text {
         position: absolute;
         left: 0;
