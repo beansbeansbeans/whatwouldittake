@@ -145,6 +145,7 @@ class searchView extends view {
   }
 
   handleResize() {
+    dimensions.resultsWidth = d.qs('.results').offsetWidth
     this.updateState();
   }
 
@@ -173,12 +174,11 @@ class searchView extends view {
 
   didRender() {
     if(!this.mounted) { return; }
-    var width = d.qs('.results').offsetWidth;
 
     if(!viewState.drawing && !viewState.searching && sampleSearchPath) {
       sparklineSubview.render(d3.select('#sample_search_svg'), {story: sampleSearchPath}, {
-        width: width,
-        height: width / dimensions.canvas.widthOverHeight
+        width: dimensions.resultsWidth,
+        height: dimensions.resultsWidth / dimensions.canvas.widthOverHeight
       });
 
       enterSampleSearch(d3.select('#sample_search_svg path')[0][0]);
@@ -186,13 +186,14 @@ class searchView extends view {
 
     viewState.results.forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
-        width: width,
-        height: width / dimensions.canvas.widthOverHeight
+        width: dimensions.resultsWidth,
+        height: dimensions.resultsWidth / dimensions.canvas.widthOverHeight
       });
     });
   }
 
   render() {
+    console.log("RENDERING");
     var canvasWidth = dimensions.canvas.width;
     var canvasHeight = canvasWidth / dimensions.canvas.widthOverHeight;
 
@@ -200,6 +201,8 @@ class searchView extends view {
     var percentChange;
     var inflectionPoints;
     var stats;
+    console.log(canvasHeight);
+    console.log(dimensions.resultsWidth);
 
     if(viewState.showingPercentChange) {
       percentChange = h('div.percent-change-display', [
@@ -255,7 +258,11 @@ class searchView extends view {
           height: canvasHeight * 2
         }),
         h('div.sample-search', [
-          svg('svg#sample_search_svg'),
+          svg('svg#sample_search_svg', {
+            style: {
+              top: ((canvasHeight - (dimensions.resultsWidth / dimensions.canvas.widthOverHeight)) / 2) + 'px'
+            }
+          }),
           h('div.text', 'E.g.')
         ]),
         h('div.button#clear-search-button', 'Clear search'),
