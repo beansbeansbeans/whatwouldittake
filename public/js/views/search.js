@@ -48,6 +48,12 @@ var setPosition = (e) => {
   points.push([pos.x, pos.y]);
 }
 
+var enterSampleSearch = _.once((path) => {
+  var length = path.getTotalLength();
+  path.setAttribute("style", "stroke-dasharray:" + length + ";stroke-dashoffset:" + length);
+  path.classList.add("animate");
+});
+
 class searchView extends view {
 
   clearState() {
@@ -99,8 +105,8 @@ class searchView extends view {
     if(viewState.searching) { return; }
     viewState.drawing = true;
     dragging = true;
-    setPosition(e);
     this.updateState();
+    setPosition(e);
   }
 
   handleMouseUp(e) {
@@ -174,6 +180,8 @@ class searchView extends view {
         width: width,
         height: width / dimensions.canvas.widthOverHeight
       });
+
+      enterSampleSearch(d3.select('#sample_search_svg path')[0][0]);
     }
 
     viewState.results.forEach((story, storyIndex) => {
