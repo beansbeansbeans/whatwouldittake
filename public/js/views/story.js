@@ -146,6 +146,8 @@ class storyView extends view {
         feeling = d.qs('[name="feeling"]').value,
         notes = d.qs('[name="notes"]').value;
 
+      date = moment(date, 'x').add(Math.round(Math.random() * 1000), 'milliseconds');
+
       if(this.validate()) {
         var points = storyState.story.entries.concat({
           date: date,
