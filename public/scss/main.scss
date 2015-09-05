@@ -8,6 +8,10 @@ body {
   @extend %body-font;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 #loader-container {
   position: fixed;
   top: 0;
