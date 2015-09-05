@@ -14,7 +14,7 @@ var viewState = {
   gettingMoreStories: false
 }
 
-var dimensions = { widthOverHeight: 10 };
+var dimensions = { widthOverHeight: 4 };
 
 class indexView extends view {
   start() {
@@ -69,8 +69,22 @@ class indexView extends view {
   }
 
   handleResize() {
-    dimensions.width = Math.max(d.gbID('index').offsetWidth, 250);
-    dimensions.height = Math.min(dimensions.width / dimensions.widthOverHeight, 200)
+    var windowWidth = state.get('dimensions').windowWidth,
+      columns = 4;
+
+    if(windowWidth < 600) {
+      columns = 1;
+    } else if(windowWidth < 850) {
+      columns = 2;
+    } else if(windowWidth < 1200) {
+      columns = 3;
+    }
+
+    dimensions.columns = columns;
+    dimensions.margin = windowWidth / 20;
+    dimensions.width = ((d.gbID('index').offsetWidth - ((columns - 1) * dimensions.margin)) / columns) - 1;
+    // offset by 1px to avoid wrapping
+    dimensions.height = Math.max(dimensions.width / dimensions.widthOverHeight, 50);
 
     state.get('stories').forEach((story, storyIndex) => {
       if(story.entries.length > 1) {
@@ -110,12 +124,17 @@ class indexView extends view {
         }
 
         return h('li.story-item', {
-          style: { minHeight: dimensions.height + 'px' },
+          style: { 
+            width: dimensions.width + 'px',
+            height: dimensions.width + 'px',
+            marginRight: storyIndex % dimensions.columns !== (dimensions.columns - 1) ? dimensions.margin + 'px' : 0,
+            marginBottom: dimensions.margin + 'px'
+          },
           dataset: { storyId: story._id }
         }, [
-          svg('svg#svg_' + storyIndex),
-          h('div.above', [
+          h('div.contents', [
             username,
+            svg('svg#svg_' + storyIndex),
             h('div.last-updated', [
               h('div', 'last updated: '),
               h('div', moment.utc(story.lastUpdated, 'x').format('h:mm:ss a'))

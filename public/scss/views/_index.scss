@@ -5,9 +5,9 @@
 }
 
 #index {
+  @extend %index-content-container;
   .hero {
     text-align: center;
-    @extend %index-content-container;
     border-bottom: solid 1px $border-color;
     padding-top: 5rem;
     padding-bottom: 3rem;
@@ -22,7 +22,6 @@
   h1 {
     text-align: center;
     text-transform: uppercase;
-    @extend %index-content-container;
     font-size: 1rem;
     font-weight: 100;
     margin-top: 4rem;
@@ -32,9 +31,11 @@
     margin: 0;
     list-style: none;
     padding: 0 0 5rem 0;
+    text-align: center;
     li {
       position: relative;
       cursor: pointer;
+      float: left;
       &:not(:last-of-type) {
         margin-bottom: 1rem;
       }
@@ -53,7 +54,6 @@
       }
     }
     svg {
-      position: absolute;
       path {
         @include transition(stroke $transition-duration);
         fill: none;
@@ -64,10 +64,8 @@
         fill: none;
       }
     }
-    .above {
+    .contents {
       position: relative;
-      z-index: 1;
-      @extend %index-content-container
     }
   }
 }
