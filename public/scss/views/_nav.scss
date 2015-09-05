@@ -5,7 +5,7 @@ nav {
     top: 0;
     left: 0;
     right: 0;
-    background: white;
+    background: $body-bg-color;
     @extend %clearfix;
     padding: 1rem;
     z-index: 10;
@@ -15,7 +15,7 @@ nav {
       a {
         line-height: 2;
         text-transform: uppercase;
-        color: $tuna;
+        color: $text-color;
         font-size: 1.25rem;
       }
     }
@@ -26,12 +26,12 @@ nav {
       margin-left: 1.5rem;
     }
     #login, #signup, #logout-button, #me {
-      margin-left: 1rem;
+      margin-left: 0.8rem;
       text-transform: uppercase;
       &, a {
         line-height: 2.25rem;
         font-size: 0.8rem; 
-        color: $tuna;       
+        color: $text-color;       
       }
     }
   }

@@ -1,8 +1,9 @@
 @import "library";
 
 body {
+  background: $body-bg-color;
   margin: 0;
-  color: $tuna;
+  color: $text-color;
   @include border-radius(50%);
   @extend %body-font;
 }
