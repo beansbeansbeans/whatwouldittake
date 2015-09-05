@@ -51,12 +51,16 @@ class indexView extends view {
     });    
   }
 
-  didRender() {
+  renderPaths() {
     state.get('stories').forEach((story, storyIndex) => {
       if(story.entries.length > 1) {
         sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, dimensions);
       }
-    });
+    });    
+  }
+
+  didRender() {
+    this.renderPaths();
     viewState.pageHeight = util.getDocumentHeight();
   }
 
@@ -86,14 +90,7 @@ class indexView extends view {
     // offset by 1px to avoid wrapping
     dimensions.height = Math.max(dimensions.width / dimensions.widthOverHeight, 50);
 
-    state.get('stories').forEach((story, storyIndex) => {
-      if(story.entries.length > 1) {
-        sparklineSubview.render(d3.select("#svg_" + storyIndex), {
-          story: story
-        }, dimensions);        
-      }
-    });
-
+    this.renderPaths();
     this.updateState();
   }
 

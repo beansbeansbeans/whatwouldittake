@@ -2,7 +2,7 @@ module.exports = {
   render(container, state, dimensions) {
     var story = state.story;
     
-    var svgBuffer = 10,
+    var svgBuffer = dimensions.svgBuffer || 10,
       minFeeling = Math.min.apply(Math, story.entries.map(x => x.feeling)),
       maxFeeling = Math.max.apply(Math, story.entries.map(x => x.feeling)),
       feelings = story.entries.map(x => x.feeling).slice(0).reverse();
