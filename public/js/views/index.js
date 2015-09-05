@@ -119,10 +119,19 @@ class indexView extends view {
       ]),
       h('h1', 'Latest stories'),
       h('ul', state.get('stories').map((story, storyIndex) => {
-        var username;
+        var username, lastNote;
         if(!story.hideIdentity) {
           username = h('div.user', story.user.username);
         }
+
+        lastNote = 'No notes.';
+        story.entries.some((d) => {
+          if(d.notes.length) {
+            lastNote = d.notes;
+            return true;
+          }
+          return false;
+        });
 
         return h('li.story-item', {
           style: { 
@@ -134,8 +143,9 @@ class indexView extends view {
           dataset: { storyId: story._id }
         }, [
           h('div.contents', [
-            username,
+            h('div.last-note', lastNote),
             svg('svg#svg_' + storyIndex),
+            username,
             h('div.last-updated', [
               h('div', 'last updated: '),
               h('div', moment.utc(story.lastUpdated, 'x').format('h:mm:ss a'))
