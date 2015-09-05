@@ -54,7 +54,11 @@ class indexView extends view {
   renderPaths() {
     state.get('stories').forEach((story, storyIndex) => {
       if(story.entries.length > 1) {
-        sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, dimensions);
+        sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
+          width: dimensions.width,
+          height: dimensions.height,
+          horizontalBuffer: 30
+        });
       }
     });    
   }

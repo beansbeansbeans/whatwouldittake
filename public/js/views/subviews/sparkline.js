@@ -2,18 +2,19 @@ module.exports = {
   render(container, state, dimensions) {
     var story = state.story;
     
-    var svgBuffer = dimensions.svgBuffer || 10,
+    var horizontalBuffer = dimensions.horizontalBuffer || 10,
+      verticalBuffer = dimensions.verticalBuffer || 10,
       minFeeling = Math.min.apply(Math, story.entries.map(x => x.feeling)),
       maxFeeling = Math.max.apply(Math, story.entries.map(x => x.feeling)),
       feelings = story.entries.map(x => x.feeling).slice(0).reverse();
 
     var yScale = d3.scale.linear().domain([minFeeling, maxFeeling])
-      .range([svgBuffer, dimensions.height - svgBuffer * 2]),
+      .range([verticalBuffer, dimensions.height - verticalBuffer * 2]),
       y = (d) => {
         return dimensions.height - yScale(d)
       },
       x = (d, i) => {
-        return svgBuffer + i * (dimensions.width - svgBuffer * 2) / (story.entries.length - 1);
+        return horizontalBuffer + i * (dimensions.width - horizontalBuffer * 2) / (story.entries.length - 1);
       };
 
     var line = d3.svg.line().x(x).y(y).interpolate("cardinal");
