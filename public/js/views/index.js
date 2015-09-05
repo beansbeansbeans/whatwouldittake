@@ -148,10 +148,9 @@ class indexView extends view {
             username,
             h('div.last-updated', [
               h('div', 'last updated: '),
-              h('div', moment.utc(story.lastUpdated, 'x').format('h:mm:ss a'))
+              h('div', moment.utc(story.lastUpdated, 'x').format('MMM Do'))
             ]),
-            h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries')),
-            h('div.date', moment.utc(story.entries[0].date, 'x').format('YYYY MM DD'))
+            h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries'))
           ])
         ])
       }))
