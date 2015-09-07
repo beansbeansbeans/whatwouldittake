@@ -143,14 +143,14 @@ class indexView extends view {
           dataset: { storyId: story._id }
         }, [
           h('div.contents', [
-            h('div.last-note', lastNote),
             svg('svg#svg_' + storyIndex),
+            h('div.last-note', lastNote),
             username,
+            h('div.entries-count.button', util.pluralize(story.entries.length, 'entry', 'entries')),
             h('div.last-updated', [
-              h('div', 'last updated: '),
+              h('div', 'updated'),
               h('div', moment.utc(story.lastUpdated, 'x').format('MMM Do'))
-            ]),
-            h('div.entries-count', util.pluralize(story.entries.length, 'entry', 'entries'))
+            ])
           ])
         ])
       }))

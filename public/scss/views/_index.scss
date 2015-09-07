@@ -33,26 +33,36 @@
     padding: 0 0 5rem 0;
     text-align: center;
     li {
-      padding: 1rem 0;
-      background: $carrara;
       position: relative;
       cursor: pointer;
       float: left;
       color: $gray;
+      font-weight: 100;
       .last-note {
         white-space: nowrap;
         text-overflow: ellipsis;
         width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        font-style: italic;
-        font-weight: 100;
+        font-weight: 400;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        margin: 0.5rem auto 0.5rem auto;
+        color: $text-color;
+      }
+      .user {
       }
       .last-updated {
+        font-style: italic;
         * {
+          font-size: 0.8rem;
           display: inline-block;
-          margin-right: .5rem;
+          margin-right: .35rem;
         }
+      }
+      .entries-count {
+        margin-top: 0.75rem;
+        margin-bottom: 0.5rem;
+        color: $gray;
+        border-color: $gray;
       }
       &:hover {
 
