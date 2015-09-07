@@ -6,6 +6,7 @@
 
 #search {
   padding-top: 2rem;
+  @extend %search-content-width;
   &[data-searching="true"] {
 
   }
@@ -28,12 +29,12 @@
   .title {
     text-align: center;
     font-size: 2.5rem;
-    @extend %search-content-width;
     margin-bottom: 3rem;
   }
   .canvas-container {
     position: relative;
     margin-bottom: 1rem;
+    border: solid 2px $mine-shaft;
     .sample-search {
       pointer-events: none;
       position: absolute;
@@ -53,6 +54,8 @@
       }
       svg {
         position: relative;
+        top: 50%;
+        @include transform(translateY(-50%));
         path {
           fill: none;
           stroke: $smoke;
@@ -120,8 +123,6 @@
   }
   canvas {
     position: absolute;
-    border-top: solid 2px $smoke;
-    border-bottom: solid 2px $smoke;
     @include transform(scale(0.5));
     transform-origin: top left;
     cursor: default;

@@ -79,11 +79,11 @@ class searchView extends view {
     window.addEventListener('mousemove', this.draw);
     window.addEventListener('mousedown', this.handleMouseDown);
     window.addEventListener('mouseup', this.handleMouseUp);
+    this.updateState();
   }
 
   draw(e) {
     if(!dragging || viewState.searching) { return; }
-
     if(getDistance(e) < 10) { return; }
 
     ctx.beginPath();
@@ -97,7 +97,6 @@ class searchView extends view {
     setPosition(e);
 
     ctx.lineTo(pos.x * 2, pos.y * 2);
-
     ctx.stroke();
   }
 
@@ -145,6 +144,7 @@ class searchView extends view {
   }
 
   handleResize() {
+    dimensions.canvas.width = d.gbID("search").offsetWidth;
     dimensions.resultsWidth = d.qs('.results').offsetWidth
     this.updateState();
   }
@@ -177,8 +177,8 @@ class searchView extends view {
 
     if(!viewState.drawing && !viewState.searching && sampleSearchPath) {
       sparklineSubview.render(d3.select('#sample_search_svg'), {story: sampleSearchPath}, {
-        width: dimensions.resultsWidth,
-        height: dimensions.resultsWidth / dimensions.canvas.widthOverHeight
+        width: dimensions.canvas.width * 0.8,
+        height: dimensions.canvas.width * 0.8 / dimensions.canvas.widthOverHeight
       });
 
       enterSampleSearch(d3.select('#sample_search_svg path')[0][0]);
@@ -255,11 +255,7 @@ class searchView extends view {
           height: canvasHeight * 2
         }),
         h('div.sample-search', [
-          svg('svg#sample_search_svg', {
-            style: {
-              top: ((canvasHeight - (dimensions.resultsWidth / dimensions.canvas.widthOverHeight)) / 2) + 'px'
-            }
-          }),
+          svg('svg#sample_search_svg'),
           h('div.text', 'E.g.')
         ]),
         h('div.button#clear-search-button', 'Clear search'),
