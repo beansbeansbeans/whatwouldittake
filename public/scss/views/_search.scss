@@ -53,8 +53,7 @@
         text-align: center;
         top: 50%;
         @include transform(translateY(-50%));
-        font-size: 3rem;
-        color: $gray;
+        font-size: 2rem;
         text-transform: lowercase;
       }
       svg {
@@ -63,7 +62,7 @@
         @include transform(translateY(-50%));
         path {
           fill: none;
-          stroke: $smoke;
+          stroke: $padua;
           stroke-width: 4px;
           &.animate {
             @include animation(dash 1.5s linear forwards);

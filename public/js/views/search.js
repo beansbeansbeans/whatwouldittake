@@ -243,7 +243,7 @@ class searchView extends view {
         drawing: viewState.drawing
       }
     }, [
-      h('div.title', 'Search by mood path.'),
+      h('div.title', 'Search by mood.'),
       h('div.canvas-container', {
         style: {
           width: canvasWidth + 'px',
