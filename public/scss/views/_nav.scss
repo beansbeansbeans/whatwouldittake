@@ -14,7 +14,6 @@ nav {
       font-weight: 100;
       a {
         line-height: 2;
-        text-transform: uppercase;
         color: $text-color;
         font-size: 1.25rem;
       }
@@ -27,10 +26,9 @@ nav {
     }
     #login, #signup, #logout-button, #me {
       margin-left: 0.8rem;
-      text-transform: uppercase;
       &, a {
         line-height: 2.25rem;
-        font-size: 0.8rem; 
+        font-size: 1rem; 
         color: $text-color;       
       }
     }

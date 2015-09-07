@@ -65,7 +65,7 @@ class navView extends view {
       }),
       h('div.contents', [
         h('li#logo', [
-          h('a', { href: './'}, 'stories of')
+          h('a', { href: './'}, 'Stories of')
         ]),
         h('div#create-story-button.button', 'Create a story'),
         logout,

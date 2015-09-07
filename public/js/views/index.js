@@ -112,7 +112,8 @@ class indexView extends view {
   render() {
     return h('div#index', [
       h('div.hero', [
-        h('div.title', 'This is a place to share stories.'),
+        h('div.title', 'Stories of'),
+        h('div.description', 'This is a place to share stories.'),
         h('div.button#go-to-search', {
           dataset: { type: 'critical' }
         }, 'Search')
