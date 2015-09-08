@@ -112,27 +112,24 @@
         @include transform(translateY(-50%));
         font-size: 2rem;
       }
+      .start, .end, .point {
+        border-radius: 50%;
+        @include square(1rem);
+        position: absolute;
+        margin-left: -0.5rem;
+        margin-top: -0.5rem;        
+      }
     }
     .percent-change-display {
       @include animation(fade-in-out 2s 0.5s forwards);
       .start, .end {
-        border-radius: 50%;
-        background: $amaranth;
-        @include square(2rem);
-        position: absolute;
-        margin-left: -1rem;
-        margin-top: -1rem;
+        border: solid 2px $tuna;
       }    
     }
     .inflection-points-display {
       @include animation(fade-in-out 2s 2.25s forwards);
       .point {
-        border-radius: 50%;
-        background: $tuna;
-        @include square(2rem);
-        position: absolute;
-        margin-left: -1rem;
-        margin-top: -1rem;
+        border: solid 2px $tuna;
       }
     }
     #clear-search-button {
