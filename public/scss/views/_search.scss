@@ -43,6 +43,15 @@
     linear-gradient(90deg, $border-color 1px, transparent 1px);
     background-size: 20px 20px;
     background-position: -1px -1px;
+    &:hover {
+      .sample-search {
+        svg {
+          path {
+            stroke: rgba(darken($wild-sand, 10%), 0.5);
+          }
+        }
+      }
+    }
     .sample-search {
       pointer-events: none;
       position: absolute;
@@ -66,8 +75,9 @@
         top: 50%;
         @include transform(translateY(-50%));
         path {
+          @include transition(stroke $transition-duration);
           fill: none;
-          stroke: $padua;
+          stroke: darken($wild-sand, 10%);
           stroke-width: 4px;
           &.animate {
             @include animation(dash 1.5s linear forwards);

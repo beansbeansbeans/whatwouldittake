@@ -90,9 +90,9 @@ class searchView extends view {
 
     ctx.beginPath();
 
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 8;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#77C4D3';
+    ctx.strokeStyle = '#ABE5CB';
 
     ctx.moveTo(pos.x * 2, pos.y * 2);
 
