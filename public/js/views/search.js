@@ -68,6 +68,7 @@ class searchView extends view {
 
   start() {
     super.start();
+    this.clearState();
 
     _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw', 'handleClick');
 
@@ -152,7 +153,6 @@ class searchView extends view {
 
   stop() {
     super.stop();
-    this.clearState();
 
     mediator.unsubscribe("window_click", this.handleClick);
     window.removeEventListener('mousemove', this.draw);
