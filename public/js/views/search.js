@@ -28,6 +28,7 @@ var dimensions = {
   }
 }
 
+var gradientSize = 20;
 var pos = { x: 0, y: 0 };
 var offset = { x: 0, y: 0 }
 var ctx;
@@ -144,7 +145,7 @@ class searchView extends view {
   }
 
   handleResize() {
-    dimensions.canvas.width = d.gbID("search").offsetWidth;
+    dimensions.canvas.width = Math.ceil(d.gbID("search").offsetWidth / gradientSize) * gradientSize;
     dimensions.resultsWidth = d.qs('.results').offsetWidth
     this.updateState();
   }
@@ -194,7 +195,7 @@ class searchView extends view {
 
   render() {
     var canvasWidth = dimensions.canvas.width;
-    var canvasHeight = canvasWidth / dimensions.canvas.widthOverHeight;
+    var canvasHeight = Math.ceil((canvasWidth / dimensions.canvas.widthOverHeight) / gradientSize) * gradientSize;
 
     var analysis = viewState.analysis;
     var percentChange;
