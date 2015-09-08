@@ -24,7 +24,7 @@ var viewState = JSON.parse(JSON.stringify(initialState));
 var dimensions = {
   canvas: {
     width: window.innerWidth, // default
-    widthOverHeight: 3
+    widthOverHeight: 4
   }
 }
 
@@ -103,7 +103,7 @@ class searchView extends view {
   }
 
   handleMouseDown(e) {
-    if(viewState.searching) { return; }
+    if(viewState.searching || !e.target.closest('.canvas-container')) { return; }
     viewState.drawing = true;
     dragging = true;
     this.updateState();
@@ -111,7 +111,7 @@ class searchView extends view {
   }
 
   handleMouseUp(e) {
-    if(viewState.searching) { return; }
+    if(viewState.searching || !dragging) { return; }
     dragging = false;
     var canvasHeight = dimensions.canvas.width / dimensions.canvas.widthOverHeight;
     viewState.analysis = pathUtil.analyze(points.map((p) => {
@@ -236,6 +236,8 @@ class searchView extends view {
 
     if(viewState.searching) {
       stats = h('div.stats', 'Stats: ' + Math.round(analysis.percentChange) + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
+    } else {
+      stats = h('div.stats', 'Draw a mood path to see stories that match its trajectory.')
     }
 
     return h('div#search', {
