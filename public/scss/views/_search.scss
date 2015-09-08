@@ -30,6 +30,11 @@
     font-size: 3rem;
     margin-bottom: 1.5rem;
   }
+  .stats {
+    font-style: italic;
+    color: $subdued-text-color;
+    font-weight: 100;
+  }
   .canvas-container {
     position: relative;
     margin-bottom: 1rem;
