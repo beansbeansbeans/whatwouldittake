@@ -119,19 +119,24 @@ class searchView extends view {
     }));
 
     viewState.drawing = false;
-    viewState.searching = true;
-    viewState.showingPercentChange = true;
-    viewState.showingInflectionPoints = true;
+
+    if(points.length > 1) { 
+      viewState.searching = true;
+      viewState.showingPercentChange = true;
+      viewState.showingInflectionPoints = true;
+
+      api.post('/search_stories_by_path', {
+        inflectionPoints: viewState.analysis.inflectionPoints,
+        percentChange: viewState.analysis.percentChange
+      }, (data) => {
+        viewState.results = data.data;
+        this.updateState();
+      });
+    } else {
+      this.clearState();
+    }
 
     this.updateState();
-
-    api.post('/search_stories_by_path', {
-      inflectionPoints: viewState.analysis.inflectionPoints,
-      percentChange: viewState.analysis.percentChange
-    }, (data) => {
-      viewState.results = data.data;
-      this.updateState();
-    });
   }
 
   handleClick(e) {
