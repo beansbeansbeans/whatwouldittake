@@ -227,7 +227,7 @@ class searchView extends view {
 
     if(viewState.showingInflectionPoints) {
       inflectionPoints = h('div.inflection-points-display', [
-        h('div.description', analysis.inflectionPointIndices.length + ' inflection points'),
+        h('div.description', analysis.inflectionPointIndices.length + ' inflection ' + util.pluralize(analysis.inflectionPointIndices.length, 'point', 'points')),
         analysis.inflectionPointIndices.map((d) => {
           return h('div.point', {
             style: {
@@ -288,7 +288,7 @@ class searchView extends view {
               h('div', 'last updated: '),
               h('div', moment.utc(d.lastUpdated, 'x').format('h:mm:ss a'))
             ]),
-            h('div.entries-count', util.pluralize(d.entries.length, 'entry', 'entries')),
+            h('div.entries-count', d.entries.length + ' ' + util.pluralize(d.entries.length, 'entry', 'entries')),
             h('div.date', moment.utc(d.entries[0].date, 'x').format('YYYY MM DD'))
           ])
         }))

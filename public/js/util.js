@@ -13,9 +13,9 @@ module.exports = {
   pluralize(count, singular, plural) {
     plural = plural || singular + 's';
     if(count === 1) {
-      return count + ' ' + singular;
+      return singular;
     }
-    return count + ' ' + plural;
+    return plural;
   },
   async(tasks, callback) {
     var count = 0, n = tasks.length;

@@ -147,7 +147,7 @@ class indexView extends view {
             svg('svg#svg_' + storyIndex),
             h('div.last-note', lastNote),
             username,
-            h('div.entries-count.button', util.pluralize(story.entries.length, 'entry', 'entries')),
+            h('div.entries-count.button', story.entries.length + ' ' + util.pluralize(story.entries.length, 'entry', 'entries')),
             h('div.last-updated', [
               h('div', 'updated'),
               h('div', moment.utc(story.lastUpdated, 'x').format('MMM Do'))
