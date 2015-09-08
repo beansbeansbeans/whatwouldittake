@@ -47,7 +47,7 @@
       .sample-search {
         svg {
           path {
-            stroke: rgba(darken($wild-sand, 10%), 0.5);
+            stroke: rgba(darken($wild-sand, 10%), 0.35);
           }
         }
       }
@@ -61,6 +61,7 @@
       text-align: center;
       opacity: 0;
       .text {
+        display: none;
         position: absolute;
         left: 0;
         right: 0;
