@@ -10,6 +10,19 @@ $stat-anim-initial-delay: 0.5s;
 #search {
   padding-top: 2rem;
   @extend %search-content-width;
+  $stats: 'inflection-points', 'range', 'percentage-change';
+  @each $stat in $stats {
+    &[data-hovering=#{$stat}] {
+      [data-stat=#{$stat}] {
+        .value {
+          color: $bittersweet;
+        }
+      }
+      .#{$stat}-display {
+        opacity: 1 !important;
+      }
+    }
+  }
   &[data-searching="true"] {
     .stats {
       @include sub-width(3, 1.5rem, '.stat');
@@ -22,38 +35,17 @@ $stat-anim-initial-delay: 0.5s;
         vertical-align: top;
         border-top: solid 1px darken($border-color, 10%);
         padding-top: 0.5rem;
+        .label, .value {
+          pointer-events: none;
+        }
         .label {
           font-weight: 100;
         }
         .value {
+          @include transition(color $transition-duration);
           font-size: 2.5rem;
           font-weight: 800;
           margin-top: -0.5rem;
-        }
-        &.percentage-change {
-          .value {
-            @include animation(switch-hue $stat-anim-dur $stat-anim-initial-delay forwards);
-          }
-        }
-        &.inflection-points {
-          .value {
-            @include animation(switch-hue $stat-anim-dur $stat-anim-dur forwards);
-          }
-        }
-        &.range {
-          .value {
-            @include animation(switch-hue $stat-anim-dur $stat-anim-dur * 2 forwards);
-          }
-        }
-        @at-root {
-          @include keyframes(switch-hue) {
-            0%, 100% {
-              color: $subdued-text-color;
-            }
-            20%, 80% {
-              color: $bittersweet;
-            }
-          }
         }
       }
     }
@@ -151,8 +143,9 @@ $stat-anim-initial-delay: 0.5s;
         }
       }
     }
-    .percent-change-display, .inflection-points-display, .range-display {
+    .percentage-change-display, .inflection-points-display, .range-display {
       opacity: 0;
+      @include transition(opacity $transition-duration);
       position: absolute;
       top: 0;
       left: 0; 
@@ -166,15 +159,6 @@ $stat-anim-initial-delay: 0.5s;
         margin-top: -0.5rem;        
         border: solid 2px $tuna;
       }
-    }
-    .percent-change-display {
-      @include animation(fade-in-out $stat-anim-dur $stat-anim-initial-delay forwards);
-    }
-    .inflection-points-display {
-      @include animation(fade-in-out $stat-anim-dur $stat-anim-dur forwards);
-    }
-    .range-display {
-      @include animation(fade-in-out $stat-anim-dur $stat-anim-dur * 2 forwards);
     }
     #clear-search-button {
       position: absolute;

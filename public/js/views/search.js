@@ -13,7 +13,8 @@ var initialState = {
   fetching: false,
   searching: false,
   drawing: false,
-  analysis: null
+  analysis: null,
+  hovering: ''
 };
 
 var sampleSearchPath;
@@ -69,7 +70,7 @@ class searchView extends view {
     super.start();
     this.clearState();
 
-    _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw', 'handleClick');
+    _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw', 'handleClick', 'handleMouseOver', 'handleMouseOut');
 
     api.get('/sample_search', (err, data) => {
       sampleSearchPath = data.data;
@@ -80,6 +81,8 @@ class searchView extends view {
     window.addEventListener('mousemove', this.draw);
     window.addEventListener('mousedown', this.handleMouseDown);
     window.addEventListener('mouseup', this.handleMouseUp);
+    window.addEventListener("mouseover", this.handleMouseOver);
+    window.addEventListener('mouseout', this.handleMouseOut);
     this.updateState();
   }
 
@@ -99,6 +102,20 @@ class searchView extends view {
 
     ctx.lineTo(pos.x * 2, pos.y * 2);
     ctx.stroke();
+  }
+
+  handleMouseOver(e) {
+    if(e.target.classList.contains('stat')) {
+      viewState.hovering = e.target.getAttribute("data-stat");
+      this.updateState();
+    }
+  }
+
+  handleMouseOut(e) {
+    if(e.target.classList.contains('stat')) {
+      viewState.hovering = '';
+      this.updateState();
+    }
   }
 
   handleMouseDown(e) {
@@ -162,6 +179,8 @@ class searchView extends view {
     window.removeEventListener('mousemove', this.draw);
     window.removeEventListener('mousedown', this.handleMouseDown);
     window.removeEventListener('mouseup', this.handleMouseUp);
+    window.removeEventListener('mouseover', this.handleMouseOver);
+    window.removeEventListener('mouseout', this.handleMouseOut);
   }
 
   mount() {
@@ -209,7 +228,7 @@ class searchView extends view {
     var resultsLabel;
 
     if(viewState.searching) {
-      percentChange = h('div.percent-change-display', [
+      percentChange = h('div.percentage-change-display', [
         h('div.start', {
           style: {
             left: points[0][0] + 'px',
@@ -247,15 +266,21 @@ class searchView extends view {
       ]);
 
       stats = h('div.stats', [
-        h('div.percentage-change.stat', [
+        h('div.stat', {
+          dataset: { stat: 'percentage-change' }
+        }, [
           h('div.label', 'percentage change'),
           h('div.value', Math.round(analysis.percentChange) + '%')
         ]),
-        h('div.inflection-points.stat', [
+        h('div.stat', {
+          dataset: { stat: 'inflection-points' }
+        }, [
           h('div.label', 'inflection points'),
           h('div.value', '' + analysis.inflectionPoints.length)
         ]),
-        h('div.range.stat', [
+        h('div.stat', {
+          dataset: { stat: 'range' }
+        }, [
           h('div.label', 'range'),
           h('div.value', Math.round(analysis.range[0][1]) + ' to ' + Math.round(analysis.range[1][1]))
         ])
@@ -278,6 +303,7 @@ class searchView extends view {
 
     return h('div#search', {
       dataset: { 
+        hovering: viewState.hovering,
         searching: viewState.searching,
         drawing: viewState.drawing
       }
