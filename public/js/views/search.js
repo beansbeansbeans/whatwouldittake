@@ -257,7 +257,7 @@ class searchView extends view {
         ]),
         h('div.range.stat', [
           h('div.label', 'range'),
-          h('div.value', Math.round(analysis.range[0][1]) + ' - ' + Math.round(analysis.range[1][1]))
+          h('div.value', Math.round(analysis.range[0][1]) + ' to ' + Math.round(analysis.range[1][1]))
         ])
       ]);
 
