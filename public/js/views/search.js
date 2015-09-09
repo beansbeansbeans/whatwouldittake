@@ -90,7 +90,7 @@ class searchView extends view {
 
     ctx.lineWidth = 8;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#ABE5CB';
+    ctx.strokeStyle = '#FD7475';
 
     ctx.moveTo(pos.x * 2, pos.y * 2);
 
@@ -203,6 +203,7 @@ class searchView extends view {
     var inflectionPoints;
     var range;
     var stats;
+    var animator;
 
     if(viewState.searching) {
       percentChange = h('div.percent-change-display', [
@@ -256,6 +257,8 @@ class searchView extends view {
           h('div.value', Math.round(analysis.range[0][1]) + ' - ' + Math.round(analysis.range[1][1]))
         ])
       ]);
+
+      animator = h('div.animator');
     } else {
       stats = h('div.stats', 'Draw a path.')
     }
@@ -289,6 +292,7 @@ class searchView extends view {
       ]),
       h('div.results-container', [
         stats,
+        animator,
         h('div.results', viewState.results.map((d, i) => {
           var username;
           if(!d.hideIdentity) {
