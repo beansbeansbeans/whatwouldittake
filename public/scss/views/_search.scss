@@ -181,8 +181,12 @@ $stat-anim-initial-delay: 0.5s;
     }
     #clear-search-button {
       position: absolute;
-      bottom: 2rem;
-      right: 2rem;
+      bottom: 1rem;
+      right: 1rem;
+      font-weight: 100;
+      color: white;
+      background: darken($mercury, 7%);
+      border: none;
     }
   }
   canvas {
