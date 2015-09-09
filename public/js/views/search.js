@@ -242,7 +242,7 @@ class searchView extends view {
     if(viewState.searching) {
       stats = h('div.stats', 'Stats: ' + Math.round(analysis.percentChange) + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
     } else {
-      stats = h('div.stats', 'Draw a mood path to see stories that match its trajectory.')
+      stats = h('div.stats', 'Draw a path.')
     }
 
     return h('div#search', {
@@ -251,7 +251,8 @@ class searchView extends view {
         drawing: viewState.drawing
       }
     }, [
-      h('div.title', 'Search by mood.'),
+      h('div.title', 'Search'),
+      h('div.description', 'Find stories by mood history.'),
       h('div.canvas-container', {
         style: {
           width: canvasWidth + 'px',

@@ -5,7 +5,7 @@
 }
 
 #search {
-  padding-top: 4rem;
+  padding-top: 3rem;
   @extend %search-content-width;
   &[data-searching="true"] {
 
@@ -15,6 +15,11 @@
       pointer-events: none;
       opacity: 0;
     }
+  }
+  .title {
+    font-weight: 800;
+    color: $bittersweet;
+    font-size: 3rem;
   }
   &[data-drawing="false"][data-searching="false"] {
     .sample-search {
@@ -27,8 +32,13 @@
     }
   }
   .title {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
+    font-size: 3.5rem;
+  }
+  .description {
+    font-weight: 100;
+    color: $subdued-text-color;
+    margin-top: -0.5rem;
+    margin-bottom: 2rem;
   }
   .stats {
     font-style: italic;
@@ -121,13 +131,13 @@
       }
     }
     .percent-change-display {
-      @include animation(fade-in-out 2s 0.5s forwards);
+      @include animation(fade-in-out 3s 0.5s forwards);
       .start, .end {
         border: solid 2px $tuna;
       }    
     }
     .inflection-points-display {
-      @include animation(fade-in-out 2s 2.25s forwards);
+      @include animation(fade-in-out 3s 3s forwards);
       .point {
         border: solid 2px $tuna;
       }
