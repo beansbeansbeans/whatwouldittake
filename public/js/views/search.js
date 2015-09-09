@@ -160,22 +160,12 @@ class searchView extends view {
   }
 
   launchStatsTour() {
-    statsTourTimeoutIDs.push(setTimeout(() => {
-      viewState.hovering = 'percentage-change';
-      this.updateState();
-    }, 500));
-    statsTourTimeoutIDs.push(setTimeout(() => {
-      viewState.hovering = 'inflection-points';
-      this.updateState();
-    }, 2000));
-    statsTourTimeoutIDs.push(setTimeout(() => {
-      viewState.hovering = 'range';
-      this.updateState();
-    }, 3500));
-    statsTourTimeoutIDs.push(setTimeout(() => {
-      viewState.hovering = '';
-      this.updateState();
-    }, 5000));
+    ['percentage-change', 'inflection-points', 'range', ''].forEach((d, i) => {
+      statsTourTimeoutIDs.push(setTimeout(() => {
+        viewState.hovering = d;
+        this.updateState();
+      }, 500 + i * 1500));
+    });
   }
 
   cancelStatsTour() {
