@@ -303,13 +303,13 @@ class searchView extends view {
         ])
       ]);
 
-      var resultsText = viewState.results.length + ' ' + util.pluralize(viewState.results.length, 'story', 'stories') + ' found';
+      var resultsText = viewState.results.length + ' ' + util.pluralize(viewState.results.length, 'story', 'stories');
 
       if(viewState.fetching) {
         resultsText = 'Searching...';
       } else {
         if(!viewState.results.length) {
-          resultsText = 'No results found.';
+          resultsText = 'No results.';
         }
       }
 
@@ -350,23 +350,33 @@ class searchView extends view {
         stats,
         resultsLabel,
         h('div.results', viewState.results.map((d, i) => {
-          var username;
+          var username, lastNote = 'No notes.';
           if(!d.hideIdentity) {
-            username = h('div.user', d.user.username);
+            username = h('div.user', 'by ' + d.user.username);
           }
+
+          d.entries.some((entry) => {
+            if(entry.notes.length) {
+              lastNote = entry.notes;
+              return true;
+            }
+            return false;
+          });
 
           return h('div.result', {
             style: { height: dimensions.height + 'px' },
             dataset: { storyId: d._id }
           }, [
             svg('svg#svg_' + i),
-            username,
-            h('div.last-updated', [
-              h('div', 'last updated: '),
-              h('div', moment.utc(d.lastUpdated, 'x').format('h:mm:ss a'))
+            h('div.handle', [
+              h('div.last-updated', moment.utc(d.lastUpdated, 'x').format('MMM Do')),
+              h('div.explanation', 'Latest entry')
             ]),
-            h('div.entries-count', d.entries.length + ' ' + util.pluralize(d.entries.length, 'entry', 'entries')),
-            h('div.date', moment.utc(d.entries[0].date, 'x').format('YYYY MM DD'))
+            h('div.main', [
+              h('div.excerpt', lastNote),
+              h('div.bio', d.entries.length + ' entries '),
+              username
+            ])
           ])
         }))
       ])

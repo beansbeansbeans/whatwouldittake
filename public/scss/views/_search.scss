@@ -40,9 +40,14 @@ $stat-anim-initial-delay: 0.5s;
         }
         .label {
           font-weight: 100;
+          font-size: 0.7rem;
+          margin-bottom: 0.2rem;
+          text-transform: uppercase;
         }
         .value {
           @include transition(color $transition-duration);
+          @extend %header-font;
+          letter-spacing: 2px;
           font-size: 2.5rem;
           font-weight: 800;
           margin-top: -0.5rem;
@@ -56,13 +61,17 @@ $stat-anim-initial-delay: 0.5s;
       opacity: 0;
     }
     .stats {
-      font-style: italic;
+      text-transform: uppercase;
+      font-size: 0.8rem;
       color: $subdued-text-color;
       font-weight: 100;
     }
   }
   .title {
     font-weight: 800;
+    @extend %header-font;
+    text-transform: uppercase;
+    letter-spacing: 3px;
     color: $bittersweet;
     font-size: 4.5rem;
   }
@@ -79,7 +88,9 @@ $stat-anim-initial-delay: 0.5s;
   .description {
     font-weight: 100;
     color: $subdued-text-color;
-    margin-top: -0.5rem;
+    margin-top: -1rem;
+    text-transform: uppercase;
+    font-size: 0.8rem;
     margin-bottom: 2rem;
   }
   .canvas-container {
@@ -168,6 +179,7 @@ $stat-anim-initial-delay: 0.5s;
       color: white;
       background: darken($mercury, 15%);
       border: none;
+      z-index: 1;
     }
   }
   canvas {
@@ -180,14 +192,19 @@ $stat-anim-initial-delay: 0.5s;
     padding-bottom: 5rem;
     overflow: hidden;
     .results-label {
+      @extend %header-font;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       font-weight: 100;
       padding-top: 3rem;
       color: $subdued-text-color;
-      font-size: 2.5rem;
+      font-size: 3rem;
+      word-spacing: 5px;
     }
   }
   .results {
     svg {
+      position: absolute;
       path {
         fill: none;
         stroke: $downy;
@@ -198,7 +215,41 @@ $stat-anim-initial-delay: 0.5s;
       }
     }
     .result {
+      border-top: solid 1px darken($border-color, 5%);
       cursor: pointer;
+      white-space: nowrap;
+      padding: 0.5rem 0;
+      color: $subdued-text-color;
+      font-weight: 100;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      .handle, .main {
+        float: left;
+      }
+      .handle {
+        width: 15%;
+        .last-updated {
+          font-weight: 700;
+        }
+      }
+      .main {
+        border-left: dotted 1px darken($border-color, 5%);
+        padding-left: 1rem;
+        width: 85%;
+        .excerpt {
+          font-size: 3rem;
+          letter-spacing: 1px;
+          line-height: 1.2;
+          text-transform: none;
+          @extend %header-font;
+        }
+        .bio, .user {
+          display: inline-block;
+        }
+        .user {
+          margin-left: 0.25rem;
+        }
+      }
     }
   }
 }
