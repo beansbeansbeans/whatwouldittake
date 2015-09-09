@@ -17,6 +17,8 @@ var initialState = {
   hovering: ''
 };
 
+var statsTourTimeoutIDs = [];
+
 var sampleSearchPath;
 
 var viewState = JSON.parse(JSON.stringify(initialState));
@@ -70,7 +72,7 @@ class searchView extends view {
     super.start();
     this.clearState();
 
-    _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw', 'handleClick', 'handleMouseOver', 'handleMouseOut');
+    _.bindAll(this, 'handleMouseUp', 'handleMouseDown', 'draw', 'handleClick', 'handleMouseOver', 'handleMouseOut', 'launchStatsTour', 'cancelStatsTour');
 
     api.get('/sample_search', (err, data) => {
       sampleSearchPath = data.data;
@@ -106,6 +108,7 @@ class searchView extends view {
 
   handleMouseOver(e) {
     if(e.target.classList.contains('stat')) {
+      this.cancelStatsTour();
       viewState.hovering = e.target.getAttribute("data-stat");
       this.updateState();
     }
@@ -139,6 +142,7 @@ class searchView extends view {
     if(points.length > 1) { 
       viewState.fetching = true;
       viewState.searching = true;
+      this.launchStatsTour();
 
       api.post('/search_stories_by_path', {
         inflectionPoints: viewState.analysis.inflectionPoints,
@@ -153,6 +157,29 @@ class searchView extends view {
     }
 
     this.updateState();
+  }
+
+  launchStatsTour() {
+    statsTourTimeoutIDs.push(setTimeout(() => {
+      viewState.hovering = 'percentage-change';
+      this.updateState();
+    }, 500));
+    statsTourTimeoutIDs.push(setTimeout(() => {
+      viewState.hovering = 'inflection-points';
+      this.updateState();
+    }, 2000));
+    statsTourTimeoutIDs.push(setTimeout(() => {
+      viewState.hovering = 'range';
+      this.updateState();
+    }, 3500));
+    statsTourTimeoutIDs.push(setTimeout(() => {
+      viewState.hovering = '';
+      this.updateState();
+    }, 5000));
+  }
+
+  cancelStatsTour() {
+    statsTourTimeoutIDs.forEach(x => window.clearTimeout(x));
   }
 
   handleClick(e) {
