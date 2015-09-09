@@ -12,8 +12,6 @@ var initialState = {
   results: [],
   searching: false,
   drawing: false,
-  showingPercentChange: false,
-  showingInflectionPoints: false,
   analysis: null
 };
 
@@ -122,8 +120,6 @@ class searchView extends view {
 
     if(points.length > 1) { 
       viewState.searching = true;
-      viewState.showingPercentChange = true;
-      viewState.showingInflectionPoints = true;
 
       api.post('/search_stories_by_path', {
         inflectionPoints: viewState.analysis.inflectionPoints,
@@ -205,11 +201,11 @@ class searchView extends view {
     var analysis = viewState.analysis;
     var percentChange;
     var inflectionPoints;
+    var range;
     var stats;
 
-    if(viewState.showingPercentChange) {
+    if(viewState.searching) {
       percentChange = h('div.percent-change-display', [
-        h('div.description', Math.round(analysis.percentChange) + '% change'),
         h('div.start', {
           style: {
             left: points[0][0] + 'px',
@@ -223,11 +219,8 @@ class searchView extends view {
           }
         })
       ]);
-    }
-
-    if(viewState.showingInflectionPoints) {
+      
       inflectionPoints = h('div.inflection-points-display', [
-        h('div.description', analysis.inflectionPointIndices.length + ' inflection ' + util.pluralize(analysis.inflectionPointIndices.length, 'point', 'points')),
         analysis.inflectionPointIndices.map((d) => {
           return h('div.point', {
             style: {
@@ -237,10 +230,32 @@ class searchView extends view {
           })
         })
       ]);
-    }
 
-    if(viewState.searching) {
-      stats = h('div.stats', 'Stats: ' + Math.round(analysis.percentChange) + '% change, ' + analysis.inflectionPoints.length + ' inflection points.');
+      range = h('div.range-display', [
+        analysis.range.map((d) => {
+          return h('div.point', {
+            style: {
+              left: points[d[2]][0] + 'px',
+              top: points[d[2]][1] + 'px'
+            }
+          })
+        })
+      ]);
+
+      stats = h('div.stats', [
+        h('div.percentage-change', [
+          h('div.label', 'percentage change'),
+          h('div.value', Math.round(analysis.percentChange) + '%')
+        ]),
+        h('div.inflection-points', [
+          h('div.label', 'inflection points'),
+          h('div.value', '' + analysis.inflectionPoints.length)
+        ]),
+        h('div.range', [
+          h('div.label', 'range'),
+          h('div.value', Math.round(analysis.range[0][1]) + ' - ' + Math.round(analysis.range[1][1]))
+        ])
+      ]);
     } else {
       stats = h('div.stats', 'Draw a path.')
     }
@@ -269,7 +284,8 @@ class searchView extends view {
         ]),
         h('div.button#clear-search-button', 'Clear search'),
         percentChange,
-        inflectionPoints
+        inflectionPoints,
+        range
       ]),
       h('div.results-container', [
         stats,
