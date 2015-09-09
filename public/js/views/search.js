@@ -10,6 +10,7 @@ var sparklineSubview = require('./subviews/sparkline');
 
 var initialState = {
   results: [],
+  fetching: false,
   searching: false,
   drawing: false,
   analysis: null
@@ -119,12 +120,14 @@ class searchView extends view {
     viewState.drawing = false;
 
     if(points.length > 1) { 
+      viewState.fetching = true;
       viewState.searching = true;
 
       api.post('/search_stories_by_path', {
         inflectionPoints: viewState.analysis.inflectionPoints,
         percentChange: viewState.analysis.percentChange
       }, (data) => {
+        viewState.fetching = false;
         viewState.results = data.data;
         this.updateState();
       });
@@ -258,7 +261,17 @@ class searchView extends view {
         ])
       ]);
 
-      resultsLabel = h('div.results-label', 'Results');
+      var resultsText = viewState.results.length + ' ' + util.pluralize(viewState.results.length, 'story', 'stories') + ' found';
+
+      if(viewState.fetching) {
+        resultsText = 'Searching...';
+      } else {
+        if(!viewState.results.length) {
+          resultsText = 'No results found.';
+        }
+      }
+
+      resultsLabel = h('div.results-label', resultsText);
     } else {
       stats = h('div.stats', 'Draw a path.')
     }
