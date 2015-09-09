@@ -203,7 +203,6 @@ class searchView extends view {
     var inflectionPoints;
     var range;
     var stats;
-    var animator;
     var resultsLabel;
 
     if(viewState.searching) {
@@ -259,7 +258,6 @@ class searchView extends view {
         ])
       ]);
 
-      animator = h('div.animator');
       resultsLabel = h('div.results-label', 'Results');
     } else {
       stats = h('div.stats', 'Draw a path.')
@@ -294,7 +292,6 @@ class searchView extends view {
       ]),
       h('div.results-container', [
         stats,
-        animator,
         resultsLabel,
         h('div.results', viewState.results.map((d, i) => {
           var username;

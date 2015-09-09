@@ -13,6 +13,9 @@ $stat-anim-initial-delay: 0.5s;
   &[data-searching="true"] {
     .stats {
       @include sub-width(3, 1.5rem, '.stat');
+      opacity: 0;
+      @include animation(fade-in 0.5s forwards);
+      border-bottom: dotted 1px darken($border-color, 10%);
       .stat {
         color: $subdued-text-color;
         display: inline-block;
@@ -21,41 +24,35 @@ $stat-anim-initial-delay: 0.5s;
         padding-top: 0.5rem;
         .label {
           font-weight: 100;
-          opacity: 0;
-          @include animation(fade-in 0.5s forwards);
         }
         .value {
-          opacity: 0;
           font-size: 2.5rem;
           font-weight: 800;
           margin-top: -0.5rem;
         }
         &.percentage-change {
           .value {
-            @include animation(fade-in 0.5s $stat-anim-initial-delay forwards);
+            @include animation(switch-hue $stat-anim-dur $stat-anim-initial-delay forwards);
           }
         }
         &.inflection-points {
           .value {
-            @include animation(fade-in 0.5s $stat-anim-dur forwards);
+            @include animation(switch-hue $stat-anim-dur $stat-anim-dur forwards);
           }
         }
         &.range {
           .value {
-            @include animation(fade-in 0.5s $stat-anim-dur * 2 forwards);
+            @include animation(switch-hue $stat-anim-dur $stat-anim-dur * 2 forwards);
           }
         }
-      }
-    }
-    .animator {
-      width: 100%;
-      border-bottom: dotted 1px darken($border-color, 10%);
-      @include transform(translateX(-100%));
-      @include animation(slide-over $stat-anim-dur * 3 - $stat-anim-initial-delay $stat-anim-initial-delay linear forwards);
-      @at-root {
-        @include keyframes(slide-over) {
-          100% {
-            @include transform(translateX(0));
+        @at-root {
+          @include keyframes(switch-hue) {
+            0%, 100% {
+              color: $subdued-text-color;
+            }
+            20%, 80% {
+              color: $bittersweet;
+            }
           }
         }
       }
