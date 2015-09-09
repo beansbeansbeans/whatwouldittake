@@ -243,15 +243,15 @@ class searchView extends view {
       ]);
 
       stats = h('div.stats', [
-        h('div.percentage-change', [
+        h('div.percentage-change.stat', [
           h('div.label', 'percentage change'),
           h('div.value', Math.round(analysis.percentChange) + '%')
         ]),
-        h('div.inflection-points', [
+        h('div.inflection-points.stat', [
           h('div.label', 'inflection points'),
           h('div.value', '' + analysis.inflectionPoints.length)
         ]),
-        h('div.range', [
+        h('div.range.stat', [
           h('div.label', 'range'),
           h('div.value', Math.round(analysis.range[0][1]) + ' - ' + Math.round(analysis.range[1][1]))
         ])

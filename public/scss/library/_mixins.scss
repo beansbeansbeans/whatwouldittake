@@ -30,3 +30,12 @@
     margin-right: auto;
   }
 }
+
+@mixin sub-width($count, $margin, $selector) {
+  #{$selector} {
+    width: calc((100% - ((#{$count} - 1) * #{$margin})) / #{$count});
+    &:not(:last-of-type) {
+      margin-right: $margin;
+    }
+  }
+}

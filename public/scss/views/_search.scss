@@ -8,12 +8,34 @@
   padding-top: 2rem;
   @extend %search-content-width;
   &[data-searching="true"] {
-
+    .stats {
+      @include sub-width(3, 1.5rem, '.stat');
+      .stat {
+        color: $subdued-text-color;
+        display: inline-block;
+        vertical-align: top;
+        border-top: solid 1px darken($border-color, 10%);
+        padding-top: 0.5rem;
+        .label {
+          font-weight: 100;
+        }
+        .value {
+          font-size: 2.5rem;
+          font-weight: 800;
+          margin-top: -0.5rem;
+        }
+      }
+    }
   }
   &[data-searching="false"] {
     #clear-search-button {
       pointer-events: none;
       opacity: 0;
+    }
+    .stats {
+      font-style: italic;
+      color: $subdued-text-color;
+      font-weight: 100;
     }
   }
   .title {
@@ -39,11 +61,6 @@
     color: $subdued-text-color;
     margin-top: -0.5rem;
     margin-bottom: 2rem;
-  }
-  .stats {
-    font-style: italic;
-    color: $subdued-text-color;
-    font-weight: 100;
   }
   .canvas-container {
     position: relative;
