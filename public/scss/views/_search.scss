@@ -198,6 +198,12 @@ $stat-anim-initial-delay: 0.5s;
   .results-container {
     padding-bottom: 5rem;
     overflow: hidden;
+    .results-label {
+      font-weight: 100;
+      padding-top: 3rem;
+      color: $subdued-text-color;
+      font-size: 2.5rem;
+    }
   }
   .results {
     svg {
