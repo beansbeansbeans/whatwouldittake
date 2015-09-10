@@ -32,6 +32,8 @@ module.exports = {
     var circles = container.selectAll("circle").data(feelings);
 
     circles.enter().append("circle");
+
+    circles.exit().remove();
     
     circles
       .classed("selected", (_, i) => { 
