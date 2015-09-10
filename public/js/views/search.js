@@ -60,7 +60,8 @@ var enterSampleSearch = _.once((path) => {
 class searchView extends view {
 
   clearState() {
-    ctx.clearRect(0, 0, dimensions.canvas.width * 2, dimensions.canvas.width * 2 / dimensions.canvas.widthOverHeight);
+    // extra 50px below because it wasn't getting properly cleared out
+    ctx.clearRect(0, 0, dimensions.canvas.width * 2, (dimensions.canvas.width * 2 + 50) / dimensions.canvas.widthOverHeight);
     
     viewState = JSON.parse(JSON.stringify(initialState));
 
