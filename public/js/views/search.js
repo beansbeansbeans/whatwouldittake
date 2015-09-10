@@ -277,7 +277,7 @@ class searchView extends view {
       ]);
 
       range = h('div.range-display', [
-        analysis.range.map((d) => {
+        analysis.range.points.map((d) => {
           return h('div.point', {
             style: {
               left: points[d[2]][0] + 'px',
@@ -304,7 +304,7 @@ class searchView extends view {
           dataset: { stat: 'range' }
         }, [
           h('div.label', 'range'),
-          h('div.value', Math.round(analysis.range[0][1]) + ' to ' + Math.round(analysis.range[1][1]))
+          h('div.value', Math.round(analysis.range.points[0][1]) + ' to ' + Math.round(analysis.range.points[1][1]))
         ])
       ]);
 

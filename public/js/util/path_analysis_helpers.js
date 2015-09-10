@@ -41,7 +41,10 @@ module.exports = {
     percentChange = arr[arr.length - 1][1] - arr[0][1];
 
     return {
-      range: [min, max],
+      range: {
+        value: max[1] - min[1],
+        points: [min, max]
+      },
       percentChange: percentChange,
       inflectionPoints: {
         direction: direction,
