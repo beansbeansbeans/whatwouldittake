@@ -228,13 +228,14 @@ class searchView extends view {
     }
 
     if(d.qs('.result')) {
-      var resultHeight = d.qs('.result').offsetHeight;
+      var resultHeight = d.qs('.result .excerpt-container').offsetHeight;
     }
 
     viewState.results.forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
         width: dimensions.resultsWidth,
-        height: resultHeight
+        height: resultHeight * 1.2,
+        verticalBuffer: 0
       });
     });
   }
@@ -376,15 +377,22 @@ class searchView extends view {
             style: { height: dimensions.height + 'px' },
             dataset: { storyId: d._id }
           }, [
-            svg('svg#svg_' + i),
-            h('div.handle', [
-              h('div.last-updated', moment.utc(d.lastUpdated, 'x').format('MMM Do')),
-              h('div.explanation', 'Last updated')
+            h('div.svg-container', [
+              h('div.handle', [
+                h('div.explanation', '3 inflection points')
+              ]),
+              h('div.main', svg('svg#svg_' + i))
             ]),
-            h('div.main', [
-              h('div.excerpt', lastNote),
-              h('div.bio', d.entries.length + ' entries '),
-              username
+            h('div.excerpt-container', [
+              h('div.handle', [
+                h('div.last-updated', moment.utc(d.lastUpdated, 'x').format('MMM Do')),
+                h('div.explanation', 'Last updated')
+              ]),
+              h('div.main', [
+                h('div.excerpt', lastNote),
+                h('div.bio', d.entries.length + ' entries '),
+                username
+              ])
             ])
           ])
         }))

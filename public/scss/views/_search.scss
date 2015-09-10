@@ -203,12 +203,10 @@ $divider-color: darken($mercury, 10%);
   }
   .results {
     svg {
-      position: absolute;
-      top: 0;
       path {
         @include transition(stroke $transition-duration);
         fill: none;
-        stroke: $carrara;
+        stroke: $bittersweet;
         stroke-width: 2px;
       }
       circle {
@@ -217,15 +215,24 @@ $divider-color: darken($mercury, 10%);
     }
     .result {
       position: relative;
-      border-top: solid 1px $divider-color;
       cursor: pointer;
-      white-space: nowrap;
       padding: 1rem 0;
       color: $subdued-text-color;
       font-weight: 100;
       font-size: 0.7rem;
       text-transform: uppercase;
-      @extend %clearfix;
+      border-top: solid 2px $gray;
+      &:last-of-type {
+        border-bottom: solid 2px $gray;
+      }
+      .svg-container {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: dotted 1px $divider-color;
+      }
+      &, .excerpt-container, .svg-container {
+        @extend %clearfix;
+      }
       .handle, .main {
         float: left;
         position: relative;
@@ -264,9 +271,6 @@ $divider-color: darken($mercury, 10%);
         .user {
           margin-left: 0.25rem;
         }
-      }
-      &:last-of-type {
-        border-bottom: solid 1px $divider-color;
       }
     }
   }
