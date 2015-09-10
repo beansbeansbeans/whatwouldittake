@@ -198,9 +198,10 @@ $stat-anim-initial-delay: 0.5s;
   .results {
     svg {
       position: absolute;
+      top: 0;
       path {
         fill: none;
-        stroke: $downy;
+        stroke: $bittersweet;
         stroke-width: 2px;
       }
       circle {
@@ -208,20 +209,25 @@ $stat-anim-initial-delay: 0.5s;
       }
     }
     .result {
+      position: relative;
       border-top: solid 1px darken($border-color, 5%);
       cursor: pointer;
       white-space: nowrap;
-      padding: 0.5rem 0;
+      padding: 0.6rem 0;
       color: $subdued-text-color;
       font-weight: 100;
       font-size: 0.7rem;
       text-transform: uppercase;
+      @extend %clearfix;
       .handle, .main {
         float: left;
+        position: relative;
+        z-index: 1;
       }
       .handle {
         width: 15%;
         .last-updated {
+          font-size: 0.8rem;
           font-weight: 700;
         }
       }
@@ -242,6 +248,9 @@ $stat-anim-initial-delay: 0.5s;
         .user {
           margin-left: 0.25rem;
         }
+      }
+      &:last-of-type {
+        border-bottom: solid 1px darken($border-color, 5%);
       }
     }
   }
