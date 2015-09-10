@@ -309,7 +309,10 @@ class searchView extends view {
         ])
       ]);
 
-      var resultsText = viewState.results.length + ' ' + util.pluralize(viewState.results.length, 'story', 'stories');
+      var resultsText = [
+        h('div.main', viewState.results.length + ' ' + util.pluralize(viewState.results.length, 'story', 'stories')),
+        h('div.info', 'Results are collected based on these ways etc.')
+      ];
 
       if(viewState.fetching) {
         resultsText = 'Searching...';

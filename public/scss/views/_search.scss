@@ -191,8 +191,14 @@ $divider-color: darken($mercury, 10%);
       padding-top: 4rem;
       text-transform: uppercase;
       color: $subdued-text-color;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
+      .info {
+        text-transform: none;
+        font-size: 1rem;
+        font-weight: 100;
+        margin-top: 0.2rem;
+      }
     }
   }
   .results {
