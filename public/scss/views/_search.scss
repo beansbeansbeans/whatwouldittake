@@ -1,5 +1,6 @@
 $stat-anim-dur: 2s;
 $stat-anim-initial-delay: 0.5s;
+$divider-color: darken($mercury, 10%);
 
 %search-content-width {
   width: $content-width * 1vw;
@@ -28,8 +29,8 @@ $stat-anim-initial-delay: 0.5s;
       @include sub-width(3, 1.5rem, '.stat');
       opacity: 0;
       @include animation(fade-in 0.5s forwards);
-      border-top: solid 1px $gray;
-      border-bottom: solid 1px $gray;
+      border-top: solid 1px $divider-color;
+      border-bottom: solid 1px $divider-color;
       .stat {
         color: $subdued-text-color;
         display: inline-block;
@@ -212,7 +213,7 @@ $stat-anim-initial-delay: 0.5s;
     }
     .result {
       position: relative;
-      border-top: solid 1px $gray;
+      border-top: solid 1px $divider-color;
       cursor: pointer;
       white-space: nowrap;
       padding: 1rem 0;
@@ -242,7 +243,7 @@ $stat-anim-initial-delay: 0.5s;
         }
       }
       .main {
-        border-left: dotted 1px $gray;
+        border-left: dotted 1px $divider-color;
         padding-left: 1rem;
         width: 85%;
         .excerpt {
@@ -261,7 +262,7 @@ $stat-anim-initial-delay: 0.5s;
         }
       }
       &:last-of-type {
-        border-bottom: solid 1px $gray;
+        border-bottom: solid 1px $divider-color;
       }
     }
   }
