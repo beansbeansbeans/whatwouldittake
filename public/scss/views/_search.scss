@@ -203,6 +203,7 @@ $divider-color: darken($mercury, 10%);
   }
   .results {
     svg {
+      overflow: visible;
       path {
         @include transition(stroke $transition-duration);
         fill: none;

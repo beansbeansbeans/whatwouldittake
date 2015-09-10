@@ -2,8 +2,8 @@ module.exports = {
   render(container, state, dimensions) {
     var story = state.story;
     
-    var horizontalBuffer = dimensions.horizontalBuffer || 10,
-      verticalBuffer = dimensions.verticalBuffer || 10,
+    var horizontalBuffer = typeof dimensions.horizontalBuffer === 'undefined' ? 10 : dimensions.horizontalBuffer,
+      verticalBuffer = typeof dimensions.verticalBuffer === 'undefined' ? 10 : dimensions.verticalBuffer,
       minFeeling = Math.min.apply(Math, story.entries.map(x => x.feeling)),
       maxFeeling = Math.max.apply(Math, story.entries.map(x => x.feeling)),
       feelings = story.entries.map(x => x.feeling).slice(0).reverse();

@@ -229,12 +229,14 @@ class searchView extends view {
 
     if(d.qs('.result')) {
       var resultHeight = d.qs('.result .excerpt-container').offsetHeight;
+      var resultWidth = d.qs('.result .excerpt-container .excerpt').offsetWidth;
     }
 
     viewState.results.forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
-        width: dimensions.resultsWidth,
-        height: resultHeight * 1.2,
+        width: resultWidth,
+        height: resultHeight,
+        horizontalBuffer: 0,
         verticalBuffer: 0
       });
     });
