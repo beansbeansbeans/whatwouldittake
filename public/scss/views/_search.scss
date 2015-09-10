@@ -37,20 +37,21 @@ $stat-anim-initial-delay: 0.5s;
         padding-top: 0.5rem;
         .label, .value {
           pointer-events: none;
+          text-transform: uppercase;
         }
         .label {
           font-weight: 100;
           font-size: 0.7rem;
           margin-bottom: 0.2rem;
-          text-transform: uppercase;
         }
         .value {
           @include transition(color $transition-duration);
           @extend %header-font;
           letter-spacing: 2px;
-          font-size: 2.5rem;
+          font-size: 2.25rem;
           font-weight: 800;
           margin-top: -0.5rem;
+          line-height: 1.4;
         }
       }
     }
@@ -61,19 +62,15 @@ $stat-anim-initial-delay: 0.5s;
       opacity: 0;
     }
     .stats {
-      text-transform: uppercase;
-      font-size: 0.8rem;
+      font-size: 1rem;
       color: $subdued-text-color;
       font-weight: 100;
     }
   }
   .title {
-    font-weight: 800;
-    @extend %header-font;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+    font-weight: 600;
     color: $bittersweet;
-    font-size: 4.5rem;
+    font-size: 4rem;
   }
   &[data-drawing="false"][data-searching="false"] {
     .sample-search {
@@ -89,8 +86,7 @@ $stat-anim-initial-delay: 0.5s;
     font-weight: 100;
     color: $subdued-text-color;
     margin-top: -1rem;
-    text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: 1rem;
     margin-bottom: 2rem;
   }
   .canvas-container {
@@ -192,14 +188,11 @@ $stat-anim-initial-delay: 0.5s;
     padding-bottom: 5rem;
     overflow: hidden;
     .results-label {
-      @extend %header-font;
+      padding-top: 4rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 100;
-      padding-top: 3rem;
       color: $subdued-text-color;
-      font-size: 3rem;
-      word-spacing: 5px;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
   }
   .results {

@@ -286,8 +286,8 @@ class searchView extends view {
         h('div.stat', {
           dataset: { stat: 'percentage-change' }
         }, [
-          h('div.label', 'percentage change'),
-          h('div.value', Math.round(analysis.percentChange) + '%')
+          h('div.label', 'change'),
+          h('div.value', Math.round(analysis.percentChange) + ' percent')
         ]),
         h('div.stat', {
           dataset: { stat: 'inflection-points' }
