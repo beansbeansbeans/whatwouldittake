@@ -28,13 +28,13 @@ $stat-anim-initial-delay: 0.5s;
       @include sub-width(3, 1.5rem, '.stat');
       opacity: 0;
       @include animation(fade-in 0.5s forwards);
-      border-bottom: dotted 1px darken($border-color, 10%);
+      border-top: solid 1px $gray;
+      border-bottom: solid 1px $gray;
       .stat {
         color: $subdued-text-color;
         display: inline-block;
         vertical-align: top;
-        border-top: solid 1px darken($border-color, 10%);
-        padding-top: 0.5rem;
+        padding-top: 0.85rem;
         .label, .value {
           pointer-events: none;
           text-transform: uppercase;
@@ -52,6 +52,7 @@ $stat-anim-initial-delay: 0.5s;
           font-weight: 800;
           margin-top: -0.5rem;
           line-height: 1.4;
+          padding-bottom: 0.25rem;
         }
       }
     }
@@ -92,9 +93,9 @@ $stat-anim-initial-delay: 0.5s;
   .canvas-container {
     position: relative;
     margin-bottom: 1rem;
-    border: solid 1px $border-color;
-    background-image: linear-gradient($border-color 1px, transparent 1px),
-    linear-gradient(90deg, $border-color 1px, transparent 1px);
+    border: solid 1px darken($mercury, 5%);
+    background-image: linear-gradient(darken($mercury, 5%) 1px, transparent 1px),
+    linear-gradient(90deg, darken($mercury, 5%) 1px, transparent 1px);
     background-size: 20px 20px;
     background-position: -1px -1px;
     &:hover {
@@ -200,8 +201,9 @@ $stat-anim-initial-delay: 0.5s;
       position: absolute;
       top: 0;
       path {
+        @include transition(stroke $transition-duration);
         fill: none;
-        stroke: $bittersweet;
+        stroke: $carrara;
         stroke-width: 2px;
       }
       circle {
@@ -210,10 +212,10 @@ $stat-anim-initial-delay: 0.5s;
     }
     .result {
       position: relative;
-      border-top: solid 1px darken($border-color, 5%);
+      border-top: solid 1px $gray;
       cursor: pointer;
       white-space: nowrap;
-      padding: 0.6rem 0;
+      padding: 1rem 0;
       color: $subdued-text-color;
       font-weight: 100;
       font-size: 0.7rem;
@@ -231,11 +233,20 @@ $stat-anim-initial-delay: 0.5s;
           font-weight: 700;
         }
       }
+      &:hover {
+        .excerpt {
+        }
+        path {
+          stroke: $bittersweet;
+          
+        }
+      }
       .main {
-        border-left: dotted 1px darken($border-color, 5%);
+        border-left: dotted 1px $gray;
         padding-left: 1rem;
         width: 85%;
         .excerpt {
+          @include transition(color $transition-duration);
           font-size: 3rem;
           letter-spacing: 1px;
           line-height: 1.2;
@@ -250,7 +261,7 @@ $stat-anim-initial-delay: 0.5s;
         }
       }
       &:last-of-type {
-        border-bottom: solid 1px darken($border-color, 5%);
+        border-bottom: solid 1px $gray;
       }
     }
   }

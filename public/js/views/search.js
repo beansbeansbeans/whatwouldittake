@@ -225,10 +225,14 @@ class searchView extends view {
       enterSampleSearch(d3.select('#sample_search_svg path')[0][0]);
     }
 
+    if(d.qs('.result')) {
+      var resultHeight = d.qs('.result').offsetHeight;
+    }
+
     viewState.results.forEach((story, storyIndex) => {
       sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
         width: dimensions.resultsWidth,
-        height: dimensions.resultsWidth / dimensions.canvas.widthOverHeight
+        height: resultHeight
       });
     });
   }
