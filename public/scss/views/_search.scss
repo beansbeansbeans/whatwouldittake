@@ -29,13 +29,11 @@ $divider-color: darken($mercury, 10%);
       @include sub-width(3, 1.5rem, '.stat');
       opacity: 0;
       @include animation(fade-in 0.5s forwards);
-      border-top: solid 1px $divider-color;
       border-bottom: solid 1px $divider-color;
       .stat {
         color: $subdued-text-color;
         display: inline-block;
         vertical-align: top;
-        padding-top: 0.85rem;
         .label, .value {
           pointer-events: none;
           text-transform: uppercase;
