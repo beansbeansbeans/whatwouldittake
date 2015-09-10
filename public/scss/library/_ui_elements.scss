@@ -1,3 +1,9 @@
+%ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 %clearfix {
   &:before, &:after {
     content: " "; /* 1 */

@@ -264,7 +264,8 @@ $divider-color: darken($mercury, 10%);
           letter-spacing: 1px;
           line-height: 1.2;
           text-transform: none;
-          @extend %header-font;
+          width: 100%;
+          @extend %header-font, %ellipsis;
         }
         .bio, .user {
           display: inline-block;
