@@ -19,18 +19,17 @@ module.exports = {
       }
 
       if(i > 0) {
-        var diff = point[1] - arr[i - 1][1];
+        var diff = point[1] - arr[i - 1][1],
+          sign = util.getSign(diff);
         if(i === 1) {
-          lastDirection = util.getSign(diff);
+          lastDirection = sign;
         } else {
-          if(util.getSign(diff) !== lastDirection && util.getSign(diff) !== 0) {
-            inflectionPoints.push(point);
+          if(sign !== lastDirection && sign !== 0) {
+            inflectionPoints.push(point.concat(sign));
             inflectionPointIndices.push(i);
           }
 
-          if(util.getSign(diff) !== 0) {
-            lastDirection = util.getSign(diff);
-          }
+          if(sign !== 0) { lastDirection = sign; }
         }
       }
     });
