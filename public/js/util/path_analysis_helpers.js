@@ -5,6 +5,7 @@ module.exports = {
     var percentChange, 
       min = [0, Infinity],
       max = [0, 0],
+      direction,
       inflectionPoints = [],
       inflectionPointIndices = [],
       lastDirection;
@@ -25,8 +26,11 @@ module.exports = {
           lastDirection = sign;
         } else {
           if(sign !== lastDirection && sign !== 0) {
-            inflectionPoints.push(point.concat(sign));
+            inflectionPoints.push(point);
             inflectionPointIndices.push(i);
+            if(typeof direction === 'undefined') {
+              direction = sign;
+            }
           }
 
           if(sign !== 0) { lastDirection = sign; }
@@ -39,7 +43,10 @@ module.exports = {
     return {
       range: [min, max],
       percentChange: percentChange,
-      inflectionPoints: inflectionPoints,
+      inflectionPoints: {
+        direction: direction,
+        points: inflectionPoints
+      },
       inflectionPointIndices: inflectionPointIndices
     };
   }

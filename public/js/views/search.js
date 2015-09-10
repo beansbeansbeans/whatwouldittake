@@ -298,7 +298,7 @@ class searchView extends view {
           dataset: { stat: 'inflection-points' }
         }, [
           h('div.label', 'inflection points'),
-          h('div.value', '' + analysis.inflectionPoints.length)
+          h('div.value', '' + analysis.inflectionPoints.points.length)
         ]),
         h('div.stat', {
           dataset: { stat: 'range' }
@@ -375,7 +375,7 @@ class searchView extends view {
             svg('svg#svg_' + i),
             h('div.handle', [
               h('div.last-updated', moment.utc(d.lastUpdated, 'x').format('MMM Do')),
-              h('div.explanation', 'Latest entry')
+              h('div.explanation', 'Last updated')
             ]),
             h('div.main', [
               h('div.excerpt', lastNote),
