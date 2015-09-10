@@ -146,7 +146,8 @@ class searchView extends view {
 
       api.post('/search_stories_by_path', {
         inflectionPoints: viewState.analysis.inflectionPoints,
-        percentChange: viewState.analysis.percentChange
+        percentChange: viewState.analysis.percentChange,
+        range: viewState.analysis.range
       }, (data) => {
         viewState.fetching = false;
         viewState.results = data.data;

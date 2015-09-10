@@ -164,6 +164,7 @@ class storyView extends view {
           id: storyState.story._id,
           percentChange: analysis.percentChange,
           inflectionPoints: analysis.inflectionPoints,
+          range: analysis.range,
           date: +date,
           feeling: feeling,
           notes: notes
