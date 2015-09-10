@@ -208,7 +208,7 @@ $divider-color: darken($mercury, 10%);
         @include transition(stroke $transition-duration);
         fill: none;
         stroke: $bittersweet;
-        stroke-width: 2px;
+        stroke-width: 3px;
       }
       circle {
         fill: none;
@@ -222,9 +222,9 @@ $divider-color: darken($mercury, 10%);
       font-weight: 100;
       font-size: 0.7rem;
       text-transform: uppercase;
-      border-top: solid 2px $gray;
+      border-top: solid 2px $divider-color;
       &:last-of-type {
-        border-bottom: solid 2px $gray;
+        border-bottom: solid 2px $divider-color;
       }
       .svg-container {
         padding-bottom: 1rem;
