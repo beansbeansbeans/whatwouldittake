@@ -222,10 +222,9 @@ $divider-color: darken($mercury, 10%);
       font-weight: 100;
       font-size: 0.7rem;
       text-transform: uppercase;
-      border-top: solid 2px $divider-color;
-      &:last-of-type {
-        border-bottom: solid 2px $divider-color;
-      }
+      border-top: solid 1px darken($divider-color, 5%);
+      border-bottom: solid 1px darken($divider-color, 5%);
+      margin-bottom: 2rem;
       .svg-container {
         padding-bottom: 1rem;
         margin-bottom: 1rem;
