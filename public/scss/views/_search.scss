@@ -10,6 +10,40 @@ $divider-color: darken($mercury, 10%);
 }
 
 #search {
+  
+  &[data-searching="true"] .stats, .match-stats {
+    @include sub-width(3, 1.5rem, '.stat');
+    opacity: 0;
+    @include animation(fade-in 0.5s forwards);
+    border-bottom: solid 1px $divider-color;
+    .stat {
+      color: $subdued-text-color;
+      display: inline-block;
+      vertical-align: top;
+      border-top: dotted 1px $divider-color;
+      padding-top: 0.7rem;
+      .label, .value {
+        pointer-events: none;
+        text-transform: uppercase;
+      }
+      .label {
+        font-weight: 100;
+        font-size: 0.7rem;
+        margin-bottom: 0.2rem;
+      }
+      .value {
+        @include transition(color $transition-duration);
+        @extend %header-font;
+        letter-spacing: 2px;
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: -0.5rem;
+        line-height: 1.4;
+        padding-bottom: 0.1rem;
+      }
+    }
+  }
+
   padding-top: 2rem;
   @extend %search-content-width;
   $stats: 'inflection-points', 'range', 'percentage-change';
@@ -22,38 +56,6 @@ $divider-color: darken($mercury, 10%);
       }
       .#{$stat}-display {
         opacity: 1 !important;
-      }
-    }
-  }
-  &[data-searching="true"] {
-    .stats {
-      @include sub-width(3, 1.5rem, '.stat');
-      opacity: 0;
-      @include animation(fade-in 0.5s forwards);
-      border-bottom: solid 1px $divider-color;
-      .stat {
-        color: $subdued-text-color;
-        display: inline-block;
-        vertical-align: top;
-        .label, .value {
-          pointer-events: none;
-          text-transform: uppercase;
-        }
-        .label {
-          font-weight: 100;
-          font-size: 0.7rem;
-          margin-bottom: 0.2rem;
-        }
-        .value {
-          @include transition(color $transition-duration);
-          @extend %header-font;
-          letter-spacing: 2px;
-          font-size: 2.25rem;
-          font-weight: 800;
-          margin-top: -0.5rem;
-          line-height: 1.4;
-          padding-bottom: 0.25rem;
-        }
       }
     }
   }
@@ -222,29 +224,35 @@ $divider-color: darken($mercury, 10%);
       color: $subdued-text-color;
       font-weight: 100;
       font-size: 0.7rem;
-      text-transform: uppercase;
-      border-top: solid 1px darken($divider-color, 5%);
-      border-bottom: solid 1px darken($divider-color, 5%);
       margin-bottom: 2rem;
+      .match {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        padding-bottom: 0.5rem;
+      }
+      .main {
+        border-top: solid 1px darken($divider-color, 5%);
+        border-bottom: solid 1px darken($divider-color, 5%);  
+        .attribution {
+          padding-top: 0.5rem;
+          * {
+            text-transform: uppercase;
+            display: inline-block;
+            margin-right: 0.25rem;
+          }
+        }     
+      }
       .svg-container {
-        padding-bottom: 1rem;
-        margin-bottom: 1rem;
-        border-bottom: dotted 1px $divider-color;
+        padding-bottom: 0.5rem;
       }
-      &, .excerpt-container, .svg-container {
-        @extend %clearfix;
+      .match-stats {
+        text-transform: uppercase;
+        border-bottom: none;
+        // border-bottom: dotted 1px $divider-color;
+        // margin-bottom: 1rem;
       }
-      .handle, .main {
-        float: left;
-        position: relative;
-        z-index: 1;
-      }
-      .handle {
-        width: 15%;
-        .last-updated {
-          font-size: 0.8rem;
-          font-weight: 700;
-        }
+      .excerpt-container {
+        display: none;
       }
       &:hover {
         .excerpt {
@@ -254,25 +262,22 @@ $divider-color: darken($mercury, 10%);
           
         }
       }
-      .main {
-        border-left: dotted 1px $divider-color;
-        padding-left: 1rem;
-        width: 85%;
-        .excerpt {
-          @include transition(color $transition-duration);
-          font-size: 3rem;
-          letter-spacing: 1px;
-          line-height: 1.2;
-          text-transform: none;
-          width: 100%;
-          @extend %header-font, %ellipsis;
-        }
-        .bio, .user {
+      .label {
+        .explanation, .last-updated {
           display: inline-block;
         }
-        .user {
-          margin-left: 0.25rem;
+        .explanation {
+          margin-right: 0.5rem;
         }
+      }
+      .excerpt {
+        @include transition(color $transition-duration);
+        font-size: 3rem;
+        letter-spacing: 1px;
+        line-height: 1.2;
+        text-transform: none;
+        width: 100%;
+        @extend %header-font, %ellipsis;
       }
     }
   }

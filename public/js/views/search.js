@@ -238,8 +238,8 @@ class searchView extends view {
     }
 
     if(d.qs('.result')) {
-      var resultHeight = d.qs('.result .excerpt-container').offsetHeight;
-      var resultWidth = d.qs('.result .excerpt-container .excerpt').offsetWidth;
+      var resultHeight = d.qs('.result .match-stats').offsetHeight;
+      var resultWidth = d.qs('.result').offsetWidth;
     }
 
     viewState.results.forEach((story, storyIndex) => {
@@ -390,23 +390,32 @@ class searchView extends view {
             dataset: { storyId: d._id }
           }, [
             h('div.match', d.match + '% match'),
-            h('div.match-stats', [
-              h('div.percentage-change', d.percentChange + '% change'),
-              h('div.inflection-points', d.inflectionPoints.points.length + ' inflection points'),
-              h('div.range', d.range.value + '% range')
-            ]),
-            h('div.svg-container', [
-              h('div.main', svg('svg#svg_' + i))
-            ]),
-            h('div.excerpt-container', [
-              h('div.handle', [
-                h('div.last-updated', moment.utc(d.lastUpdated, 'x').format('MMM Do')),
-                h('div.explanation', 'Last updated')
-              ]),
-              h('div.main', [
-                h('div.excerpt', lastNote),
-                h('div.bio', d.entries.length + ' entries '),
+            h('div.main', [
+              h('div.attribution', [
+                h('div.entries-count', d.entries.length + ' entries '),
                 username
+              ]),
+              h('div.svg-container', [ svg('svg#svg_' + i) ]),
+              h('div.match-stats', [
+                h('div.stat', [
+                  h('div.label', 'change'),
+                  h('div.value', d.percentChange + ' percent')
+                ]),
+                h('div.stat', [
+                  h('div.label', 'inflection points'),
+                  h('div.value', '' + d.inflectionPoints.points.length)
+                ]),
+                h('div.stat', [
+                  h('div.label', 'range'),
+                  h('div.value', d.range.points[0][1] + ' to ' + d.range.points[1][1])
+                ])
+              ]),
+              h('div.excerpt-container', [
+                h('div.label', [
+                  h('div.explanation', 'Last updated '),
+                  h('div.last-updated', moment.utc(d.lastUpdated, 'x').format('MMM Do'))
+                ]),
+                h('div.excerpt', lastNote)
               ])
             ])
           ])
