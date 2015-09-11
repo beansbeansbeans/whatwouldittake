@@ -36,7 +36,7 @@ var offset = { x: 0, y: 0 }
 var ctx;
 var dragging = false;
 var points = [];
-var matchScale = d3.scale.linear().domain([15, 0]).range([0, 33.3]);
+var matchScale = d3.scale.linear().domain([15, 0]).range([0, 33.3]).clamp(true);
 
 var getDistance = (e) => {
   var a = Math.max(e.clientX - offset.x, pos.x) - pos.x;
