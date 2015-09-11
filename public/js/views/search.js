@@ -36,6 +36,7 @@ var offset = { x: 0, y: 0 }
 var ctx;
 var dragging = false;
 var points = [];
+var matchScale = d3.scale.linear().domain([15, 0]).range([0, 33.3]);
 
 var getDistance = (e) => {
   var a = Math.max(e.clientX - offset.x, pos.x) - pos.x;
@@ -151,7 +152,16 @@ class searchView extends view {
         range: viewState.analysis.range
       }, (data) => {
         viewState.fetching = false;
-        viewState.results = data.data;
+        viewState.results = data.data.map((d) => {
+          var rangeMatch = matchScale(Math.abs(d.range.value - viewState.analysis.range.value));
+          var changeMatch = matchScale(Math.abs(d.percentChange - viewState.analysis.percentChange));
+          d.match = Math.round(33.3 + rangeMatch + changeMatch);
+          return d;
+        }).sort((a, b) => {
+          if(a.match > b.match) { return -1; }
+          if(a.match < b.match) { return 1; }
+          return 0;
+        });
         this.updateState();
       });
     } else {
@@ -379,10 +389,13 @@ class searchView extends view {
             style: { height: dimensions.height + 'px' },
             dataset: { storyId: d._id }
           }, [
+            h('div.match', d.match + '% match'),
+            h('div.match-stats', [
+              h('div.percentage-change', d.percentChange + '% change'),
+              h('div.inflection-points', d.inflectionPoints.points.length + ' inflection points'),
+              h('div.range', d.range.value + '% range')
+            ]),
             h('div.svg-container', [
-              h('div.handle', [
-                h('div.explanation', '3 inflection points')
-              ]),
               h('div.main', svg('svg#svg_' + i))
             ]),
             h('div.excerpt-container', [
