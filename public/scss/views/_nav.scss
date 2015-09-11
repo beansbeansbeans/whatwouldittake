@@ -1,6 +1,7 @@
 nav {
   list-style: none;
   .contents {
+    border-bottom: solid 1px darken($border-color, 5%);
     position: fixed;
     top: 0;
     left: 0;
