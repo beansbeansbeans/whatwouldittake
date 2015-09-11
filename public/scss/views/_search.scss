@@ -34,12 +34,12 @@ $divider-color: darken($mercury, 10%);
       .value {
         @include transition(color $transition-duration);
         @extend %header-font;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         font-size: 2.25rem;
-        font-weight: 800;
         margin-top: -0.5rem;
         line-height: 1.4;
         padding-bottom: 0.1rem;
+        font-weight: 500;
       }
     }
   }
@@ -192,11 +192,12 @@ $divider-color: darken($mercury, 10%);
     overflow: hidden;
     .results-label {
       padding-top: 4rem;
-      text-transform: uppercase;
-      color: $subdued-text-color;
-      font-size: 1.75rem;
+      font-weight: 800;
+      color: $bittersweet;
+      font-size: 3rem;
       margin-bottom: 2rem;
       .info {
+        color: $subdued-text-color;
         text-transform: none;
         font-size: 1rem;
         font-weight: 100;
@@ -247,12 +248,14 @@ $divider-color: darken($mercury, 10%);
       }
       .match-stats {
         text-transform: uppercase;
-        border-bottom: none;
-        // border-bottom: dotted 1px $divider-color;
-        // margin-bottom: 1rem;
+        border-bottom: dotted 1px $divider-color;
+        margin-bottom: 0.5rem;
       }
       .excerpt-container {
-        display: none;
+        .label {
+          padding-top: 0.25rem;
+          text-transform: uppercase;
+        }
       }
       &:hover {
         .excerpt {
@@ -272,12 +275,12 @@ $divider-color: darken($mercury, 10%);
       }
       .excerpt {
         @include transition(color $transition-duration);
-        font-size: 3rem;
+        font-size: 1.75rem;
         letter-spacing: 1px;
-        line-height: 1.2;
-        text-transform: none;
+        line-height: 1.5;
         width: 100%;
         @extend %header-font, %ellipsis;
+        font-weight: 100;
       }
     }
   }
