@@ -21,6 +21,8 @@ class navView extends view {
         });
       } else if(e.target.getAttribute("id") === "create-story-button") {
         page('create');
+      } else if(e.target.classList.contains("material-icons") && e.target.classList.contains("search")) {
+        page('search');
       }
     });
   }
@@ -71,7 +73,11 @@ class navView extends view {
         logout,
         profile,
         login,
-        signup
+        signup,
+        h('div#go-to-search', [
+          h('i.material-icons.search', 'search'),
+          h('a.text', { href: './search' }, 'search')
+        ])
       ])
     ]);
   }
