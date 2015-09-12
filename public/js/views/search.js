@@ -192,12 +192,21 @@ class searchView extends view {
   }
 
   handleResize() {
+    var oldWidth = dimensions.canvas.width;
+
     var rect = d.qs('.canvas-container').getBoundingClientRect();
     offset.x = rect.left;
     offset.y = rect.top;
 
     dimensions.canvas.width = Math.ceil(d.gbID("search").offsetWidth / gradientSize) * gradientSize;
     dimensions.resultsWidth = d.qs('.results').offsetWidth;
+
+    var sizeFactor = dimensions.canvas.width / oldWidth;
+
+    points = points.map((p) => {
+      return [p[0] * sizeFactor, p[1] * sizeFactor];
+    });
+
     this.updateState();
 
     ctx.lineWidth = 8;
