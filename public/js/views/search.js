@@ -196,6 +196,10 @@ class searchView extends view {
   }
 
   handleResize() {
+    var rect = d.qs('.canvas-container').getBoundingClientRect();
+    offset.x = rect.left;
+    offset.y = rect.top;
+    
     dimensions.canvas.width = Math.ceil(d.gbID("search").offsetWidth / gradientSize) * gradientSize;
     dimensions.resultsWidth = d.qs('.results').offsetWidth
     this.updateState();
@@ -217,10 +221,6 @@ class searchView extends view {
 
     var canvas = d.qs('canvas');
     ctx = canvas.getContext('2d');
-
-    var rect = d.qs('.canvas-container').getBoundingClientRect();
-    offset.x = rect.left;
-    offset.y = rect.top;
 
     this.handleResize();
   }
