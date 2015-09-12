@@ -70,9 +70,18 @@ $last-updated-width: 6.5rem;
         display: inline-block;
         margin-right: 0.35rem;
       }
-
+      .last-note, .entries-count, .user, .last-updated {
+        @include transition(color $transition-duration);
+      }
       &:hover {
-
+        svg {
+          path {
+            stroke: rgba($bittersweet, 0.4);
+          }
+        }
+        .last-note, .entries-count, .user, .last-updated {
+          color: $mine-shaft;
+        }
       }
     }
     svg {
@@ -83,7 +92,7 @@ $last-updated-width: 6.5rem;
         @include transition(stroke $transition-duration);
         fill: none;
         stroke: transparent;
-        stroke-width: 3px;
+        stroke-width: 2px;
         stroke-linecap: round;
       }
       circle {
