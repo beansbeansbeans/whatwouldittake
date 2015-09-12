@@ -1,5 +1,8 @@
+$last-updated-width: 6.5rem;
+
 %index-content-container {
   width: $content-width * 1vw;
+  max-width: $max-content-width;
   margin-left: auto;
   margin-right: auto;  
 }
@@ -7,8 +10,6 @@
 #index {
   @extend %index-content-container;
   .hero {
-    border-bottom: solid 1px $border-color;
-    text-align: center;
     padding-top: 4rem;
     padding-bottom: 4rem;
     margin-bottom: 3rem;
@@ -35,57 +36,67 @@
     margin: 0;
     list-style: none;
     padding: 0 0 5rem 0;
-    text-align: center;
     li {
+      border-top: solid 1px darken($border-color, 5%);
+      &:last-of-type {
+        border-bottom: solid 1px darken($border-color, 5%);
+      }
       position: relative;
       cursor: pointer;
-      float: left;
       color: $gray;
       font-weight: 100;
-      .last-note {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        width: 80%;
-        font-weight: 400;
-        font-size: 1.1rem;
-        text-transform: uppercase;
-        margin: 0.5rem auto 0.5rem auto;
-        color: $text-color;
-      }
-      .user {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      @extend %clearfix;
+      padding: 1.25rem 0;
+      .last-updated, .main {
+        float: left;
+        position: relative;
+        z-index: 1;
       }
       .last-updated {
-        font-style: italic;
-        * {
-          font-size: 0.8rem;
-          display: inline-block;
-          margin-right: .35rem;
+        width: $last-updated-width;
+        padding-right: 1rem;
+        .date {
+          font-weight: 500;
         }
       }
-      .entries-count {
-        margin-top: 0.75rem;
-        margin-bottom: 0.5rem;
-        color: $gray;
-        border-color: lighten($gray, 5%);
+      .main {
+        padding-left: 1rem;
+        width: calc(100% - #{$last-updated-width});
+        border-left: dotted 1px $border-color;
       }
+      .last-note {
+        @extend %ellipsis, %header-font;
+        width: 100%;
+        font-size: 2.25rem;
+        text-transform: none;
+        line-height: 1;
+        margin-bottom: 0.3rem;
+      }
+      .entries-count, .user {
+        display: inline-block;
+        margin-right: 0.35rem;
+      }
+
       &:hover {
 
       }
     }
     svg {
+      position: absolute;
+      left: 0;
+      top: 0;
       path {
         @include transition(stroke $transition-duration);
         fill: none;
-        stroke: $bittersweet;
+        stroke: transparent;
         stroke-width: 3px;
         stroke-linecap: round;
       }
       circle {
         fill: none;
       }
-    }
-    .contents {
-      position: relative;
     }
   }
 }

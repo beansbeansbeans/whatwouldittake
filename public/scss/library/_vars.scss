@@ -21,8 +21,9 @@ $padua: #ABE5CB;
 $body-bg-color: $wild-sand;
 $text-color: $gray;
 $subdued-text-color: $gray;
-$border-color: $mercury;
+$border-color: darken($mercury, 10%);
 
 // DIMENSIONS
 
 $content-width: 80;
+$max-content-width: 900px;

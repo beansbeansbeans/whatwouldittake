@@ -14,7 +14,7 @@ var viewState = {
   gettingMoreStories: false
 }
 
-var dimensions = { widthOverHeight: 4 };
+var dimensions = {};
 
 class indexView extends view {
   start() {
@@ -52,12 +52,15 @@ class indexView extends view {
   }
 
   renderPaths() {
+    if(!d.qs('.story-item')) { return; }
+    var storyHeight = d.qs('.story-item').offsetHeight;
+
     state.get('stories').forEach((story, storyIndex) => {
       if(story.entries.length > 1) {
         sparklineSubview.render(d3.select("#svg_" + storyIndex), {story: story}, {
           width: dimensions.width,
-          height: dimensions.height,
-          horizontalBuffer: 30
+          height: storyHeight,
+          horizontalBuffer: 0
         });
       }
     });    
@@ -77,22 +80,7 @@ class indexView extends view {
   }
 
   handleResize() {
-    var windowWidth = state.get('dimensions').windowWidth,
-      columns = 4;
-
-    if(windowWidth < 600) {
-      columns = 1;
-    } else if(windowWidth < 850) {
-      columns = 2;
-    } else if(windowWidth < 1200) {
-      columns = 3;
-    }
-
-    dimensions.columns = columns;
-    dimensions.margin = windowWidth / 20;
-    dimensions.width = ((d.gbID('index').offsetWidth - ((columns - 1) * dimensions.margin)) / columns) - 1;
-    // offset by 1px to avoid wrapping
-    dimensions.height = Math.max(dimensions.width / dimensions.widthOverHeight, 50);
+    dimensions.width = d.gbID("index").offsetWidth;
 
     this.renderPaths();
     this.updateState();
@@ -122,7 +110,7 @@ class indexView extends view {
       h('ul', state.get('stories').map((story, storyIndex) => {
         var username, lastNote;
         if(!story.hideIdentity) {
-          username = h('div.user', story.user.username);
+          username = h('div.user', 'by ' + story.user.username);
         }
 
         lastNote = 'No notes.';
@@ -135,23 +123,17 @@ class indexView extends view {
         });
 
         return h('li.story-item', {
-          style: { 
-            width: dimensions.width + 'px',
-            height: dimensions.width + 'px',
-            marginRight: storyIndex % dimensions.columns !== (dimensions.columns - 1) ? dimensions.margin + 'px' : 0,
-            marginBottom: dimensions.margin + 'px'
-          },
           dataset: { storyId: story._id }
         }, [
-          h('div.contents', [
-            svg('svg#svg_' + storyIndex),
+          svg('svg#svg_' + storyIndex),
+          h('div.last-updated', [
+            h('div.date', moment.utc(story.lastUpdated, 'x').format('MMM Do')),
+            h('div', 'last updated')
+          ]),
+          h('div.main', [
             h('div.last-note', lastNote),
-            username,
-            h('div.entries-count.button', story.entries.length + ' ' + util.pluralize(story.entries.length, 'entry', 'entries')),
-            h('div.last-updated', [
-              h('div', 'updated'),
-              h('div', moment.utc(story.lastUpdated, 'x').format('MMM Do'))
-            ])
+            h('div.entries-count', story.entries.length + ' ' + util.pluralize(story.entries.length, 'entry', 'entries')),
+            username
           ])
         ])
       }))
