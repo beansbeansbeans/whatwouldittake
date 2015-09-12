@@ -9,6 +9,14 @@ $divider-color: darken($mercury, 10%);
   margin-right: auto; 
 }
 
+%label {
+  font-weight: 100;
+  font-size: 0.65rem;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+  padding-top: 0.7rem;
+}
+
 #search {
   &[data-searching="true"] .stats, .match-stats {
     @include sub-width(3, 1.5rem, '.stat');
@@ -20,21 +28,18 @@ $divider-color: darken($mercury, 10%);
       display: inline-block;
       vertical-align: top;
       border-top: dotted 1px $divider-color;
-      padding-top: 0.7rem;
       .label, .value {
         pointer-events: none;
         text-transform: uppercase;
       }
       .label {
-        font-weight: 100;
-        font-size: 0.7rem;
-        margin-bottom: 0.2rem;
+        @extend %label;
       }
       .value {
         @include transition(color $transition-duration);
         @extend %header-font;
         letter-spacing: 1px;
-        font-size: 2.25rem;
+        font-size: 2.2rem;
         margin-top: -0.5rem;
         line-height: 1.4;
         padding-bottom: 0.1rem;
@@ -226,19 +231,18 @@ $divider-color: darken($mercury, 10%);
       font-size: 0.7rem;
       margin-bottom: 2rem;
       .match {
-        font-size: 1.5rem;
-        text-transform: uppercase;
+        font-size: 1.65rem;
         padding-bottom: 0.5rem;
       }
       .main {
         border-top: solid 1px darken($divider-color, 5%);
         border-bottom: solid 1px darken($divider-color, 5%);  
         .attribution {
-          padding-top: 0.5rem;
           * {
             text-transform: uppercase;
             display: inline-block;
             margin-right: 0.25rem;
+            @extend %label;
           }
         }     
       }
@@ -253,7 +257,7 @@ $divider-color: darken($mercury, 10%);
       .excerpt-container {
         .label {
           padding-top: 0.25rem;
-          text-transform: uppercase;
+          @extend %label;
         }
       }
       &:hover {
