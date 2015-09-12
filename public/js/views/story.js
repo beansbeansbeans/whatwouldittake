@@ -66,7 +66,7 @@ var modalOptions = {
 };
 
 var svgDimensions = { 
-  widthOverHeight: 10
+  widthOverHeight: 12
 };
 
 var isLastStory = thisIndex => state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
@@ -272,8 +272,8 @@ class storyView extends view {
         sparklineSubview.render(d3.select("svg"), storyState, {
           width: svgDimensions.width,
           height: svgDimensions.height,
-          verticalBuffer: 15,
-          horizontalBuffer: 35
+          verticalBuffer: 20,
+          horizontalBuffer: 40
         });
       }
       storyState.entryPositions = storyState.story.entries.map((_, i) => {
