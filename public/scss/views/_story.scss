@@ -1,8 +1,6 @@
 #story-view {
-  .user, .entry, .utilities {
-    width: $content-width * 1vw;
-    margin-left: auto;
-    margin-right: auto;    
+  .main {
+    @extend %content-width;
   }
   .user {
     padding: 2rem 0;
@@ -66,7 +64,8 @@
       display: none;
     }
     .header-contents {
-      background: $harp;
+      border-bottom: solid 1px $border-color;
+      background: $body-bg-color;
       position: fixed;
       z-index: 1;      
       left: 0;
@@ -78,11 +77,11 @@
       position: relative;
       path {
         fill: none;
-        stroke: $downy;
+        stroke: $bittersweet;
         stroke-width: 2px;
       }
       circle {
-        fill: $downy;
+        fill: $bittersweet;
       }
       circle.selected {
         fill: $amaranth;
@@ -91,18 +90,27 @@
       }
     }
   }
-  #next-story {
+  .story-footer {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    @include square(3rem);
-    border: solid 1px $tuna;
-    border-radius: 50%;
-    text-align: center;
+    @extend %content-width;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: solid 1px $border-color;
+    padding: 1rem 0;
+    background: $body-bg-color;
+  }
+  #next-story {
     cursor: pointer;
+    float: right;
+    .text, i {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1rem;
+    }
     i {
+      width: 1rem;
       pointer-events: none;
-      line-height: 3rem;
       font-size: 1.75rem;
     }
   }

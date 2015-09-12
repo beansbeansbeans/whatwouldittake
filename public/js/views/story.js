@@ -66,9 +66,7 @@ var modalOptions = {
 };
 
 var svgDimensions = { 
-  widthOverHeight: 10,
-  horizontalPadding: 50,
-  verticalPadding: 25
+  widthOverHeight: 10
 };
 
 var isLastStory = thisIndex => state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
@@ -98,6 +96,7 @@ class storyView extends view {
       storyState.isOwnStory = state.get('user') && state.get('user')._id === storyState.story.user._id;
       storyState.editedHideIdentitySetting = storyState.story.hideIdentity;
 
+      this.updateState();
       this.handleResize();
     });
 
@@ -270,7 +269,12 @@ class storyView extends view {
     
     if(storyState.story) {
       if(storyState.story.entries.length > 1) {
-        sparklineSubview.render(d3.select("svg"), storyState, svgDimensions);
+        sparklineSubview.render(d3.select("svg"), storyState, {
+          width: svgDimensions.width,
+          height: svgDimensions.height,
+          verticalBuffer: 15,
+          horizontalBuffer: 35
+        });
       }
       storyState.entryPositions = storyState.story.entries.map((_, i) => {
         return document.body.scrollTop + d.qs('.entry:nth-of-type(' + (i + 1) + 'n)').getBoundingClientRect().top;
@@ -291,7 +295,7 @@ class storyView extends view {
   }
 
   handleResize() {
-    svgDimensions.width = Math.max(window.innerWidth - (svgDimensions.horizontalPadding * 2), 300);
+    svgDimensions.width = Math.max(document.body.clientWidth, 300);
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, 300);
 
     this.updateState();
@@ -360,19 +364,18 @@ class storyView extends view {
 
     if(storyState.nextIndex !== -1) {
       nextStory = h('div#next-story', [
+        h('div.text', 'Next story'),
         h('i.material-icons', 'keyboard_arrow_right')
       ]);
     }
 
-    svgContainerStyle = { height: (svgDimensions.height + (2 * svgDimensions.verticalPadding)) + "px" };
+    svgContainerStyle = { height: svgDimensions.height + "px" };
 
     if(storyState.story.entries.length > 1) {
       svgContainer = h('div.header-contents', {
         style: svgContainerStyle
       }, [
-        svg('svg', { 
-          style: { top: svgDimensions.verticalPadding + 'px' } 
-        })
+        svg('svg')
       ]);
     }
 
@@ -384,28 +387,32 @@ class storyView extends view {
       h('div.header', {
         style: svgContainerStyle
       }, [ svgContainer ]),
-      nextStory,
-      userDisplay,
-      h('div.utilities', [
-        editVisibility,
-        edit
-      ]),
-      h('div.entry-list', storyState.story.entries.map((entry, i) => {
-        var deleteEntry;
-        if(storyState.isOwnStory) {
-          deleteEntry = h('div.button.delete-entry', {
-            dataset: { entryId: i }
-          }, 'Delete entry');
-        }
+      h('div.main', [
+        userDisplay,
+        h('div.utilities', [
+          editVisibility,
+          edit
+        ]),
+        h('div.entry-list', storyState.story.entries.map((entry, i) => {
+          var deleteEntry;
+          if(storyState.isOwnStory) {
+            deleteEntry = h('div.button.delete-entry', {
+              dataset: { entryId: i }
+            }, 'Delete entry');
+          }
 
-        return h('div.entry', [
-          deleteEntry,
-          h('div.date', moment.utc(entry.date, 'x').format('YYYY MM DD')),
-          h('div.feeling', entry.feeling),
-          h('div.notes', entry.notes)
-        ]);
-      })),
-      h('div.delete-story-container', [ deleteStory ]),
+          return h('div.entry', [
+            deleteEntry,
+            h('div.date', moment.utc(entry.date, 'x').format('YYYY MM DD')),
+            h('div.feeling', entry.feeling),
+            h('div.notes', entry.notes)
+          ]);
+        })),
+        h('div.delete-story-container', [ deleteStory ])
+      ]),
+      h('div.story-footer', [
+        nextStory
+      ]),
       modal
     ]);
   }
