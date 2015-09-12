@@ -96,10 +96,6 @@ class searchView extends view {
 
     ctx.beginPath();
 
-    ctx.lineWidth = 8;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#FD7475';
-
     ctx.moveTo(pos.x * 2, pos.y * 2);
 
     setPosition(e);
@@ -199,10 +195,27 @@ class searchView extends view {
     var rect = d.qs('.canvas-container').getBoundingClientRect();
     offset.x = rect.left;
     offset.y = rect.top;
-    
+
     dimensions.canvas.width = Math.ceil(d.gbID("search").offsetWidth / gradientSize) * gradientSize;
-    dimensions.resultsWidth = d.qs('.results').offsetWidth
+    dimensions.resultsWidth = d.qs('.results').offsetWidth;
     this.updateState();
+
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#FD7475';
+
+    if(points.length) {
+      ctx.beginPath();
+      points.forEach((p, i) => {
+        if(i === 0) {
+          ctx.moveTo(p[0] * 2, p[1] * 2);
+        } else {
+          ctx.lineTo(p[0] * 2, p[1] * 2);
+        }
+      });
+
+      ctx.stroke();
+    }
   }
 
   stop() {
