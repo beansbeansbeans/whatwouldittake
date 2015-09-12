@@ -359,7 +359,7 @@ class searchView extends view {
 
       resultsLabel = h('div.results-label', resultsText);
     } else {
-      stats = h('div.stats', 'Draw a path.')
+      stats = h('div.stats', 'Draw a path, such as the one shown.')
     }
 
     return h('div#search', {
