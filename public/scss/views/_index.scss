@@ -14,7 +14,15 @@ $last-updated-width: 6.5rem;
     color: $bittersweet;
     font-weight: 700;
     margin-top: 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+  }
+  .description {
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+    font-weight: 100;
+  }
+  .button {
+    margin-bottom: 2.5rem;
   }
   ul {
     margin: 0;

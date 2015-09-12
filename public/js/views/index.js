@@ -100,6 +100,10 @@ class indexView extends view {
   render() {
     return h('div#index', [
       h('h1', 'Latest'),
+      h('div.description', "These are stories of people's moods."),
+      h('div.button#go-to-search', {
+        dataset: { type: "critical" }
+      }, 'Search'),
       h('ul', state.get('stories').map((story, storyIndex) => {
         var username, lastNote;
         if(!story.hideIdentity) {
