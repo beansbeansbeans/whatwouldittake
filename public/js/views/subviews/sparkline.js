@@ -9,7 +9,7 @@ module.exports = {
       feelings = story.entries.map(x => x.feeling).slice(0).reverse();
 
     var yScale = d3.scale.linear().domain([minFeeling, maxFeeling])
-      .range([verticalBuffer, dimensions.height - verticalBuffer * 2]),
+      .range([verticalBuffer, dimensions.height - verticalBuffer]),
       y = (d) => {
         return dimensions.height - yScale(d)
       },
