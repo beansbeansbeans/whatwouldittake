@@ -8,14 +8,14 @@ nav {
     right: 0;
     background: $body-bg-color;
     @extend %clearfix;
-    padding: 1rem;
+    padding: 0.6rem 1rem;
     z-index: 10;
     #logo {
       float: left;
-      font-weight: 100;
       a {
         line-height: 2;
         color: $text-color;
+        font-weight: 100;
         font-size: 1.25rem;
       }
     }
@@ -28,6 +28,7 @@ nav {
     #login, #signup, #logout-button, #me {
       margin-left: 0.8rem;
       &, a {
+        font-weight: 100;
         line-height: 2.25rem;
         font-size: 1rem; 
         color: $text-color;       
