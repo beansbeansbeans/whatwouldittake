@@ -10,11 +10,12 @@ $last-updated-width: 6.5rem;
 #index {
   @extend %index-content-container;
   h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: $bittersweet;
     font-weight: 700;
     margin-top: 2rem;
     margin-bottom: 0;
+    text-transform: uppercase;
   }
   .description {
     margin-top: -1rem;
