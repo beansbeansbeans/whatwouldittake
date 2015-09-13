@@ -1,9 +1,10 @@
 module.exports = {
   render(container, state, dimensions) {
     var story = state.story;
-    
+
     var horizontalBuffer = typeof dimensions.horizontalBuffer === 'undefined' ? 0 : dimensions.horizontalBuffer,
       verticalBuffer = typeof dimensions.verticalBuffer === 'undefined' ? 25 : dimensions.verticalBuffer,
+      dates = story.entries.map(x => x.date).slice(0).reverse(),
       feelings = story.entries.map(x => x.feeling).slice(0).reverse();
 
     var yScale = d3.scale.linear().domain([0, 100])
@@ -57,12 +58,11 @@ module.exports = {
 
     labels
       .classed("selected", selected)
-      .attr("x", x)
-      .attr("y", (d) => {
+      .attr("x", x).attr("y", (d) => {
         var multiplier = d > 50 ? 1 : -1;
         return (dimensions.height / 2 + 5) + (multiplier * 15);
       })
-      .text("hi");
+      .text((d, i) => { return moment.utc(dates[i], 'x').format('MMM D'); });
 
   }
 }
