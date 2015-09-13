@@ -20,6 +20,12 @@
   .entry {
     $label-width: 6.25rem;
     margin-bottom: 4rem;
+    position: relative;
+    .delete-entry {
+      position: absolute;
+      right: 0;
+      @extend %button-small;
+    }
     .feeling-container, .notes-container {
       @extend %clearfix;
     }
@@ -72,7 +78,7 @@
     }    
   }
   .edit-visibility {
-    border-bottom: solid 1px $border-color;
+    // border-bottom: solid 1px $border-color;
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     .display {
@@ -231,8 +237,7 @@
     }
   }
   .edit {
-    padding-bottom: 2rem;
-    border-bottom: solid 1px $smoke;
+    padding-bottom: 5rem;
     &[data-editing="false"] {
       .form {
         display: none;

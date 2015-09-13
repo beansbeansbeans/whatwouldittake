@@ -355,7 +355,11 @@ class storyView extends view {
       edit = h('div.edit', {
         dataset: { editing: storyState.addingEntry }
       }, [
-        h('div.button#open-update-story', 'Add entry'),
+        h('div.button#open-update-story', {
+          dataset: {
+            type: 'critical'
+          }
+        }, 'Add entry'),
         h('div.form', [
           createEntrySubview.render(storyState.fieldStatus),
           h('div#update-story-button.button', 'Update'),
@@ -414,12 +418,12 @@ class storyView extends view {
           }
 
           return h('div.entry', [
-            deleteEntry,
             h('div.feeling-container', [
               h('div.label', [
                 h('div.date', moment.utc(entry.date, 'x').format('MMM Do YYYY')),
-                h('div.text', 'Feeling')
+                h('div.text', 'Feeling'),
               ]),
+              deleteEntry,
               h('div.feeling', entry.feeling)
             ]),
             h('div.notes-container', [

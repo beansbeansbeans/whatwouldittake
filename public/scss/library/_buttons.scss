@@ -1,10 +1,11 @@
-@mixin button-sizing($font-size, $horizontal-padding) {
+@mixin button-sizing($font-size, $horizontal-padding, $padding-top: 0) {
   font-size: $font-size;
   padding: 0 $horizontal-padding;
+  padding-top: $padding-top;
 }
 
 %button-small {
-  @include button-sizing(0.85rem, 0.85rem);
+  @include button-sizing(0.65rem, 0.65rem, 0.1rem);
 }
 
 %button-large {
@@ -27,8 +28,9 @@
   cursor: pointer;
   text-transform: uppercase;
   &[data-type="severe"] {
-    border-color: $amaranth;
-    color: $amaranth;
+    color: white;
+    border-color: $bittersweet;
+    background: $bittersweet;
   }
   &[data-type="critical"] {
     color: white;
