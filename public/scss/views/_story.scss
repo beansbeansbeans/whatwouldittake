@@ -78,16 +78,16 @@
   }
   .edit-visibility {
     // border-bottom: solid 1px $border-color;
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
+    font-weight: 100;
     .display {
       .status {
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
       }
     }
     .edit-visibility-form {
       .checkbox-wrapper {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
       }
       .button {
         margin-right: 1rem;
