@@ -2,9 +2,15 @@
   .main {
     @extend %content-width;
   }
+  .entries-count {
+    color: $bittersweet;
+    font-weight: 800;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    padding-top: 3rem;
+    margin-bottom: 3rem;
+  }
   .user {
-    padding: 1rem 0;
-    border-bottom: solid 1px $border-color;
     @extend %header-font;
     text-transform: uppercase;
     font-weight: 500;
@@ -12,30 +18,44 @@
     margin-bottom: 3rem;
   }
   .entry {
-    padding: 0.5rem 0;
-    border-top: solid 1px $border-color;
-    border-bottom: solid 1px $border-color;
-    margin-bottom: 3rem;
-    .button {
-      float: right;
+    $label-width: 6.25rem;
+    margin-bottom: 4rem;
+    .feeling-container, .notes-container {
+      @extend %clearfix;
+    }
+    .feeling-container {
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-bottom: dotted 1px $border-color;
+    }
+    .label {
+      width: $label-width;
+      font-size: 0.7rem;
+      .date {
+        font-weight: 500;
+      }
+    }
+    .label, .feeling, .notes {
+      float: left;
+    }
+    .feeling, .notes {
+      width: calc(100% - #{$label-width});
+      border-left: dotted 1px $border-color;
+      padding-left: 1rem;
     }
     .date, .label {
       text-transform: uppercase;
       font-weight: 100;
-      font-size: 0.75rem;
     }
     .feeling {
-      border-bottom: dotted 1px $border-color;
       @extend %header-font;
       font-weight: 500;
-      font-size: 2rem;
+      font-size: 2.6rem;
       line-height: 1;
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.5rem;
     }
     .notes {
-      font-size: 1.2rem;
-      text-transform: uppercase;
+      padding-top: 0.25rem;
+      font-size: 1rem;
       font-weight: 100;
     }
   }
@@ -182,6 +202,7 @@
     }
   }
   .story-footer {
+    display: none;
     position: fixed;
     @extend %content-width;
     bottom: 0;

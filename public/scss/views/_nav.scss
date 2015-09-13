@@ -10,6 +10,9 @@ nav {
   list-style: none;
   .contents {
     border-bottom: solid 1px $border-color;
+    [data-active-route="story"] & {
+      border-bottom: dotted 1px $border-color;
+    }
     position: fixed;
     top: 0;
     left: 0;

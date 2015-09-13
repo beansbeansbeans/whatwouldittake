@@ -316,7 +316,7 @@ class storyView extends view {
       svgContainerStyle;
 
     if(!storyState.story.hideIdentity) {
-      userDisplay = h('div.user', storyState.story.user.username);
+      userDisplay = h('div.user', 'by ' + storyState.story.user.username);
     }
 
     if(storyState.isOwnStory) {
@@ -399,6 +399,7 @@ class storyView extends view {
         style: svgContainerStyle
       }, [ svgContainer ]),
       h('div.main', [
+        h('div.entries-count', storyState.story.entries.length + ' ' + util.pluralize(storyState.story.entries.length, 'entry', 'entries')),
         userDisplay,
         h('div.utilities', [
           editVisibility,
@@ -414,10 +415,17 @@ class storyView extends view {
 
           return h('div.entry', [
             deleteEntry,
-            h('div.date', moment.utc(entry.date, 'x').format('YYYY MM DD')),
-            h('div.feeling', entry.feeling),
-            h('div.label', 'Notes'),
-            h('div.notes', entry.notes)
+            h('div.feeling-container', [
+              h('div.label', [
+                h('div.date', moment.utc(entry.date, 'x').format('MMM Do YYYY')),
+                h('div.text', 'Feeling')
+              ]),
+              h('div.feeling', entry.feeling)
+            ]),
+            h('div.notes-container', [
+              h('div.label', 'Notes'),
+              h('div.notes', entry.notes)
+            ])
           ]);
         })),
         h('div.delete-story-container', [ deleteStory ])
