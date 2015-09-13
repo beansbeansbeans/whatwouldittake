@@ -65,9 +65,7 @@ var modalOptions = {
   }
 };
 
-var svgDimensions = { 
-  widthOverHeight: 12
-};
+var svgDimensions = { widthOverHeight: 11 };
 
 var isLastStory = thisIndex => state.get('page_limit') === state.get('page') && (thisIndex + 1 === state.get('stories').length);
 
