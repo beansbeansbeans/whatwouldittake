@@ -79,9 +79,10 @@
         fill: none;
         stroke: $bittersweet;
         stroke-width: 2px;
+        stroke-linecap: round;
       }
       circle {
-        fill: $bittersweet;
+        fill: $gray;
       }
       circle.selected {
         fill: $amaranth;

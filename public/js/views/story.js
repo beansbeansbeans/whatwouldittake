@@ -8,7 +8,7 @@ var util = require('../util');
 var pathUtil = require('../util/path_analysis_helpers');
 var state = require('../state');
 var createEntrySubview = require('./subviews/create_entry');
-var sparklineSubview = require('./subviews/sparkline');
+var storyPath = require('./story/story_path_helper');
 var modalSubview = require('./subviews/modal');
 var formHelpers = require('../util/form_helpers');
 var scrollHelpers = require('../util/scroll_helpers');
@@ -269,7 +269,7 @@ class storyView extends view {
     
     if(storyState.story) {
       if(storyState.story.entries.length > 1) {
-        sparklineSubview.render(d3.select("svg"), storyState, {
+        storyPath.render(d3.select("svg"), storyState, {
           width: svgDimensions.width,
           height: svgDimensions.height,
           verticalBuffer: 20,
