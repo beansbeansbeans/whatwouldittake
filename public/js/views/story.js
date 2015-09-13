@@ -379,7 +379,7 @@ class storyView extends view {
       }, [
         h('div.range', [
           h('div.text', [
-            h('div.length', '167'),
+            h('div.length', '' + moment.utc(storyState.story.entries[0].date, 'x').diff(moment.utc(storyState.story.entries[storyState.story.entries.length - 1].date), 'days')),
             h('div.unit', 'days')
           ])
         ]),
