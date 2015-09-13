@@ -272,7 +272,7 @@ class storyView extends view {
         storyPath.render(d3.select("svg"), storyState, {
           width: svgDimensions.width,
           height: svgDimensions.height,
-          horizontalBuffer: 40
+          horizontalBuffer: 30
         });
       }
       storyState.entryPositions = storyState.story.entries.map((_, i) => {
@@ -294,7 +294,12 @@ class storyView extends view {
   }
 
   handleResize() {
-    svgDimensions.width = Math.max(document.body.clientWidth, 300);
+    if(d.qs('.header-contents') && d.qs('.header-contents .range')) {
+      svgDimensions.width = d.qs('.header-contents').offsetWidth - d.qs('.header-contents .range').offsetWidth - d.qs('.header-contents .label').offsetWidth;      
+    } else {
+      svgDimensions.width = document.body.clientWidth;
+    }
+
     svgDimensions.height = Math.min(svgDimensions.width / svgDimensions.widthOverHeight, 300);
 
     this.updateState();
@@ -374,7 +379,16 @@ class storyView extends view {
       svgContainer = h('div.header-contents', {
         style: svgContainerStyle
       }, [
-        svg('svg')
+        h('div.range', [
+          h('div.text', [
+            h('div.length', '167'),
+            h('div.unit', 'days')
+          ])
+        ]),
+        svg('svg'),
+        h('div.label', [
+          h('div.text', 'Neutral well-being')
+        ])
       ]);
     }
 

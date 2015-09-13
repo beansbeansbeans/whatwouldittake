@@ -2,8 +2,8 @@ module.exports = {
   render(container, state, dimensions) {
     var story = state.story;
     
-    var horizontalBuffer = typeof dimensions.horizontalBuffer === 'undefined' ? 10 : dimensions.horizontalBuffer,
-      verticalBuffer = typeof dimensions.verticalBuffer === 'undefined' ? 10 : dimensions.verticalBuffer,
+    var horizontalBuffer = typeof dimensions.horizontalBuffer === 'undefined' ? 0 : dimensions.horizontalBuffer,
+      verticalBuffer = typeof dimensions.verticalBuffer === 'undefined' ? 20 : dimensions.verticalBuffer,
       feelings = story.entries.map(x => x.feeling).slice(0).reverse();
 
     var yScale = d3.scale.linear().domain([0, 100])
