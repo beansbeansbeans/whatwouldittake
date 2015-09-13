@@ -49,5 +49,20 @@ module.exports = {
       .classed("selected", selected)
       .attr("r", 2).attr("cy", dimensions.height / 2).attr("cx", x);
 
+    var labels = container.selectAll("text").data(feelings);
+
+    labels.enter().append("text");
+
+    labels.exit().remove();
+
+    labels
+      .classed("selected", selected)
+      .attr("x", x)
+      .attr("y", (d) => {
+        var multiplier = d > 50 ? 1 : -1;
+        return (dimensions.height / 2 + 5) + (multiplier * 15);
+      })
+      .text("hi");
+
   }
 }

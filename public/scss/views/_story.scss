@@ -65,7 +65,7 @@
     }
     .header-contents {
       @extend %clearfix;
-      border-bottom: solid 1px darken($border-color, 5%);
+      border-bottom: solid 1px lighten($border-color, 5%);
       background: $body-bg-color;
       position: fixed;
       z-index: 1;      
@@ -139,6 +139,12 @@
         stroke: $bittersweet;
         stroke-width: 2px;
         stroke-linecap: round;
+      }
+      text {
+        text-anchor: middle;
+        fill: $gray;
+        @extend %header-font;
+        text-transform: uppercase;
       }
       circle {
         fill: $gray;
