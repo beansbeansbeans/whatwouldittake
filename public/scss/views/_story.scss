@@ -89,6 +89,10 @@
         stroke: $amaranth;
         stroke-width: 3px;
       }
+      line {
+        stroke: $gray;
+        stroke-dasharray: 1, 1;
+      }
     }
   }
   .story-footer {

@@ -15,6 +15,9 @@ module.exports = {
       },
       x = (d, i) => {
         return horizontalBuffer + i * (dimensions.width - horizontalBuffer * 2) / (story.entries.length - 1);
+      },
+      selected = (_, i) => { 
+        return i === (feelings.length - 1 - state.firstVisibleStoryIndex); 
       };
 
     var line = d3.svg.line().x(x).y(y).interpolate("cardinal");
@@ -36,9 +39,19 @@ module.exports = {
     circles.exit().remove();
     
     circles
-      .classed("selected", (_, i) => { 
-        return i === (feelings.length - 1 - state.firstVisibleStoryIndex); 
-      })
+      .classed("selected", selected)
       .attr("r", 2).attr("cy", dimensions.height / 2).attr("cx", x);
+
+    var connectors = container.selectAll('line').data(feelings);
+
+    connectors.enter().append('line');
+
+    connectors.exit().remove();
+
+    connectors
+      .classed("selected", selected)
+      .attr("x1", x).attr("y1", dimensions.height / 2)
+      .attr("x2", x).attr("y2", y);
+
   }
 }

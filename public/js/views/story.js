@@ -272,7 +272,6 @@ class storyView extends view {
         storyPath.render(d3.select("svg"), storyState, {
           width: svgDimensions.width,
           height: svgDimensions.height,
-          verticalBuffer: 20,
           horizontalBuffer: 40
         });
       }
