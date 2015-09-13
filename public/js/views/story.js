@@ -416,6 +416,7 @@ class storyView extends view {
             deleteEntry,
             h('div.date', moment.utc(entry.date, 'x').format('YYYY MM DD')),
             h('div.feeling', entry.feeling),
+            h('div.label', 'Notes'),
             h('div.notes', entry.notes)
           ]);
         })),
