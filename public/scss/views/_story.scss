@@ -85,13 +85,13 @@
         fill: $gray;
       }
       circle.selected {
-        fill: $amaranth;
-        stroke: $amaranth;
-        stroke-width: 3px;
+        fill: $bittersweet;
+        stroke: $bittersweet;
+        stroke-width: 5px;
       }
       line {
-        stroke: $gray;
-        stroke-dasharray: 1, 1;
+        stroke: lighten($gray, 5%);
+        stroke-dasharray: 1, 2;
       }
     }
   }

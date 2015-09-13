@@ -28,16 +28,6 @@ module.exports = {
 
     path.attr("d", line);
 
-    var circles = container.selectAll("circle").data(feelings);
-
-    circles.enter().append("circle");
-
-    circles.exit().remove();
-    
-    circles
-      .classed("selected", selected)
-      .attr("r", 2).attr("cy", dimensions.height / 2).attr("cx", x);
-
     var connectors = container.selectAll('line').data(feelings);
 
     connectors.enter().append('line');
@@ -48,6 +38,16 @@ module.exports = {
       .classed("selected", selected)
       .attr("x1", x).attr("y1", dimensions.height / 2)
       .attr("x2", x).attr("y2", y);
+
+    var circles = container.selectAll("circle").data(feelings);
+
+    circles.enter().append("circle");
+
+    circles.exit().remove();
+    
+    circles
+      .classed("selected", selected)
+      .attr("r", 2).attr("cy", dimensions.height / 2).attr("cx", x);
 
   }
 }
