@@ -324,7 +324,7 @@ class storyView extends view {
     if(!storyState.story) { return h('div'); }
 
     var userDisplay, edit, nextStory, deleteStory, svgContainer, modal,
-      likeStory,
+      likeStory, likeButton,
       editVisibility,
       svgContainerStyle;
 
@@ -333,9 +333,15 @@ class storyView extends view {
     }
 
     if(state.get('user') !== null) {
+      if(state.get('user').likes.indexOf(storyState.story._id) !== -1) {
+        likeButton = h('div.button#unlike-story', 'Unlike');
+      } else {
+        likeButton = h('div.button#like-story', 'Like');
+      }
+
       likeStory = h('div.like-story', [
         h('div.label', 'Like story (' + storyState.story.likes.length + ' so far)'),
-        h('div.button#like-story', 'Like')
+        likeButton
       ]);
     }
 
