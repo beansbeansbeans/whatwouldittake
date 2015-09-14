@@ -178,10 +178,12 @@ class storyView extends view {
         id: storyState.story._id,
         user_id: state.get('user')._id
       }, (data) => {
-        storyState.story = data.story;
-        state.set('user', data.user);
-        api.clearCache('/story/' + storyState.story._id);
-        this.updateState();
+        if(data.success) {
+          api.clearCache('/story/' + storyState.story._id);
+          storyState.story = data.data.story;
+          state.set('user', data.data.user);
+          this.updateState();          
+        }
       });
     } else if(e.target.id === 'open-update-story') {
       storyState.addingEntry = true;
