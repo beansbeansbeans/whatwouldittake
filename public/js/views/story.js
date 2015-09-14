@@ -178,6 +178,8 @@ class storyView extends view {
         id: storyState.story._id,
         user_id: state.get('user')._id
       }, (data) => {
+        storyState.story = data.story;
+        state.set('user', data.user);
         api.clearCache('/story/' + storyState.story._id);
         this.updateState();
       });
@@ -330,7 +332,7 @@ class storyView extends view {
 
     if(state.get('user') !== null) {
       likeStory = h('div.like-story', [
-        h('div.label', 'Like story'),
+        h('div.label', 'Like story (' + storyState.story.likes.length + ' so far)'),
         h('div.button#like-story', 'Like')
       ]);
     }
