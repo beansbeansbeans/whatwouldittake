@@ -212,7 +212,6 @@
     }
   }
   .story-footer {
-    display: none;
     position: fixed;
     @extend %content-width;
     bottom: 0;
@@ -221,6 +220,15 @@
     border-top: solid 1px $border-color;
     padding: 1rem 0;
     background: $body-bg-color;
+  }
+  .like-story {
+    float: left;
+    .label {
+      margin-right: 0.5rem;
+    }
+    .label, .button {
+      float: left;
+    }
   }
   #next-story {
     cursor: pointer;

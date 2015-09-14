@@ -173,6 +173,14 @@ class storyView extends view {
           }
         });             
       }
+    } else if(e.target.id === 'like-story') {
+      api.post('/favorite_story', {
+        id: storyState.story._id,
+        user_id: state.get('user')._id
+      }, (data) => {
+        api.clearCache('/story/' + storyState.story._id);
+        this.updateState();
+      });
     } else if(e.target.id === 'open-update-story') {
       storyState.addingEntry = true;
     } else if(e.target.id === 'cancel-update-story') {
@@ -312,11 +320,19 @@ class storyView extends view {
     if(!storyState.story) { return h('div'); }
 
     var userDisplay, edit, nextStory, deleteStory, svgContainer, modal,
+      likeStory,
       editVisibility,
       svgContainerStyle;
 
     if(!storyState.story.hideIdentity) {
       userDisplay = h('div.user', 'by ' + storyState.story.user.username);
+    }
+
+    if(state.get('user') !== null) {
+      likeStory = h('div.like-story', [
+        h('div.label', 'Like story'),
+        h('div.button#like-story', 'Like')
+      ]);
     }
 
     if(storyState.isOwnStory) {
@@ -435,6 +451,7 @@ class storyView extends view {
         h('div.delete-story-container', [ deleteStory ])
       ]),
       h('div.story-footer', [
+        likeStory,
         nextStory
       ]),
       modal
