@@ -174,17 +174,21 @@ class storyView extends view {
         });             
       }
     } else if(e.target.id === 'like-story') {
-      api.post('/favorite_story', {
-        id: storyState.story._id,
-        user_id: state.get('user')._id
-      }, (data) => {
-        if(data.success) {
-          api.clearCache('/story/' + storyState.story._id);
-          storyState.story = data.data.story;
-          state.set('user', data.data.user);
-          this.updateState();          
-        }
-      });
+      if(state.get('user')) {
+        api.post('/favorite_story', {
+          id: storyState.story._id,
+          user_id: state.get('user')._id
+        }, (data) => {
+          if(data.success) {
+            api.clearCache('/story/' + storyState.story._id);
+            storyState.story = data.data.story;
+            state.set('user', data.data.user);
+            this.updateState();          
+          }
+        });        
+      } else {
+        page('/signup');
+      }
     } else if(e.target.id === 'unlike-story') {
       api.post('/unfavorite_story', {
         id: storyState.story._id,
@@ -344,18 +348,16 @@ class storyView extends view {
       userDisplay = h('div.user', 'by ' + storyState.story.user.username);
     }
 
-    if(state.get('user') !== null) {
-      if(state.get('user').likes.indexOf(storyState.story._id) !== -1) {
-        likeButton = h('div.button#unlike-story', 'Unlike');
-      } else {
-        likeButton = h('div.button#like-story', 'Like');
-      }
-
-      likeStory = h('div.like-story', [
-        h('div.label', 'Like story (' + storyState.story.likes.length + ' so far)'),
-        likeButton
-      ]);
+    if(state.get('user') && state.get('user').likes.indexOf(storyState.story._id) !== -1) {
+      likeButton = h('div.button#unlike-story', 'Unlike');
+    } else {
+      likeButton = h('div.button#like-story', 'Like');
     }
+
+    likeStory = h('div.like-story', [
+      h('div.label', 'Like story (' + storyState.story.likes.length + ' so far)'),
+      likeButton
+    ]);
 
     if(storyState.isOwnStory) {
       deleteStory = h('div.button#delete-story', {
