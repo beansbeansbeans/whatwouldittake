@@ -204,7 +204,7 @@ class storyView extends view {
     } else if(e.target.nodeName === "circle") {
       var indexOfCircle = storyState.story.entries.length - [].indexOf.call(e.target.parentNode.children, e.target) + 1;
       scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop - svgDimensions.height - state.get('dimensions').headerHeight);
-    } else if(e.target.id === "next-story") {
+    } else if(e.target.id === "next-story" || e.target.closest("#next-story")) {
       page('story/' + state.get('stories')[storyState.nextIndex]._id);
     } else if(e.target.id === "delete-story") {
       storyState.confirming = 'DELETE_STORY';
