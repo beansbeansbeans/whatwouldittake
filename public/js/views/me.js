@@ -2,6 +2,8 @@ var h = require('virtual-dom/h');
 var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
+var sparklineSubview = require('./subviews/sparkline');
+var snippet = require('./subviews/snippet');
 
 var meState = {
   active: 'stories',
@@ -40,12 +42,12 @@ class meView extends view {
 
     if(!_.isEmpty(meState.user)) {
       if(meState.active === 'stories') {
-        stories = meState.user.stories.map((d) => {
-          return h('div', '' + d._id);
+        stories = meState.user.stories.map((d, i) => {
+          return snippet.render(d, i);
         });
       } else {
-        stories = meState.user.likes.map((d) => {
-          return h('div', '' + d._id);
+        stories = meState.user.likes.map((d, i) => {
+          return snippet.render(d, i);
         });
       }      
     }
