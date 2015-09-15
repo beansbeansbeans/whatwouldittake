@@ -468,7 +468,9 @@ class storyView extends view {
             ]),
             h('div.notes-container', [
               h('div.label', 'Notes'),
-              h('div.notes', entry.notes)
+              h('div.notes', {
+                dataset: { contentful: !!entry.notes.length }
+              }, entry.notes.length ? entry.notes : 'No notes')
             ])
           ]);
         })),
