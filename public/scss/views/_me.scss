@@ -1,0 +1,11 @@
+#me-view {
+  @extend %content-width;
+  $tabs: 'stories', 'likes';
+  @each $tab in $tabs {
+    &[data-active=#{$tab}] {
+      [data-toggle=#{$tab}] {
+        color: $bittersweet;
+      }
+    }
+  }
+}
