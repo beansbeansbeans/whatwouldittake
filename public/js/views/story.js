@@ -169,7 +169,8 @@ class storyView extends view {
           if(data.success) {
             storyState.story.entries = data.data.entries;
             storyState.addingEntry = false;
-            this.updateState();                  
+            this.updateState(); 
+            this.handleResize(); // could be NEWLY introducing sparkline header
           }
         });             
       }
