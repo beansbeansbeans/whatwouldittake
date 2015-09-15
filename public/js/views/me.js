@@ -57,10 +57,10 @@ class meView extends view {
     }, [
       h('div.your-stories', {
         dataset: { toggle: 'stories' }
-      }, 'YOUR STORIES'),
+      }, 'stories'),
       h('div.your-likes', {
         dataset: { toggle: 'likes' }
-      }, 'YOUR LIKES'),
+      }, 'likes'),
       h('ul.stories', stories)
     ]);
   }
