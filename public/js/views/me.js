@@ -41,11 +41,11 @@ class meView extends view {
     if(!_.isEmpty(meState.user)) {
       if(meState.active === 'stories') {
         stories = meState.user.stories.map((d) => {
-          return h('div', '' + d);
+          return h('div', '' + d._id);
         });
       } else {
         stories = meState.user.likes.map((d) => {
-          return h('div', '' + d);
+          return h('div', '' + d._id);
         });
       }      
     }
