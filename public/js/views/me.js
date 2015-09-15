@@ -61,7 +61,7 @@ class meView extends view {
       h('div.your-likes', {
         dataset: { toggle: 'likes' }
       }, 'YOUR LIKES'),
-      h('div.stories', stories)
+      h('ul.stories', stories)
     ]);
   }
 }
