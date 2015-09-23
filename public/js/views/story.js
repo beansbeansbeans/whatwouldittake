@@ -96,6 +96,7 @@ class storyView extends view {
 
       this.updateState();
       this.handleResize();
+      d.qs('.svg-scroller').scrollLeft = d.qs('svg').offsetWidth - d.qs('.svg-scroller').offsetWidth;
     });
 
     var thisIndex = _.findIndex(state.get('stories'), d => d._id === +ctx.params.id);
