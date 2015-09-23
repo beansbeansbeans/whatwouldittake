@@ -1,5 +1,6 @@
 module.exports = {
   render(container, state, dimensions) {
+    var minimumSegmentWidth = 200;
     var story = state.story;
 
     var horizontalBuffer = typeof dimensions.horizontalBuffer === 'undefined' ? 0 : dimensions.horizontalBuffer,

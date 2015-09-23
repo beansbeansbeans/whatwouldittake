@@ -125,7 +125,7 @@
       text-align: center;
       line-height: 0;
     }
-    .range, svg, .label {
+    .range, .svg-scroller, .label {
       display: inline-block;
     }
     .range, .label {
@@ -182,8 +182,16 @@
         }
       }
     }
-    svg {
+    .svg-scroller {
       position: relative;
+      height: 100%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+    }
+    svg {
+      position: absolute;
+      left: 0;
+      top: 0;
       z-index: 1;
       path {
         fill: none;

@@ -428,7 +428,11 @@ class storyView extends view {
             h('div.unit', 'days')
           ])
         ]),
-        svg('svg'),
+        h('div.svg-scroller', {
+          style: {
+            width: svgDimensions.width + 'px'
+          }
+        }, [svg('svg')]),
         h('div.label', [
           h('div.text', 'Neutral well-being')
         ])
