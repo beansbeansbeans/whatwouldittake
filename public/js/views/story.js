@@ -350,13 +350,13 @@ class storyView extends view {
     }
 
     if(state.get('user') && state.get('user').likes.indexOf(storyState.story._id) !== -1) {
-      likeButton = h('div.button#unlike-story', 'Unlike');
+      likeButton = h('i.material-icons#unlike-story', 'thumb_up');
     } else {
-      likeButton = h('div.button#like-story', 'Like');
+      likeButton = h('i.material-icons#like-story', 'thumb_up');
     }
 
     likeStory = h('div.like-story', [
-      h('div.label', 'Like story (' + storyState.story.likes.length + ' so far)'),
+      h('div.label', '' + storyState.story.likes.length),
       likeButton
     ]);
 

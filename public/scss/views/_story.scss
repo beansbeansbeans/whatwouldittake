@@ -223,11 +223,26 @@
   }
   .like-story {
     float: left;
+    height: 1rem;
     .label {
       margin-right: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 100;
+      line-height: 1;
     }
-    .label, .button {
-      float: left;
+    .label, .material-icons {
+      display: inline-block;
+      vertical-align: top;
+    }
+    .material-icons {
+      cursor: pointer;
+      margin-top: -0.2rem;
+    }
+    #like-story {
+
+    }
+    #unlike-story {
+      color: $padua;
     }
   }
   #next-story {
