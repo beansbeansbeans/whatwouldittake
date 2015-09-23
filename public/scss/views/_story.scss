@@ -225,18 +225,19 @@
     float: left;
     height: 1rem;
     .label {
-      margin-right: 0.5rem;
-      font-size: 1.25rem;
+      margin-right: 0.75rem;
       font-weight: 100;
       line-height: 1;
+      text-transform: uppercase;
     }
     .label, .material-icons {
       display: inline-block;
-      vertical-align: top;
+      vertical-align: middle;
     }
     .material-icons {
       cursor: pointer;
       margin-top: -0.2rem;
+      font-size: 1.25rem;
     }
     #like-story {
 

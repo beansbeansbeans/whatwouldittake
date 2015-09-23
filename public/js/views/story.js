@@ -356,7 +356,7 @@ class storyView extends view {
     }
 
     likeStory = h('div.like-story', [
-      h('div.label', '' + storyState.story.likes.length),
+      h('div.label', storyState.story.likes.length + ' ' + util.pluralize(storyState.story.likes.length, 'appreciates', 'appreciate')),
       likeButton
     ]);
 
