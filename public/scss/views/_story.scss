@@ -196,6 +196,7 @@
         fill: $gray;
         @extend %header-font;
         text-transform: uppercase;
+        cursor: pointer;
       }
       circle {
         fill: $gray;

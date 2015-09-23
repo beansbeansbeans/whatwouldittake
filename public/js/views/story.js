@@ -206,9 +206,9 @@ class storyView extends view {
       storyState.addingEntry = true;
     } else if(e.target.id === 'cancel-update-story') {
       storyState.addingEntry = false;
-    } else if(e.target.nodeName === "circle") {
-      var indexOfCircle = storyState.story.entries.length - [].indexOf.call(e.target.parentNode.children, e.target) + 1;
-      scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfCircle + 'n)').getBoundingClientRect().top + body.scrollTop - svgDimensions.height - state.get('dimensions').headerHeight);
+    } else if(e.target.nodeName === "text") {
+      var indexOfText = storyState.story.entries.length - [].indexOf.call(e.target.parentNode.querySelectorAll("text"), e.target) + 1;
+      scrollHelpers.scrollTo(d.qs('.entry:nth-of-type(' + indexOfText + 'n)').getBoundingClientRect().top + body.scrollTop - svgDimensions.height - state.get('dimensions').headerHeight);
     } else if(e.target.id === "next-story" || e.target.closest("#next-story")) {
       page('story/' + state.get('stories')[storyState.nextIndex]._id);
     } else if(e.target.id === "delete-story") {
