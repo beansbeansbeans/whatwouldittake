@@ -1,6 +1,6 @@
 module.exports = {
   render(container, state, dimensions) {
-    var minimumSegmentWidth = 200;
+    var minimumSegmentWidth = 100;
     var story = state.story;
 
     var horizontalBuffer = typeof dimensions.horizontalBuffer === 'undefined' ? 0 : dimensions.horizontalBuffer,
@@ -12,7 +12,7 @@ module.exports = {
       .range([verticalBuffer, dimensions.height - verticalBuffer]),
       y = d => dimensions.height - yScale(d),
       x = (d, i) => {
-        return horizontalBuffer + i * (dimensions.width - horizontalBuffer * 2) / (story.entries.length - 1);
+        return horizontalBuffer + i * Math.max((dimensions.width - horizontalBuffer * 2) / (story.entries.length - 1), minimumSegmentWidth);
       },
       selected = (_, i) => { 
         return i === (feelings.length - 1 - state.firstVisibleStoryIndex); 
@@ -21,7 +21,7 @@ module.exports = {
     var line = d3.svg.line().x(x).y(y).interpolate("cardinal");
 
     container
-      .attr("width", dimensions.width)
+      .attr("width", Math.max(dimensions.width, (story.entries.length - 1) * minimumSegmentWidth + (horizontalBuffer * 2)))
       .attr("height", dimensions.height);
 
     var path = container.selectAll("path").data([feelings]);
