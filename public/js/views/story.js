@@ -96,7 +96,7 @@ class storyView extends view {
 
       this.updateState();
       this.handleResize();
-      d.qs('.svg-scroller').scrollLeft = d.qs('svg').offsetWidth - d.qs('.svg-scroller').offsetWidth;
+      d.qs('.svg-scroller').scrollLeft = d.qs('svg').offsetWidth - d.qs('.svg-scroller').offsetWidth + d.qs('.svg-scroller .label').offsetWidth;
     });
 
     var thisIndex = _.findIndex(state.get('stories'), d => d._id === +ctx.params.id);
@@ -298,7 +298,7 @@ class storyView extends view {
     if(storyState.story) {
       if(storyState.story.entries.length > 1) {
         storyPath.render(d3.select("svg"), storyState, {
-          width: svgDimensions.width,
+          width: svgDimensions.width - d.qs(".svg-scroller .label").offsetWidth,
           height: svgDimensions.height,
           horizontalBuffer: 30
         });
@@ -323,7 +323,7 @@ class storyView extends view {
 
   handleResize() {
     if(d.qs('.header-contents') && d.qs('.header-contents .range')) {
-      svgDimensions.width = d.qs('.header-contents').offsetWidth - d.qs('.header-contents .range').offsetWidth - d.qs('.header-contents .label').offsetWidth;      
+      svgDimensions.width = d.qs('.header-contents').offsetWidth - d.qs('.header-contents .range').offsetWidth;      
     } else {
       svgDimensions.width = document.body.clientWidth;
     }
@@ -433,9 +433,11 @@ class storyView extends view {
           style: {
             width: svgDimensions.width + 'px'
           }
-        }, [svg('svg')]),
-        h('div.label', [
-          h('div.text', 'Neutral well-being')
+        }, [
+          svg('svg'),
+          h('div.label', [
+            h('div.text', 'Neutral well-being')
+          ])
         ])
       ]);
     }

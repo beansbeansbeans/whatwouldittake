@@ -163,6 +163,7 @@
     }
     .label {
       width: 7rem;
+      white-space: normal;
       .text {
         padding-left: 1rem;
         width: 5rem;
@@ -173,7 +174,7 @@
         text-align: left;
         &:before {
           content: '';
-          width: 1.8rem;
+          width: 1.5rem;
           height: 1px;
           background: lighten($gray, 10%);
           right: calc(100% - 0.5rem);
@@ -187,11 +188,9 @@
       height: 100%;
       overflow-x: scroll;
       overflow-y: hidden;
+      white-space: nowrap;
     }
     svg {
-      position: absolute;
-      left: 0;
-      top: 0;
       z-index: 1;
       path {
         fill: none;
