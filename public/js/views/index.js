@@ -99,12 +99,19 @@ class indexView extends view {
   }
 
   render() {
+    var loader;
+
+    if(state.get('stories').length === 0) {
+      loader = h('div.loader', 'Loading stories...');
+    }
+
     return h('div#index', [
       h('h1', 'Latest'),
       h('div.description', "These are stories of people's moods."),
       h('div.button#go-to-search', {
         dataset: { type: "critical" }
       }, 'Search'),
+      loader,
       h('ul', state.get('stories').map((story, storyIndex) => {
         return snippet.render(story, storyIndex);
       }))
