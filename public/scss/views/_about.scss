@@ -6,11 +6,18 @@
       color: $bittersweet;
       font-weight: 800;
       font-size: 3.5rem;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      margin-bottom: 1.5rem;
+      @extend %header-font;
+      letter-spacing: 1px;
+      font-size: 2.35rem;
     }
     .description {
       margin-bottom: 1rem;
+      font-weight: 100;
     }
   }
 }
