@@ -33,7 +33,7 @@ nav {
         font-size: 1.75rem;
       }
     }
-    #me, #logout-button, #login, #signup, #create-story-button, #go-to-search {
+    #me, #logout-button, #login, #signup, #create-story-button, #go-to-search, #go-to-about {
       float: right;
       cursor: pointer;
     }
@@ -53,7 +53,7 @@ nav {
         }
       }
     }
-    #login, #signup, #logout-button, #me {
+    #login, #signup, #logout-button, #me, #go-to-about {
       margin-left: 1rem;
       &, a {
         @extend %nav-link;       

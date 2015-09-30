@@ -74,6 +74,9 @@ class navView extends view {
         profile,
         login,
         signup,
+        h('div#go-to-about', [
+          h('a', { href: './about' }, 'about')
+        ]),
         h('div#go-to-search', [
           h('i.material-icons.search', 'search'),
           h('a.text', { href: './search' }, 'search')

@@ -7,7 +7,8 @@ var routes = {
   me: require('./views/me'),
   create: require('./views/create'),
   story: require('./views/story'),
-  search: require('./views/search')
+  search: require('./views/search'),
+  about: require('./views/about')
 };
 
 var previousRoute;
@@ -41,6 +42,7 @@ module.exports = {
       page('signup', routes.signup.start);
       page('search', routes.search.start);
       page('me', routes.me.start);
+      page('about', routes.about.start);
 
       page('create', (context) => {
         if(state.get('user')) {
