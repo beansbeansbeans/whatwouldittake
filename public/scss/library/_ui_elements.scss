@@ -80,9 +80,31 @@
   .pika-title {
     text-align: center;
   }
+  .pika-label {
+    color: transparent;
+    width: 7.5rem;
+    height: 1.85rem;
+    position: relative;
+    margin: auto;
+    select {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+  .pika-select {
+    font-size: 1rem;
+    -webkit-appearance: none;
+    padding: 0.25rem 0.5rem 0 0.5rem;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-family: Gotham;
+    background-color: transparent;
+    line-height: 1.5;
+  }
   .pika-prev, .pika-next {
     position: absolute;
-    top: 2.35rem;
+    top: 2.6rem;
     box-shadow: none;
     -webkit-appearance: none;
     border: none;
@@ -95,13 +117,13 @@
     }
   }
   .pika-prev {
-    left: 1.5rem;
+    left: 3rem;
     &:before {
       @include triangle(left, $gray, 0.35rem);
     }
   }
   .pika-next {
-    right: 1.5rem;
+    right: 2.75rem;
     &:before {
       @include triangle(right, $gray, 0.35rem);
     }
