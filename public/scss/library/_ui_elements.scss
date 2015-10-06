@@ -77,6 +77,35 @@
   .is-disabled {
     opacity: 0.2;
   }
+  .pika-title {
+    text-align: center;
+  }
+  .pika-prev, .pika-next {
+    position: absolute;
+    top: 2.35rem;
+    box-shadow: none;
+    -webkit-appearance: none;
+    border: none;
+    background: none;
+    &:before {
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+  .pika-prev {
+    left: 1.5rem;
+    &:before {
+      @include triangle(left, $gray, 0.35rem);
+    }
+  }
+  .pika-next {
+    right: 1.5rem;
+    &:before {
+      @include triangle(right, $gray, 0.35rem);
+    }
+  }
 }
 
 .checkbox-wrapper {
