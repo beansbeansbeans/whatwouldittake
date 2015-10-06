@@ -26,9 +26,12 @@ class meView extends view {
 
   handleClick(e) {
     var toggle = e.target.getAttribute("data-toggle");
+    var story = e.target.closest(".story-item");
     if(toggle) {
       meState.active = toggle;
       this.updateState();
+    } else if(story) {
+      page('/story/' + story.dataset.storyId);
     }
   }
 
