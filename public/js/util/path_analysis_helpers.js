@@ -5,7 +5,7 @@ module.exports = {
     var percentChange, 
       min = [0, Infinity],
       max = [0, 0],
-      direction,
+      direction = 1,
       inflectionPoints = [],
       inflectionPointIndices = [],
       lastDirection;
@@ -39,6 +39,12 @@ module.exports = {
     });
 
     percentChange = arr[arr.length - 1][1] - arr[0][1];
+
+    if(!inflectionPoints.length) {
+      if(arr[0][1] > arr[arr.length - 1][1]) {
+        direction = -1;
+      }
+    }
 
     return {
       range: {
