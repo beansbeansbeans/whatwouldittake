@@ -67,7 +67,7 @@
 
 .pika-single {
   background: white;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
   border: solid 1px $smoke;
   margin-top: 1rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -94,7 +94,7 @@
     &:last-of-type {
       width: 3.2rem;
       margin-top: 0.25rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
   }
   .pika-select {
@@ -107,10 +107,11 @@
     font-family: Gotham;
     background-color: transparent;
     line-height: 1.5;
+    cursor: pointer;
   }
   .pika-prev, .pika-next {
     position: absolute;
-    top: 2rem;
+    top: 2.5rem;
     box-shadow: none;
     -webkit-appearance: none;
     border: none;
@@ -120,6 +121,23 @@
       position: absolute;
       left: 0;
       top: 0;
+    }
+  }
+  .pika-day {
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    @include square(2rem);
+    text-align: center;
+    font-family: Gotham;
+    font-size: 0.8rem;
+    line-height: 1.9rem;
+    color: $gray;
+    &:hover {
+      background: darken(whitesmoke, 5%);
+      color: $mine-shaft;
     }
   }
   .pika-prev {
