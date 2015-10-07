@@ -200,6 +200,24 @@
     }
     input {
       width: 30vw;
+      margin-left: 1.7rem;
+      position: relative;
+      &:before, &:after {
+        position: absolute;
+        text-transform: uppercase;
+        @extend %header-font;
+        font-size: 1.2rem;
+        top: -0.65rem;
+      }
+      &:before {
+        content: "bad";
+        right: 100%;
+        padding-right: 0.5rem;
+      }
+      &:after {
+        content: "good";
+        padding-left: 0.5rem;
+      }
     }
   }
   .notes-wrapper {
