@@ -16,8 +16,13 @@ class aboutView extends view {
       h('div.main', [
         h('h1', 'About'),
         h('div.subtitle', 'This is a concept for a social network.'),
-        h('div.description', "Social media has become a tool for projecting the best version of ourselves to the world. Someone feeling unhappy may get the impression from their Facebook newsfeed that they're alone in their experience."),
-        h('div.description', "I built Stories of as a way for people to share their moods, good or bad.")
+        h('div.description', "We use social media as a tool for projecting the best versions of ourselves to the world. According to our Facebook newsfeeds, everyone around us is leading happy and fulfilling lives. Which means that when we're unhappy, it can feel like we're alone in our experience."),
+        h('div.description', [
+          h("span", "I built Stories of as a way for people to share their moods, good or bad. "),
+          h("span.bold", "I hope this will achieve two effects:")
+        ]),
+        h('div.description', "(1) I want people who are feeling unhappy to see this as a safe place for sharing."),
+        h('div.description', "(2) I want people who are feeling unhappy to see that they're not alone.")
       ])
     ]);
   }
