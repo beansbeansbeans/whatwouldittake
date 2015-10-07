@@ -155,12 +155,13 @@
 }
 
 .checkbox-wrapper {
+  font-weight: 100;
   #hide-identity {
     cursor: pointer;
     float: left;
     border: solid 1px $gray;
     @include square(1.5rem);
-    margin-right: .5rem;
+    margin-right: 0.8rem;
     .material-icons {
       pointer-events: none;
     }
@@ -198,7 +199,7 @@
       border: none;
       border-bottom: solid 1px rgba($gray, 0.25);
       background: transparent;
-      font-weight: 100;
+      font-weight: 300;
       width: 8rem;
       cursor: pointer;
     }
