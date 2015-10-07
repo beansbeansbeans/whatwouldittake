@@ -172,6 +172,7 @@ class storyView extends view {
           if(data.success) {
             storyState.story.entries = data.data.entries;
             storyState.addingEntry = false;
+            d.qs('.notes-wrapper textarea').value = '';
             this.updateState(); 
             this.handleResize(); // could be NEWLY introducing sparkline header
           }
