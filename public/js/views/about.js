@@ -26,7 +26,7 @@ class aboutView extends view {
           h('span', "I want people who are feeling unhappy to see this as a safe place for sharing. That's why users can choose to hide their names on their posts, and why notes are optional. Sometimes it's nice just to be able to acknowledge that you're not feeling your best.")
         ]),
         h('div.description', [
-          h('span.bold', '(2) A reference for people to use to find stories of others going through difficult times. '),
+          h('span.bold', "(2) A searchable record of people's wide-ranging feelings. "),
           h('span', "I want people who are feeling unhappy to see that they're not alone. When you're unhappy, it can sometimes feel like you'll never bounce back. I want the site to serve as proof that people get over their unhappiness. Stories are defined by a sparkline that tracks changes in the user's mood, and users can search the site for stories matching a particular mood trajectory.")
         ])
       ])
