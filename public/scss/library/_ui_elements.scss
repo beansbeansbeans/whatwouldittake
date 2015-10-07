@@ -256,3 +256,31 @@ input, textarea {
 a {
   text-decoration: none;
 }
+
+input[type=range]{
+  -webkit-appearance: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 1px;
+  background: $mine-shaft;
+  border: none;
+  border-radius: 3px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  @include square(2rem);
+  border-radius: 50%;
+  background: $padua;
+  margin-top: -1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
