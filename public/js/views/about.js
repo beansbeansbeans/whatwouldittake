@@ -20,7 +20,7 @@ class aboutView extends view {
         h('div.description', "STORIES OF aims to address this problem. The site is: "),
         h('div.description', [
           h('span.bold', '(1) A tool for people to share their feelings, good or bad. '),
-          h('span', "We wanted people feeling unhappy to see this as a safe place. That's why users can choose to hide their names on their posts, and why notes are optional. Sometimes it's nice just to be able to acknowledge that you're not feeling your best.")
+          h('span', "We wanted people feeling unhappy to see this as a safe place. That's why users can choose to hide their names on their posts, and why text is optional. Sometimes it's nice just to be able to acknowledge that you're not feeling your best.")
         ]),
         h('div.description', [
           h('span.bold', "(2) A searchable database of people's wide-ranging feelings. "),
