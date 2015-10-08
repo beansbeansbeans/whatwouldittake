@@ -21,6 +21,9 @@ nav {
     @extend %clearfix;
     padding: 0.6rem 1rem;
     z-index: 10;
+    a {
+      display: inline-block;
+    }
     #logo {
       float: left;
       padding-top: 0.7rem;
