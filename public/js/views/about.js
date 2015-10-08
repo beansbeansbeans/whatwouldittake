@@ -16,7 +16,7 @@ class aboutView extends view {
       h('div.main', [
         h('h1', 'About'),
         h('div.subtitle', 'This is a concept for a social network.'),
-        h('div.description', "According to our Facebook newsfeeds, everyone around us is leading happy and fulfilling lives. We use social media to project the best versions of ourselves to the world. This means that when we're unhappy, it can feel like we're alone in our experience."),
+        h('div.description', "According to our Facebook newsfeeds, everyone we know is leading happy and fulfilling lives. This is because we use social media to project the best versions of ourselves to the world. But it means that when we're unhappy, it can feel like we're alone in our experience."),
         h('div.description', "STORIES OF aims to address this problem. The site is: "),
         h('div.description', [
           h('span.bold', '(1) A tool for people to share their feelings, good or bad. '),
