@@ -24,7 +24,7 @@ class aboutView extends view {
         ]),
         h('div.description', [
           h('span.bold', "(2) A searchable database of people's wide-ranging feelings. "),
-          h('span', "When you're unhappy it can sometimes feel like you'll never bounce back. What if in those moments you could browse stories of people recovering from their unhappiness? On STORIES OF, users can search for stories matching particular mood trajectories. For example, users can search for stories of people starting out sad but then becoming happy. We hope this feature will show people that they're not alone, no matter how they're feeling.")
+          h('span', "When you're unhappy it can sometimes feel like you'll never bounce back. What if in those moments you could browse stories of people recovering from their unhappiness? On STORIES OF, users can search for stories matching particular mood trajectories. For example, users can search for stories of people starting out sad but then becoming happy.")
         ])
       ])
     ]);
