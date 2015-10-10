@@ -20,7 +20,7 @@ class aboutView extends view {
         h('div.description', "STORIES OF aims to address this problem. The site is: "),
         h('div.description', [
           h('span.bold', '(1) A tool for people to share their feelings, good or bad. '),
-          h('span', "The site is composed of posts in which users grade their feelings at a particular moment on a scale of one to 100. Text is optional, and users can post anonymously. This way, a post is simply an acknowledgment of a user's feelings.")
+          h('span', "The site is composed of posts in which users grade their feelings at a particular moment on a scale of one to 100. A user's posts over time form a story of their feelings. Text is optional, and users can post anonymously. This way, a post is simply an acknowledgment of a user's feelings, and stories' emphasis is on how users' feelings change over time.")
         ]),
         h('div.description', [
           h('span.bold', "(2) A searchable database of people's wide-ranging feelings. "),
