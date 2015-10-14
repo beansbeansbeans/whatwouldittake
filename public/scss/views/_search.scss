@@ -189,6 +189,7 @@ $divider-color: $border-color;
   canvas {
     position: absolute;
     @include transform(scale(0.5));
+    -webkit-transform-origin: top left;
     transform-origin: top left;
     cursor: default;
   }
