@@ -4,6 +4,7 @@ var util = require('./util');
 var api = require('./api');
 var auth = require("./auth");
 var router = require('./router');
+var closest = require('./util/closest');
 
 // views
 var nav = require('./views/nav');
