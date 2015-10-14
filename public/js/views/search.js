@@ -47,8 +47,15 @@ var getDistance = (e) => {
 var setPosition = (e) => {
   var edgeOffset = 20;
 
-  pos.x = Math.max(edgeOffset, Math.min(Math.max(e.clientX - offset.x, pos.x), dimensions.canvas.width - edgeOffset));
-  pos.y = Math.max(0, Math.min(e.clientY - offset.y, (dimensions.canvas.width / dimensions.canvas.widthOverHeight)));
+  var clientX = e.clientX;
+  var clientY = e.clientY;
+  if(UserAgent.getBrowserInfo().mobile) {
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+  }
+
+  pos.x = Math.max(edgeOffset, Math.min(Math.max(clientX - offset.x, pos.x), dimensions.canvas.width - edgeOffset));
+  pos.y = Math.max(0, Math.min(clientY - offset.y, (dimensions.canvas.width / dimensions.canvas.widthOverHeight)));
   points.push([pos.x, pos.y]);
 }
 
@@ -82,18 +89,24 @@ class searchView extends view {
     });
 
     mediator.subscribe("window_click", this.handleClick);
-    window.addEventListener('mousemove', this.draw);
-    window.addEventListener('mousedown', this.handleMouseDown);
-    window.addEventListener('mouseup', this.handleMouseUp);
-    window.addEventListener("mouseover", this.handleMouseOver);
-    window.addEventListener('mouseout', this.handleMouseOut);
+
+    if(UserAgent.getBrowserInfo().mobile) {
+      window.addEventListener('touchmove', this.draw);
+      window.addEventListener('touchstart', this.handleMouseDown);
+      window.addEventListener('touchend', this.handleMouseUp);
+    } else {
+      window.addEventListener('mousemove', this.draw);
+      window.addEventListener('mousedown', this.handleMouseDown);
+      window.addEventListener('mouseup', this.handleMouseUp);
+      window.addEventListener("mouseover", this.handleMouseOver);
+      window.addEventListener('mouseout', this.handleMouseOut);      
+    }
     this.updateState();
   }
 
   draw(e) {
     if(!dragging || viewState.searching) { return; }
     if(getDistance(e) < 10) { return; }
-
     ctx.beginPath();
 
     ctx.moveTo(pos.x * 2, pos.y * 2);
@@ -231,11 +244,18 @@ class searchView extends view {
     super.stop();
 
     mediator.unsubscribe("window_click", this.handleClick);
-    window.removeEventListener('mousemove', this.draw);
-    window.removeEventListener('mousedown', this.handleMouseDown);
-    window.removeEventListener('mouseup', this.handleMouseUp);
-    window.removeEventListener('mouseover', this.handleMouseOver);
-    window.removeEventListener('mouseout', this.handleMouseOut);
+
+    if(UserAgent.getBrowserInfo().mobile) {
+      window.remove('touchmove', this.draw);
+      window.remove('touchstart', this.handleMouseDown);
+      window.remove('touchend', this.handleMouseUp);
+    } else {
+      window.remove('mousemove', this.draw);
+      window.remove('mousedown', this.handleMouseDown);
+      window.remove('mouseup', this.handleMouseUp);
+      window.remove("mouseover", this.handleMouseOver);
+      window.remove('mouseout', this.handleMouseOut);      
+    }
   }
 
   mount() {
