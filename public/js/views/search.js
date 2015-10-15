@@ -115,6 +115,8 @@ class searchView extends view {
 
     ctx.lineTo(pos.x * 2, pos.y * 2);
     ctx.stroke();
+
+    e.preventDefault();
   }
 
   handleMouseOver(e) {
@@ -138,6 +140,7 @@ class searchView extends view {
     dragging = true;
     this.updateState();
     setPosition(e);
+    e.preventDefault();
   }
 
   handleMouseUp(e) {
@@ -178,6 +181,7 @@ class searchView extends view {
     }
 
     this.updateState();
+    e.preventDefault();
   }
 
   launchStatsTour() {
