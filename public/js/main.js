@@ -5,6 +5,7 @@ var api = require('./api');
 var auth = require("./auth");
 var router = require('./router');
 var closest = require('./util/closest');
+var useragent = require('./useragent');
 
 // views
 var nav = require('./views/nav');
