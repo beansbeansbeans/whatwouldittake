@@ -9,7 +9,7 @@ gulp.task('publish', function() {
   var publisher = awspublish.create({
     region: 'us-west-2',
     params: {
-      Bucket: 'storiesof.cc'
+      Bucket: 'whatwouldittake.cc'
     }
   });
  
