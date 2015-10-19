@@ -15,7 +15,7 @@ nav.start();
 if(window.location.hostname === "localhost") {
   api.setURL("http://localhost:5500");
 } else {
-  api.setURL("https://storiesof-49778.onmodulus.net");
+  api.setURL("https://whatwouldittake-53541.onmodulus.net");
 }
 
 window.addEventListener("click", (e) => {
