@@ -7,7 +7,11 @@ class issuesView extends view {
   start() {
     super.start();
 
+    api.get('/issues', (err, data) => {
+
+    });
   }
+
   render() {
     return h('div#issues-view', [
       h('div', 'The issues')
