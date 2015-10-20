@@ -2,8 +2,6 @@ var h = require('virtual-dom/h');
 var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
-var sparklineSubview = require('./subviews/sparkline');
-var snippet = require('./subviews/snippet');
 
 var meState = {
   active: 'stories',

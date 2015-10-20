@@ -4,10 +4,8 @@ var routes = {
   login: require('./views/login'),
   signup: require('./views/signup'),
   index: require('./views/index'),
+  issues: require('./views/issues'),
   me: require('./views/me'),
-  create: require('./views/create'),
-  story: require('./views/story'),
-  search: require('./views/search'),
   about: require('./views/about')
 };
 
@@ -40,19 +38,9 @@ module.exports = {
 
       page('login', routes.login.start);
       page('signup', routes.signup.start);
-      page('search', routes.search.start);
       page('me', routes.me.start);
       page('about', routes.about.start);
-
-      page('create', (context) => {
-        if(state.get('user')) {
-          routes.create.start(context);
-        } else {
-          routes.signup.start(context);
-        }
-      });
-
-      page('story/:id', routes.story.start);
+      page('issues', routes.issues.start);
 
       page();
     });
