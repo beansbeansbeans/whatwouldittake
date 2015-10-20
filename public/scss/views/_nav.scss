@@ -36,18 +36,11 @@ nav {
         font-size: 1.75rem;
       }
     }
-    #me, #logout-button, #login, #signup, #create-story-button, #go-to-search, #go-to-about {
+    #me, #logout-button, #login, #signup, #go-to-issues, #go-to-about {
       float: right;
       cursor: pointer;
     }
-    #create-story-button {
-      margin-left: 1.5rem;
-    }
-    #go-to-search {
-      i, .text {
-        display: inline-block;
-        vertical-align: middle;
-      }
+    #go-to-issues {
       .text {
         margin-left: 0.2rem;
         @extend %nav-link;

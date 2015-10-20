@@ -19,10 +19,6 @@ class navView extends view {
         api.post('/logout', {}, () => {
           auth.deauthenticated();
         });
-      } else if(e.target.getAttribute("id") === "create-story-button") {
-        page('create');
-      } else if(e.target.classList.contains("material-icons") && e.target.classList.contains("search")) {
-        page('search');
       }
     });
   }
@@ -67,9 +63,8 @@ class navView extends view {
       }),
       h('div.contents', [
         h('li#logo', [
-          h('a', { href: './'}, 'Stories of')
+          h('a', { href: './'}, 'What would it take?')
         ]),
-        h('div#create-story-button.button', 'Create a story'),
         logout,
         profile,
         login,
@@ -77,9 +72,8 @@ class navView extends view {
         h('div#go-to-about', [
           h('a', { href: './about' }, 'about')
         ]),
-        h('div#go-to-search', [
-          h('i.material-icons.search', 'search'),
-          h('a.text', { href: './search' }, 'search')
+        h('div#go-to-issues', [
+          h('a.text', { href: './issues' }, 'issues')
         ])
       ])
     ]);
