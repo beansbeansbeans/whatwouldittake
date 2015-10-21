@@ -4,6 +4,7 @@ var routes = {
   login: require('./views/login'),
   signup: require('./views/signup'),
   vote: require('./views/vote'),
+  stand: require('./views/stand'),
   index: require('./views/index'),
   issues: require('./views/issues'),
   me: require('./views/me'),
@@ -12,8 +13,11 @@ var routes = {
 
 var previousRoute;
 
+var getRandomIssueSlug = () => state.get("issues")[Math.round(Math.random() * (state.get("issues").length - 1))].slug;
+var getRandomPosition = () => Math.random() > 0.5 ? 'aff' : 'neg';
+
 var redirectToVote = () => {
-  page.show('vote/' + state.get("issues")[Math.round(Math.random() * (state.get("issues").length - 1))].slug);
+  page.show('vote/' + getRandomIssueSlug());
 };
 
 module.exports = {
@@ -46,6 +50,13 @@ module.exports = {
       page('me', routes.me.start);
       page('about', routes.about.start);
       page('issues', routes.issues.start);
+      page('stands', () => {
+        page.show('stands/' + getRandomIssueSlug() + '/' + getRandomPosition());
+      });
+      page('stands/:issue', (ctx) => {
+        page.show('stands/' + ctx.params.issue + '/' + getRandomPosition());
+      });
+      page('stands/:issue/:side', routes.stand.start);
       page('vote', redirectToVote);
       page('vote/:issue', routes.vote.start);
 

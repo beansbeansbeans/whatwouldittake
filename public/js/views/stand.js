@@ -11,7 +11,7 @@ var viewState = {
 
 var dimensions = {};
 
-class voteView extends view {
+class standView extends view {
   start(ctx) {
     super.start();
 
@@ -32,11 +32,7 @@ class voteView extends view {
   }
 
   handleClick(e) {
-    if(e.target.id === "agree-button") {
-      page.show('/stands/' + viewState.issue.slug + '/aff');
-    } else if(e.target.id === "disagree-button") {
-      page.show('/stands/' + viewState.issue.slug + '/neg');
-    }
+    
   }
 
   mount() {
@@ -51,13 +47,11 @@ class voteView extends view {
 
   render() {
     return h('div#index', [
-      h('h1', 'Statement:'),
+      h('h1', 'i stand with:'),
       h('div', viewState.issue.slug),
-      h('div', viewState.issue.aff),
-      h('div#agree-button', 'I agree'),
-      h('div#disagree-button', 'I disagree')
+      h('div', viewState.issue.aff)
     ]);
   }
 }
 
-module.exports = new voteView();
+module.exports = new standView();
