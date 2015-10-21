@@ -54,6 +54,12 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         done();
       });
+    },
+    (done) => {
+      api.get('/issues', (err, data) => {
+        state.set("issues", data.data);
+        done();
+      });
     }
   ], loaded);
 
