@@ -33,9 +33,27 @@ class voteView extends view {
 
   handleClick(e) {
     if(e.target.id === "agree-button") {
-      page.show('/stands/' + viewState.issue.slug + '/aff');
+      if(state.get("user") !== null) {
+        api.post('/vote', {
+          id: viewState.issue._id,
+          stand: 'aff'
+        }, () => {
+          page.show('/stands/' + viewState.issue.slug + '/aff');
+        });        
+      } else {
+        page.show('/stands/' + viewState.issue.slug + '/aff');
+      }
     } else if(e.target.id === "disagree-button") {
-      page.show('/stands/' + viewState.issue.slug + '/neg');
+      if(state.get("user") !== null) {
+        api.post('/vote', {
+          id: viewState.issue._id,
+          stand: 'neg'
+        }, () => {
+          page.show('/stands/' + viewState.issue.slug + '/neg');
+        });        
+      } else {
+        page.show('/stands/' + viewState.issue.slug + '/neg');
+      }
     }
   }
 
