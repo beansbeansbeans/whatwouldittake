@@ -18,6 +18,7 @@ class standView extends view {
     _.bindAll(this, 'handleClick');
 
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
+    viewState.position = ctx.params.side;
     this.updateState();
 
     mediator.subscribe("window_click", this.handleClick);
@@ -49,7 +50,7 @@ class standView extends view {
     return h('div#index', [
       h('h1', 'i stand with:'),
       h('div', viewState.issue.slug),
-      h('div', viewState.issue.aff)
+      h('div', viewState.issue[viewState.position])
     ]);
   }
 }
