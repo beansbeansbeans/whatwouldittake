@@ -41,7 +41,8 @@ class voteView extends view {
         api.post('/vote', {
           id: viewState.issue._id,
           stand: 'aff'
-        }, () => {
+        }, (data) => {
+          api.setCache("user", data.data);
           page.show('/stands/' + viewState.issue.slug + '/aff');
         });        
       } else {
@@ -52,7 +53,8 @@ class voteView extends view {
         api.post('/vote', {
           id: viewState.issue._id,
           stand: 'neg'
-        }, () => {
+        }, (data) => {
+          api.setCache("user", data.data);
           page.show('/stands/' + viewState.issue.slug + '/neg');
         });        
       } else {

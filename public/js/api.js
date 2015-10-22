@@ -5,6 +5,9 @@ module.exports = {
   setURL(url) {
     baseURL = url;
   },
+  setCache(prop, val) {
+    cache[prop] = val;
+  },
   clearCache(prop) {
     if(typeof prop === 'undefined') {
       cache = {};
