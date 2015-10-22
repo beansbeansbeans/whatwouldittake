@@ -68,7 +68,10 @@ class voteView extends view {
   }
 
   render() {
-    var userStand = _.findWhere(state.get("user").stands, {id: viewState.issue._id});
+    var userStand = null;
+    if(state.get("user") !== null) {
+      userStand = _.findWhere(state.get("user").stands, {id: viewState.issue._id});
+    }
 
     return h('div#vote-page', [
       h('h1', 'Statement:'),
