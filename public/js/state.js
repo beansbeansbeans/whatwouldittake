@@ -1,4 +1,5 @@
 var state = {
+  anonymous_activity: {},
   dimensions: {},
   page: 0,
   page_limit: Infinity,

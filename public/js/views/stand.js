@@ -48,11 +48,10 @@ class standView extends view {
 
   render() {
     var frame = "Some people believe that:";
-    if(state.get("user")) {
-      var issue = _.findWhere(state.get("user").stands, {id: viewState.issue._id});
-      if(issue && issue.stand === viewState.position) {
-        frame = "You believe that:";
-      }
+    var user = state.get("user") || state.get("anonymous_activity");
+    var issue = _.findWhere(user.stands, {id: viewState.issue._id});
+    if(issue && issue.stand === viewState.position) {
+      frame = "You believe that:";
     }
 
     return h('div#index', [

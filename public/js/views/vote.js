@@ -46,6 +46,15 @@ class voteView extends view {
           page.show('/stands/' + viewState.issue.slug + '/aff');
         });        
       } else {
+        var anonymous_activity = state.get("anonymous_activity");
+        if(!anonymous_activity.stands) {
+          anonymous_activity.stands = [];
+        }
+        anonymous_activity.stands.push({
+          id: viewState.issue._id,
+          stand: 'aff'
+        });
+        state.set("anonymous_activity", anonymous_activity);
         page.show('/stands/' + viewState.issue.slug + '/aff');
       }
     } else if(e.target.id === "disagree-button") {
@@ -58,6 +67,15 @@ class voteView extends view {
           page.show('/stands/' + viewState.issue.slug + '/neg');
         });        
       } else {
+        var anonymous_activity = state.get("anonymous_activity");
+        if(!anonymous_activity.stands) {
+          anonymous_activity.stands = [];
+        }
+        anonymous_activity.stands.push({
+          id: viewState.issue._id,
+          stand: 'neg'
+        });
+        state.set("anonymous_activity", anonymous_activity);
         page.show('/stands/' + viewState.issue.slug + '/neg');
       }
     }
