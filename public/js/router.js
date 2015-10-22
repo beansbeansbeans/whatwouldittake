@@ -16,10 +16,6 @@ var previousRoute;
 var getRandomIssueSlug = () => state.get("issues")[Math.round(Math.random() * (state.get("issues").length - 1))].slug;
 var getRandomPosition = () => Math.random() > 0.5 ? 'aff' : 'neg';
 
-var redirectToVote = () => {
-  page.show('vote/' + getRandomIssueSlug());
-};
-
 module.exports = {
   initialize() {
     mediator.subscribe("loaded", () => {
@@ -45,7 +41,7 @@ module.exports = {
         if(state.get("user") !== null) {
           page.show('me');
         } else {
-          redirectToVote();
+          page.redirect('/vote');
         }
       });
 
@@ -61,9 +57,8 @@ module.exports = {
         page.show('stands/' + ctx.params.issue + '/' + getRandomPosition());
       });
       page('stands/:issue/:side', routes.stand.start);
-      page('vote', redirectToVote);
-      page('vote/:issue', routes.vote.start);
-
+      page('vote', routes.vote.start);
+      page('vote/:issue', routes.vote.inflate);
       page();
     });
 

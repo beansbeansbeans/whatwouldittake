@@ -15,12 +15,16 @@ class voteView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick');
-
-    viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
-    this.updateState();
+    _.bindAll(this, 'handleClick', 'inflate');
 
     mediator.subscribe("window_click", this.handleClick);
+
+    page.redirect('/vote/' + state.get("issues")[Math.round(Math.random() * (state.get("issues").length - 1))].slug);
+  }
+
+  inflate(ctx) {
+    viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
+    this.updateState();
   }
 
   didRender() {

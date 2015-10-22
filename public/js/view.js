@@ -20,8 +20,11 @@ class view {
     this.didRender = this.didRender.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.mount = this.mount.bind(this);
+    this.inflate = this.inflate.bind(this);
     this.updateState = this.updateState.bind(this);
   }
+
+  inflate() {}
 
   didRender() {}
 
