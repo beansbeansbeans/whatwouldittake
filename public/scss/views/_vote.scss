@@ -1,0 +1,7 @@
+#vote-page {
+  .button {
+    &[data-active="true"] {
+      border: solid 2px $bittersweet;
+    }
+  }
+}

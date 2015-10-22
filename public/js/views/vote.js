@@ -68,12 +68,22 @@ class voteView extends view {
   }
 
   render() {
-    return h('div#index', [
+    var userStand = _.findWhere(state.get("user").stands, {id: viewState.issue._id});
+
+    return h('div#vote-page', [
       h('h1', 'Statement:'),
       h('div', viewState.issue.slug),
       h('div', viewState.issue.aff),
-      h('div#agree-button', 'I agree'),
-      h('div#disagree-button', 'I disagree')
+      h('div#agree-button.button', {
+        dataset: {
+          active: userStand && userStand.stand === 'aff'
+        }
+      }, 'I agree'),
+      h('div#disagree-button.button', {
+        dataset: {
+          active: userStand && userStand.stand === 'neg'
+        }
+      }, 'I disagree')
     ]);
   }
 }
