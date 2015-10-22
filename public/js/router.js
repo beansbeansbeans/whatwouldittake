@@ -58,7 +58,7 @@ module.exports = {
       });
       page('stands/:issue/:side', routes.stand.start);
       page('vote', routes.vote.start);
-      page('vote/:issue', routes.vote.inflate);
+      page('vote/:issue', routes.vote.start);
       page();
     });
 
