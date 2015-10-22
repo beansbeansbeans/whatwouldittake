@@ -63,7 +63,7 @@ class navView extends view {
       }),
       h('div.contents', [
         h('li#logo', [
-          h('a', { href: './'}, 'What would it take?')
+          h('a', { href: './issues'}, 'What would it take?')
         ]),
         logout,
         profile,
