@@ -33,7 +33,27 @@ class standView extends view {
   }
 
   handleClick(e) {
-    
+    if(e.target.id === 'convert-belief') {
+      var stand = {
+        id: viewState.issue._id,
+        stand: viewState.position
+      };
+
+      if(state.get("user") !== null) {
+        api.post('/vote', stand, (data) => {
+          api.setCache("user", data.data);
+          this.updateState();
+        });        
+      } else {
+        var anonymous_activity = state.get("anonymous_activity");
+        if(!anonymous_activity.stands) {
+          anonymous_activity.stands = [];
+        }
+        anonymous_activity.stands.push(stand);
+        state.set("anonymous_activity", anonymous_activity);
+        this.updateState();
+      }
+    }
   }
 
   mount() {
@@ -47,17 +67,22 @@ class standView extends view {
   }
 
   render() {
-    var frame = "Some people believe that:";
+    var convertButton;
+    var frame;
     var user = state.get("user") || state.get("anonymous_activity");
     var issue = _.findWhere(user.stands, {id: viewState.issue._id});
     if(issue && issue.stand === viewState.position) {
       frame = "You believe that:";
+    } else {
+      frame = "Some people believe that:";
+      convertButton = h('div.button#convert-belief', 'I believe this');
     }
 
     return h('div#index', [
       h('h1', frame),
       h('div', viewState.issue.slug),
-      h('div', viewState.issue[viewState.position])
+      h('div', viewState.issue[viewState.position]),
+      convertButton
     ]);
   }
 }
