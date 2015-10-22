@@ -4,8 +4,7 @@ var mediator = require('../mediator');
 var view = require('../view');
 
 var meState = {
-  active: 'stories',
-  user: {}
+  active: 'stories'
 };
 
 class meView extends view {
@@ -39,31 +38,7 @@ class meView extends view {
   }
 
   render() {
-    var stories = [];
-
-    if(!_.isEmpty(meState.user)) {
-      if(meState.active === 'stories') {
-        stories = meState.user.stories.map((d, i) => {
-          return snippet.render(d, i);
-        });
-      } else {
-        stories = meState.user.likes.map((d, i) => {
-          return snippet.render(d, i);
-        });
-      }      
-    }
-
-    return h('div#me-view', {
-      dataset: { active: meState.active }
-    }, [
-      h('div.your-stories', {
-        dataset: { toggle: 'stories' }
-      }, 'stories'),
-      h('div.your-likes', {
-        dataset: { toggle: 'likes' }
-      }, 'likes'),
-      h('ul.stories', stories)
-    ]);
+    return h('div#me-view', meState.user ? meState.user.username : "");
   }
 }
 

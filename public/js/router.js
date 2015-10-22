@@ -42,7 +42,11 @@ module.exports = {
         if(context.pathname.indexOf("#!") !== -1) {
           page.redirect(context.pathname.slice(3));
         }
-        redirectToVote();
+        if(state.get("user") !== null) {
+          page.show('me');
+        } else {
+          redirectToVote();
+        }
       });
 
       page('login', routes.login.start);
