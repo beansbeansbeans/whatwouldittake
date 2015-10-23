@@ -43,7 +43,6 @@ class standView extends view {
 
       if(state.get("user") !== null) {
         api.post('/vote', stand, (data) => {
-          api.setCache("user", data.data);
           state.set("user", data.data);
           this.updateState();
         });        
@@ -66,6 +65,11 @@ class standView extends view {
         moreInfo: d.qs("#contribute .more-info textarea").value
       }, (data) => {
         viewState.issue = data.data;
+        var issues = state.get("issues");
+        var thisIssueIndex = _.findIndex(issues, x => x.slug === viewState.issue.slug);
+        issues[thisIssueIndex] = data.data;
+        state.set("issues", issues);
+        api.setCache("/issues", issues);
         this.updateState();
       });
     } else if(closestCondition) {
