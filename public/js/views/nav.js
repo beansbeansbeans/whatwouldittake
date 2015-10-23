@@ -38,15 +38,11 @@ class navView extends view {
 
   render() {
     var authenticated = state.get('user') !== null,
-      profile,
       login,
       signup,
       logout;
 
     if(authenticated) {
-      profile = h('li#me', [
-        h('a', { href: './me' }, 'me')
-      ]);
       logout = h('div#logout-button', 'logout');
     } else {
       login = h('li#login', [
@@ -66,7 +62,6 @@ class navView extends view {
           h('a', { href: './issues'}, 'What would it take?')
         ]),
         logout,
-        profile,
         login,
         signup,
         h('div#go-to-about', [

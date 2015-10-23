@@ -7,7 +7,6 @@ var routes = {
   stand: require('./views/stand'),
   index: require('./views/index'),
   issues: require('./views/issues'),
-  me: require('./views/me'),
   about: require('./views/about')
 };
 
@@ -39,7 +38,7 @@ module.exports = {
           page.redirect(context.pathname.slice(3));
         }
         if(state.get("user") !== null) {
-          page.show('me');
+          page.show('/issues');
         } else {
           page.redirect('/vote');
         }
@@ -47,7 +46,6 @@ module.exports = {
 
       page('login', routes.login.start);
       page('signup', routes.signup.start);
-      page('me', routes.me.start);
       page('about', routes.about.start);
       page('issues', routes.issues.start);
       page('stands', () => {
