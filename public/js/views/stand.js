@@ -4,6 +4,7 @@ var state = require('../state');
 var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
+var helpers = require('../util/belief_helpers');
 
 var viewState = {
   issue: {}
@@ -85,12 +86,10 @@ class standView extends view {
   render() {
     var convertButton;
     var frame;
-    var user = state.get("user") || state.get("anonymous_activity");
-    var issue = _.findWhere(user.stands, {id: viewState.issue._id});
     var conditions;
     var conditionsTitle;
 
-    if(issue && issue.stand === viewState.position) {
+    if(helpers.isBeliever(viewState.issue, viewState.position)) {
       frame = "You believe that:";
       conditionsTitle = "What would it take to change your mind?";
     } else {
