@@ -38,6 +38,18 @@ class conditionView extends view {
         helpers.refreshIssue(data.data);
         this.updateState();
       });
+    } else if(e.target.id === "vote-yes-on-condition") {
+      if(state.get("user") !== null) {
+        api.post("/vote-on-condition", {
+          
+        }, (data) => {
+
+        });
+      } else {
+        // show modal asking them to authenticate
+      }
+    } else if(e.target.id === "vote-no-on-condition") {
+      page.show('/stands/' + viewState.issue.slug + '/' + viewState.position);
     }
   }
 
@@ -49,6 +61,7 @@ class conditionView extends view {
   render() {
     var submitProof;
     var proofs;
+    var voteOnCondition;
 
     if(!helpers.isBeliever(viewState.issue, viewState.position)) {
       submitProof = h('div#submit-proof', [
@@ -57,6 +70,11 @@ class conditionView extends view {
           h('textarea')
         ]),
         h('div.button#submit-proof-button', 'Submit')
+      ]);
+    } else {
+      voteOnCondition = h('div#vote-on-condition', [
+        h('div.button#vote-yes-on-condition', 'Yes'),
+        h('div.button#vote-no-on-condition', 'No')
       ]);
     }
 
@@ -70,6 +88,7 @@ class conditionView extends view {
 
     return h('#condition-view', [
       h('div.title', viewState.condition.tagline),
+      voteOnCondition,
       submitProof,
       h('div.proofs-wrapper', [
         h('div.title', 'Proofs'),
