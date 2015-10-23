@@ -65,11 +65,7 @@ class standView extends view {
         moreInfo: d.qs("#contribute .more-info textarea").value
       }, (data) => {
         viewState.issue = data.data;
-        var issues = state.get("issues");
-        var thisIssueIndex = _.findIndex(issues, x => x.slug === viewState.issue.slug);
-        issues[thisIssueIndex] = data.data;
-        state.set("issues", issues);
-        api.setCache("/issues", issues);
+        helpers.refreshIssue(data.data);
         this.updateState();
       });
     } else if(closestCondition) {
