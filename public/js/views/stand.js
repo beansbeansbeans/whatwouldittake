@@ -85,12 +85,15 @@ class standView extends view {
     var user = state.get("user") || state.get("anonymous_activity");
     var issue = _.findWhere(user.stands, {id: viewState.issue._id});
     var conditions;
+    var conditionsTitle;
 
     if(issue && issue.stand === viewState.position) {
       frame = "You believe that:";
+      conditionsTitle = "What would it take to change your mind?";
     } else {
       frame = "Some people believe that:";
       convertButton = h('div.button#convert-belief', 'I believe this');
+      conditionsTitle = "What could it take to change their minds?";
     }
 
     if(!_.isEmpty(viewState.issue) && viewState.issue.conditions[viewState.position]) {
@@ -119,7 +122,10 @@ class standView extends view {
         ]),
         h('div.button#submit-what-would-it-take', 'Submit')
       ]),
-      conditions
+      h('div.conditions-wrapper', [
+        h('div.title', conditionsTitle),
+        conditions
+      ])
     ]);
   }
 }
