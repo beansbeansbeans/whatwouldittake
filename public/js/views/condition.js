@@ -41,9 +41,14 @@ class conditionView extends view {
     } else if(e.target.id === "vote-yes-on-condition") {
       if(state.get("user") !== null) {
         api.post("/vote-on-condition", {
-          
+          id: viewState.issue._id,
+          stand: viewState.position,
+          conditionID: viewState.condition._id
         }, (data) => {
-
+          viewState.issue = data.data;
+          viewState.condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
+          helpers.refreshIssue(data.data);
+          this.updateState();
         });
       } else {
         // show modal asking them to authenticate
