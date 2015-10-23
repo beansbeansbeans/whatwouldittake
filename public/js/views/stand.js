@@ -54,6 +54,8 @@ class standView extends view {
         state.set("anonymous_activity", anonymous_activity);
         this.updateState();
       }
+    } else if(e.target.id === 'see-other-side') {
+      page.show('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
     } else if(e.target.id === 'submit-what-would-it-take') {
       api.post('/contribute', {
         id: viewState.issue._id,
@@ -103,6 +105,7 @@ class standView extends view {
       h('h1', frame),
       h('div', viewState.issue.slug),
       h('div', viewState.issue[viewState.position]),
+      h('div.button#see-other-side', 'See the other side'),
       convertButton,
       h('div#contribute', [
         h('div', 'Contribute a what-would-it-take'),
