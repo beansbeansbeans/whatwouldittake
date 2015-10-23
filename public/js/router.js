@@ -3,6 +3,7 @@ var mediator = require('./mediator');
 var routes = {
   login: require('./views/login'),
   signup: require('./views/signup'),
+  condition: require('./views/condition'),
   vote: require('./views/vote'),
   stand: require('./views/stand'),
   index: require('./views/index'),
@@ -57,6 +58,7 @@ module.exports = {
       page('stands/:issue/:side', routes.stand.start);
       page('vote', routes.vote.start);
       page('vote/:issue', routes.vote.start);
+      page('stands/:issue/:side/:condition', routes.condition.start);
       page();
     });
 

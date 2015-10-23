@@ -33,6 +33,7 @@ class standView extends view {
   }
 
   handleClick(e) {
+    var closestCondition = e.target.closest(".condition");
     if(e.target.id === 'convert-belief') {
       var stand = {
         id: viewState.issue._id,
@@ -66,6 +67,8 @@ class standView extends view {
         viewState.issue = data.data;
         this.updateState();
       });
+    } else if(closestCondition) {
+      page.show('/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id);
     }
   }
 
@@ -98,7 +101,11 @@ class standView extends view {
 
     if(!_.isEmpty(viewState.issue) && viewState.issue.conditions[viewState.position]) {
       conditions = viewState.issue.conditions[viewState.position].map((d) => {
-        return h('div.condition', [
+        return h('div.condition', {
+          dataset: {
+            id: d._id
+          }
+        }, [
           h('div', d.tagline)
         ]);
       });
