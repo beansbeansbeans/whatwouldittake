@@ -104,7 +104,7 @@ class standView extends view {
       });
     }
 
-    return h('div#index', [
+    return h('div#stand-view', [
       h('h1', frame),
       h('div', viewState.issue.slug),
       h('div', viewState.issue[viewState.position]),
