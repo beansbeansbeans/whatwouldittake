@@ -71,6 +71,7 @@ class conditionView extends view {
     var beliefAtStake = state.get("user") && viewState.condition.dependents && !!_.findWhere(viewState.condition.dependents, {
       id: state.get("user")._id
     });
+    var debug;
 
     if(!helpers.isBeliever(viewState.issue, viewState.position)) {
       submitProof = h('div#submit-proof', [
@@ -80,11 +81,15 @@ class conditionView extends view {
         ]),
         h('div.button#submit-proof-button', 'Submit')
       ]);
-    } else {
+    } else if(!beliefAtStake) {
       voteOnCondition = h('div#vote-on-condition', [
         h('div.button#vote-yes-on-condition', 'Yes'),
         h('div.button#vote-no-on-condition', 'No')
       ]);
+    }
+
+    if(beliefAtStake) {
+      debug = h('div', 'Your belief is at stake.');
     }
 
     if(viewState.condition.proofs && (!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
@@ -97,6 +102,7 @@ class conditionView extends view {
 
     return h('#condition-view', [
       h('div.title', viewState.condition.tagline),
+      debug,
       voteOnCondition,
       submitProof,
       h('div.proofs-wrapper', [
