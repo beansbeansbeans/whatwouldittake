@@ -40,6 +40,7 @@ class conditionView extends view {
       });
     } else if(e.target.id === "vote-yes-on-condition") {
       if(state.get("user") !== null) {
+        // if() {} // only allow voting if you're not already a dependent
         api.post("/vote-on-condition", {
           id: viewState.issue._id,
           stand: viewState.position,
@@ -67,6 +68,9 @@ class conditionView extends view {
     var submitProof;
     var proofs;
     var voteOnCondition;
+    var beliefAtStake = state.get("user") && viewState.condition.dependents && !!_.findWhere(viewState.condition.dependents, {
+      id: state.get("user")._id
+    });
 
     if(!helpers.isBeliever(viewState.issue, viewState.position)) {
       submitProof = h('div#submit-proof', [
@@ -83,7 +87,7 @@ class conditionView extends view {
       ]);
     }
 
-    if(viewState.condition.proofs) {
+    if(viewState.condition.proofs && (!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
       proofs = viewState.condition.proofs.map((d) => {
         return h('li.proof', [
           h('div.description', d.description)
