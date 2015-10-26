@@ -63,6 +63,18 @@ class conditionView extends view {
       this.updateState();
     } else if(e.target.dataset.action === 'signup') {
       page.show('/signup');
+    } else if(e.target.classList.contains("vote")) {
+      var closestProof = e.target.closest(".proof");
+      api.post('/convinced-by-proof', {
+        id: viewState.issue._id,
+        stand: viewState.position,
+        conditionID: viewState.condition._id,
+        proofID: closestProof.dataset.id
+      }, (data) => {
+        console.log("DONE");
+        console.log(data);
+        page.show('/stands/' + viewState.issue.slug + '/' + viewState.position)
+      });
     }
   }
 
@@ -123,8 +135,11 @@ class conditionView extends view {
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
       if(viewState.condition.proofs) {
         proofs = viewState.condition.proofs.map((d) => {
-          return h('li.proof', [
-            h('div.description', d.description)
+          return h('li.proof', {
+            dataset: { id: d._id }
+          }, [
+            h('div.description', d.description),
+            h('div.vote.button', "I'm convinced")
           ]);
         });        
       } else {
