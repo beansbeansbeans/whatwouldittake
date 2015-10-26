@@ -4,11 +4,13 @@ var mediator = require('../mediator');
 var view = require('../view');
 var auth = require('../auth');
 var state = require('../state');
+var modalSubview = require('./subviews/modal');
 var helpers = require('../util/belief_helpers');
 
 var viewState = {
   issue: {},
-  condition: {}
+  condition: {},
+  anonymousUserAttemptedVote: false
 };
 
 class conditionView extends view {
@@ -51,10 +53,16 @@ class conditionView extends view {
           this.updateState();
         });
       } else {
-        // show modal asking them to authenticate
+        viewState.anonymousUserAttemptedVote = true;
+        this.updateState();
       }
     } else if(e.target.id === "vote-no-on-condition") {
       page.show('/stands/' + viewState.issue.slug + '/' + viewState.position);
+    } else if(e.target.dataset.action === 'cancel-signup') {
+      viewState.anonymousUserAttemptedVote = false;
+      this.updateState();
+    } else if(e.target.dataset.action === 'signup') {
+      page.show('/signup');
     }
   }
 
@@ -70,7 +78,28 @@ class conditionView extends view {
     var beliefAtStake = state.get("user") && viewState.condition.dependents && !!_.findWhere(viewState.condition.dependents, {
       id: state.get("user")._id
     });
+    var modal;
     var debug;
+
+    if(!state.get("user") && viewState.anonymousUserAttemptedVote) {
+      modal = modalSubview.render({
+        title: "You must register in order to put your stake in this condition.",
+        buttons: [
+          {
+            dataset: {
+              action: 'signup'
+            },
+            text: 'Signup'
+          },
+          {
+            dataset: {
+              action: 'cancel-signup'
+            },
+            text: 'Cancel'
+          }
+        ]
+      });
+    }
 
     if(!helpers.isBeliever(viewState.issue, viewState.position)) {
       submitProof = h('div#submit-proof', [
@@ -107,7 +136,8 @@ class conditionView extends view {
       h('div.proofs-wrapper', [
         h('div.title', 'Proofs'),
         proofs
-      ])
+      ]),
+      modal
     ]);
   }
 }
