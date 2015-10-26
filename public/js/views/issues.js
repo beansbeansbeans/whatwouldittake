@@ -33,15 +33,21 @@ class issuesView extends view {
   }
 
   render() {
-    return h('div#issues-view', [
-      h('div', 'The issues'),
-      viewState.issues.map((d) => {
+    var issues;
+
+    if(viewState.issues.length) {
+      issues = viewState.issues.map((d) => {
         return h('div.issue', {
           dataset: {
             slug: d.slug
           }
         }, d.slug);
-      })
+      });
+    }
+
+    return h('div#issues-view', [
+      h('div', 'The issues'),
+      issues
     ]);
   }
 }
