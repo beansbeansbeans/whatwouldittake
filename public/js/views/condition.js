@@ -120,12 +120,16 @@ class conditionView extends view {
       debug = h('div', 'Your belief is at stake.');
     }
 
-    if(viewState.condition.proofs && (!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
-      proofs = viewState.condition.proofs.map((d) => {
-        return h('li.proof', [
-          h('div.description', d.description)
-        ]);
-      });
+    if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
+      if(viewState.condition.proofs) {
+        proofs = viewState.condition.proofs.map((d) => {
+          return h('li.proof', [
+            h('div.description', d.description)
+          ]);
+        });        
+      } else {
+        proofs = h('div', 'No proofs available yet');
+      }
     }
 
     return h('#condition-view', [
