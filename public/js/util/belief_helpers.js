@@ -13,6 +13,8 @@ module.exports = {
     var thisIssueIndex = _.findIndex(issues, x => x.slug === issue.slug);
     issues[thisIssueIndex] = issue;
     state.set("issues", issues);
-    api.setCache("/issues", issues);
+    api.setCache("/issues", {
+      data: issues
+    });
   }
 }
