@@ -51,7 +51,14 @@ class standView extends view {
         if(!anonymous_activity.stands) {
           anonymous_activity.stands = [];
         }
-        anonymous_activity.stands.push(stand);
+
+        var matchingStand = _.findWhere(anonymous_activity.stands, {id: stand.id });
+        if(matchingStand) {
+          matchingStand.stand = viewState.position;
+        } else {
+          anonymous_activity.stands.push(stand);
+        }
+
         state.set("anonymous_activity", anonymous_activity);
         this.updateState();
       }
