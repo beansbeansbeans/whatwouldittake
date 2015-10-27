@@ -134,7 +134,11 @@ class conditionView extends view {
 
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
       if(viewState.condition.proofs && viewState.condition.proofs.length) {
-        proofs = viewState.condition.proofs.map((d) => {
+        proofs = viewState.condition.proofs.sort((a, b) => {
+          if(a.believers.length > b.believers.length) { return -1; }
+          if(a.believers.length < b.believers.length) { return 1; }
+          return 0;
+        }).map((d) => {
           return h('li.proof', {
             dataset: { id: d._id }
           }, [

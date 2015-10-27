@@ -112,7 +112,11 @@ class standView extends view {
     }
 
     if(!_.isEmpty(viewState.issue) && viewState.issue.conditions[viewState.position]) {
-      conditions = viewState.issue.conditions[viewState.position].map((d) => {
+      conditions = viewState.issue.conditions[viewState.position].sort((a, b) => {
+        if(a.dependents.length > b.dependents.length) { return -1; }
+        if(a.dependents.length < b.dependents.length) { return 1; }
+        return 0;
+      }).map((d) => {
         var pendingCount = d.dependents.filter(x => x.status === 'pending').length;
         var confirmedCount = d.dependents.filter(x => x.status === 'confirmed').length;
 
