@@ -4,6 +4,7 @@ var state = require('../state');
 var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
+var helpers = require('../util/belief_helpers');
 
 var viewState = {
   issue: {}
@@ -42,7 +43,8 @@ class voteView extends view {
           id: viewState.issue._id,
           stand: 'aff'
         }, (data) => {
-          state.set("user", data.data);
+          helpers.refreshIssue(data.data.issue);
+          state.set("user", data.data.user);
           page.show('/stands/' + viewState.issue.slug + '/aff');
         });        
       } else {
@@ -63,7 +65,8 @@ class voteView extends view {
           id: viewState.issue._id,
           stand: 'neg'
         }, (data) => {
-          state.set("user", data.data);
+          helpers.refreshIssue(data.data.issue);
+          state.set("user", data.data.user);
           page.show('/stands/' + viewState.issue.slug + '/neg');
         });        
       } else {

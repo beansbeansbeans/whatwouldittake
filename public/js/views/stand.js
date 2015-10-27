@@ -43,7 +43,9 @@ class standView extends view {
 
       if(state.get("user") !== null) {
         api.post('/vote', stand, (data) => {
-          state.set("user", data.data);
+          helpers.refreshIssue(data.data.issue);
+          state.set("user", data.data.user);
+          viewState.issue = data.data.issue;
           this.updateState();
         });        
       } else {
