@@ -9,6 +9,7 @@ module.exports = {
     return matchingIssue && matchingIssue.stand === position;
   },
   isFormerBeliever(issue, position) {
+    if(!state.get("user")) { return false; }
     var matchingIssue = _.findWhere(state.get("user").stands, {id: issue._id});
     return matchingIssue && matchingIssue.previous;
   },
