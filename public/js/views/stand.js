@@ -111,12 +111,17 @@ class standView extends view {
 
     if(!_.isEmpty(viewState.issue) && viewState.issue.conditions[viewState.position]) {
       conditions = viewState.issue.conditions[viewState.position].map((d) => {
+        var pendingCount = d.dependents.filter(x => x.status === 'pending').length;
+        var confirmedCount = d.dependents.filter(x => x.status === 'confirmed').length;
+
         return h('div.condition', {
           dataset: {
             id: d._id
           }
         }, [
-          h('div', d.tagline)
+          h('div.tagline', d.tagline),
+          h('div', pendingCount + " people's opinions are at stake"),
+          h('div', confirmedCount + " people have been convinced by this")
         ]);
       });
     }
