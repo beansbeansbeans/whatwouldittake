@@ -8,6 +8,10 @@ module.exports = {
 
     return matchingIssue && matchingIssue.stand === position;
   },
+  isFormerBeliever(issue, position) {
+    var matchingIssue = _.findWhere(state.get("user").stands, {id: issue._id});
+    return matchingIssue && matchingIssue.previous;
+  },
   refreshIssue(issue) {
     var issues = state.get("issues");
     var thisIssueIndex = _.findIndex(issues, x => x.slug === issue.slug);

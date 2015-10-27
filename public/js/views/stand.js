@@ -100,7 +100,11 @@ class standView extends view {
       frame = "You believe that:";
       conditionsTitle = "What would it take to change your mind?";
     } else {
-      frame = "Some people believe that:";
+      if(helpers.isFormerBeliever(viewState.issue, viewState.position)) {
+        frame = "Some people (you used to be among them) believe that:";
+      } else {
+        frame = "Some people believe that:";
+      }
       convertButton = h('div.button#convert-belief', 'I believe this');
       conditionsTitle = "What could it take to change their minds?";
     }
