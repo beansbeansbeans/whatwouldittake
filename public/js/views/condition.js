@@ -71,7 +71,8 @@ class conditionView extends view {
         conditionID: viewState.condition._id,
         proofID: closestProof.dataset.id
       }, (data) => {
-        state.set("user", data.data);
+        helpers.refreshIssue(data.data.issue);
+        state.set("user", data.data.user);
         page.show('/stands/' + viewState.issue.slug + '/' + viewState.position)
       });
     }
