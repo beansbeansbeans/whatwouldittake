@@ -139,6 +139,7 @@ class conditionView extends view {
             dataset: { id: d._id }
           }, [
             h('div.description', d.description),
+            h('div', d.believers.length + ' people were convinced by this'),
             h('div.vote.button', "I'm convinced")
           ]);
         });        
