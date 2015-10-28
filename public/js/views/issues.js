@@ -22,8 +22,9 @@ class issuesView extends view {
   }
 
   handleClick(e) {
-    if(e.target.classList.contains('issue')) {
-      page.show('vote/' + e.target.dataset.slug);
+    var issue = e.target.closest('.issue');
+    if(issue) {
+      page.show('vote/' + issue.dataset.slug);
     }
   }
 
