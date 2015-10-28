@@ -33,7 +33,7 @@ class navView extends view {
       logout;
 
     if(authenticated) {
-      logout = h('div#logout-button', 'logout');
+      logout = h('li#logout-button', 'logout');
     } else {
       login = h('li#login', [
         h('a', { href: './login' }, 'login')
