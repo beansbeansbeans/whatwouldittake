@@ -41,7 +41,10 @@ class issuesView extends view {
           dataset: {
             slug: d.slug
           }
-        }, d.slug);
+        }, [
+          h('div.slug', d.slug),
+          h("div.description", d.description)
+        ]);
       });
     }
 
