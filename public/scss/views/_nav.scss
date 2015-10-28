@@ -6,9 +6,23 @@
   text-transform: uppercase;
 }
 
+%active-nav-link {
+  border-bottom: solid 2px $border-color;
+}
+
 nav {
   list-style: none;
   @extend %header-font;
+  [data-active-route="issues"] & {
+    #go-to-issues {
+      @extend %active-nav-link;
+    }
+  }
+  [data-active-route="about"] & {
+    #go-to-about {
+      @extend %active-nav-link;
+    }
+  }
   .contents {
     padding: 2rem 0;
     width: $content-width * 1%;

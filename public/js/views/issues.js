@@ -16,7 +16,7 @@ class issuesView extends view {
     api.get('/issues', (err, data) => {
       viewState.issues = data.data;
       this.updateState();
-    });
+    });    
 
     mediator.subscribe("window_click", this.handleClick);
   }
