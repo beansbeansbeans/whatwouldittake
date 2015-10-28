@@ -46,7 +46,7 @@ class issuesView extends view {
     }
 
     return h('div#issues-view', [
-      h('div', 'The issues'),
+      h('h1', 'The issues'),
       issues
     ]);
   }
