@@ -2,57 +2,48 @@
   font-weight: 100;
   line-height: 2.25rem;
   font-size: 0.8rem; 
-  color: $text-color;
+  color: $subdued-text-color;
   text-transform: uppercase;
 }
 
 nav {
   list-style: none;
   .contents {
-    border-bottom: solid 1px $border-color;
-    [data-active-route="story"] & {
-      border-bottom: dotted 1px $border-color;
-    }
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: $body-bg-color;
-    @extend %clearfix;
-    padding: 0.6rem 1rem;
-    z-index: 10;
+    padding: 2rem 0;
+    text-align: center;
     a {
       display: inline-block;
     }
     #logo {
-      float: left;
-      padding-top: 0.7rem;
       a {
-        @extend %header-font;
+        @extend %nav-link;
         text-transform: uppercase;
-        line-height: 1rem;
         color: $text-color;
         font-weight: 500;
-        font-size: 1.75rem;
+        &:after {
+          content: "  /";
+        }
       }
     }
-    #me, #logout-button, #login, #signup, #go-to-issues, #go-to-about {
-      float: right;
+    li {
+      display: inline-block;
       cursor: pointer;
     }
     #go-to-issues {
       .text {
-        margin-left: 0.2rem;
         @extend %nav-link;
         @include mobile-portrait-and-below {
           display: none;
         }
       }
     }
-    #login, #signup, #logout-button, #me, #go-to-about {
-      margin-left: 1rem;
+    li {
+      margin-left: 0.75rem;
       &, a {
         @extend %nav-link;       
+      }
+      &:first-of-type {
+        margin-left: 0;
       }
     }
   }

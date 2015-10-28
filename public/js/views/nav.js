@@ -11,7 +11,6 @@ class navView extends view {
 
     mediator.subscribe('auth_status_change', () => {
       this.updateState();
-      this.handleResize();
     });
 
     mediator.subscribe("window_click", (e) => {
@@ -23,17 +22,8 @@ class navView extends view {
     });
   }
 
-  handleResize() {
-    var dimensions = state.get('dimensions') || {};
-    dimensions.headerHeight = d.qs('nav .contents').getBoundingClientRect().height;
-
-    state.set('dimensions', dimensions);
-    this.updateState();
-  }
-
   mount() {
     super.mount();
-    this.handleResize();
   }
 
   render() {
@@ -54,22 +44,19 @@ class navView extends view {
     }
 
     return h('nav', [
-      h('div.spacer', {
-        style: { height: state.get('dimensions').headerHeight + 'px' }
-      }),
       h('div.contents', [
         h('li#logo', [
-          h('a', { href: './issues'}, 'What would it take?')
+          h('a', { href: './issues'}, 'WWIT')
         ]),
-        logout,
-        login,
-        signup,
-        h('div#go-to-about', [
+        h('li#go-to-about', [
           h('a', { href: './about' }, 'about')
         ]),
-        h('div#go-to-issues', [
+        h('li#go-to-issues', [
           h('a.text', { href: './issues' }, 'issues')
-        ])
+        ]),
+        login,
+        signup,
+        logout
       ])
     ]);
   }

@@ -10,6 +10,9 @@ $downy: #77C4D3;
 $harp: #DAEDE2;
 $amaranth: #EA2E49;
 
+$cod-gray: #191919;
+$bombay: #ACADAF;
+
 $gray: #8F8F8F;
 $wild-sand: #f6f6f6;
 $mine-shaft: #343434;
@@ -18,9 +21,9 @@ $mercury: #e9e9e9;
 $bittersweet: #FD7475;
 $padua: #ABE5CB;
 
-$body-bg-color: $wild-sand;
-$text-color: $gray;
-$subdued-text-color: $gray;
+$body-bg-color: white;
+$text-color: $cod-gray;
+$subdued-text-color: $bombay;
 $border-color: darken($mercury, 10%);
 
 // DIMENSIONS
