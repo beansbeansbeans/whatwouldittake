@@ -48,15 +48,15 @@ class navView extends view {
         h('li#logo', [
           h('a', { href: './issues'}, 'WWIT')
         ]),
+        login,
+        signup,
+        logout,
         h('li#go-to-about', [
           h('a', { href: './about' }, 'about')
         ]),
         h('li#go-to-issues', [
           h('a.text', { href: './issues' }, 'issues')
-        ]),
-        login,
-        signup,
-        logout
+        ])
       ])
     ]);
   }

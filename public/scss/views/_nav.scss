@@ -10,23 +10,23 @@ nav {
   list-style: none;
   .contents {
     padding: 2rem 0;
-    text-align: center;
+    width: $content-width * 1%;
+    margin: auto;
+    @extend %clearfix;
     a {
       display: inline-block;
     }
     #logo {
+      float: left;
       a {
         @extend %nav-link;
         text-transform: uppercase;
         color: $text-color;
         font-weight: 500;
-        &:after {
-          content: "  /";
-        }
       }
     }
     li {
-      display: inline-block;
+      float: right;
       cursor: pointer;
     }
     #go-to-issues {
