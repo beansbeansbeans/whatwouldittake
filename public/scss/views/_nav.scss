@@ -1,13 +1,14 @@
 %nav-link {
-  font-weight: 100;
+  font-weight: 500;
   line-height: 2.25rem;
   font-size: 0.8rem; 
-  color: $subdued-text-color;
+  color: $highlight-text-color;
   text-transform: uppercase;
 }
 
 nav {
   list-style: none;
+  @extend %header-font;
   .contents {
     padding: 2rem 0;
     width: $content-width * 1%;
@@ -21,8 +22,8 @@ nav {
       a {
         @extend %nav-link;
         text-transform: uppercase;
-        color: $text-color;
-        font-weight: 500;
+        color: $highlight-text-color;
+        font-weight: 700;
       }
     }
     li {

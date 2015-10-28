@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Merriweather:300);
+
 @font-face {
     font-family: Gotham;
     src: url("../fonts/Gotham-Book.ttf");
@@ -45,11 +47,11 @@
 }
 
 %body-font {
-    font-family: Gotham;
-    font-weight: 300;
-    color: $black;
+    font-family: Merriweather;
+    color: $subdued-text-color;
 }
 
 %header-font {
     font-family: Gotham;
+    color: $text-color;
 }
