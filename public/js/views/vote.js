@@ -109,9 +109,8 @@ class voteView extends view {
     }
 
     return h('div#vote-page', [
-      h('h1', 'Statement:'),
-      h('div', viewState.issue.slug),
-      h('div', viewState.issue.aff),
+      h('div.prompt', 'The belief:'),
+      h('h1', viewState.issue.aff),
       h('div#agree-button.button', {
         dataset: {
           active: userStand && userStand.stand === 'aff'

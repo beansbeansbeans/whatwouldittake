@@ -27,6 +27,7 @@
   @include border-radius(3px);
   cursor: pointer;
   text-transform: uppercase;
+  @extend %header-font;
   &[data-type="severe"] {
     color: white;
     border-color: $bittersweet;
