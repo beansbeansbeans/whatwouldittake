@@ -147,7 +147,7 @@ class standView extends view {
       ]),
       h('div.body', [
         h('div#contribute', [
-          h('div', 'Contribute a what-would-it-take'),
+          h('div', "Don't see anything convincing? Let us know what it would take."),
           h('div.input-container.tagline', [
             h('div.label', 'Tagline'),
             h('textarea')

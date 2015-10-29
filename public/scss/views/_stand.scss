@@ -41,18 +41,13 @@
     span {
       display: block;
     }
-    // span:first-of-type {
-      @extend %header-font;
-      font-size: 2.25rem;
-      letter-spacing: 2px;
-      font-weight: 700;
-      color: $highlight-text-color;      
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    // }
-    // span:last-of-type {
-    //   font-size: 1.5rem;
-    // }
+    @extend %header-font;
+    font-size: 2.25rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: $highlight-text-color;      
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
     text-align: center;
     margin: 3rem auto 4rem;
   }
