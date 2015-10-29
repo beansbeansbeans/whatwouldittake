@@ -21,6 +21,32 @@
   }
 }
 
+%label {
+  text-transform: uppercase;
+  @extend %header-font;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  color: $highlight-text-color;    
+  position: relative;
+  &:after {
+    content: "";
+    width: 2rem;
+    height: 2px;
+    background: $border-color;
+    position: absolute;
+    top: calc(100% + 0.8rem);
+    left: 50%;
+    margin-left: -1rem;
+  }
+}
+
+%text-h1 {
+  font-size: 1.3rem;
+  margin-top: 3rem;
+  margin-bottom: 2.5rem;
+}
+
 %auth-base {
   width: 50vw;
   padding-top: 4rem;
