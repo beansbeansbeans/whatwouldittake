@@ -1,10 +1,10 @@
 #stand-view {
-  width: $content-width * 1%;
-  margin: 3rem auto;
+  .header, .body {
+    width: $content-width * 1%;
+    margin: 3rem auto;    
+  }
   .header {
     text-align: center;
-    padding-bottom: 3rem;
-    border-bottom: solid 1px $border-color;
   }
   .prompt {
     @extend %label;
@@ -36,12 +36,14 @@
     }
   }
   .title {
+    padding: 3.5rem 0;
+    background: $alabaster;
     span {
       display: block;
     }
     // span:first-of-type {
       @extend %header-font;
-      font-size: 2.5rem;
+      font-size: 2.25rem;
       letter-spacing: 2px;
       font-weight: 700;
       color: $highlight-text-color;      
@@ -52,10 +54,10 @@
     //   font-size: 1.5rem;
     // }
     text-align: center;
-    margin: 4rem auto 4rem;
+    margin: 3rem auto 4rem;
   }
   .condition {
-    padding: 2rem;
+    padding: 2rem 0;
     cursor: pointer;
     .tagline {
       font-weight: bold;

@@ -145,20 +145,22 @@ class standView extends view {
         h('span', 'What would it take '),
         h('span', conditionsTitle)
       ]),
-      h('div#contribute', [
-        h('div', 'Contribute a what-would-it-take'),
-        h('div.input-container.tagline', [
-          h('div.label', 'Tagline'),
-          h('textarea')
+      h('div.body', [
+        h('div#contribute', [
+          h('div', 'Contribute a what-would-it-take'),
+          h('div.input-container.tagline', [
+            h('div.label', 'Tagline'),
+            h('textarea')
+          ]),
+          h('div.input-container.more-info', [
+            h('div.label', 'More information (optional)'),
+            h('textarea')
+          ]),
+          h('div.button#submit-what-would-it-take', 'Submit')
         ]),
-        h('div.input-container.more-info', [
-          h('div.label', 'More information (optional)'),
-          h('textarea')
-        ]),
-        h('div.button#submit-what-would-it-take', 'Submit')
-      ]),
-      h('div.conditions-wrapper', [
-        conditions
+        h('div.conditions-wrapper', [
+          conditions
+        ])
       ])
     ]);
   }
