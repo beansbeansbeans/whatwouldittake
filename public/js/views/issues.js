@@ -2,6 +2,8 @@ var h = require('virtual-dom/h');
 var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
+var helpers = require('../util/belief_helpers');
+var state = require('../state');
 
 var viewState = {
   issues: []
@@ -24,7 +26,17 @@ class issuesView extends view {
   handleClick(e) {
     var issue = e.target.closest('.issue');
     if(issue) {
-      page.show('vote/' + issue.dataset.slug);
+      var user = state.get("user");
+      var stand;
+      if(user) {
+        stand = _.findWhere(user.stands, {id: issue.dataset.id});
+      }
+
+      if(stand) {
+        page.show('stands/' + issue.dataset.slug + '/' + stand.stand);
+      } else {
+        page.show('vote/' + issue.dataset.slug);
+      }
     }
   }
 
@@ -40,6 +52,7 @@ class issuesView extends view {
       issues = viewState.issues.map((d) => {
         return h('div.issue', {
           dataset: {
+            id: d._id,
             slug: d.slug
           }
         }, [

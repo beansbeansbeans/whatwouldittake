@@ -23,13 +23,18 @@
 
 %auth-base {
   width: 50vw;
-  padding-top: 2rem;
+  padding-top: 4rem;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
   .title {
-    font-size: 3rem;
-    font-weight: 100;
-    margin-bottom: 2rem;
+    @extend %header-font;
+    color: $highlight-text-color;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
   }
   .input-wrapper {
     margin-bottom: 1rem;

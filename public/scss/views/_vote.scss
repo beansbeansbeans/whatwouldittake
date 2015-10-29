@@ -28,8 +28,5 @@
   }
   .button {
     margin: 0.5rem;
-    &[data-active="true"] {
-      border: solid 2px $bittersweet;
-    }
   }
 }
