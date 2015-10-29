@@ -100,15 +100,15 @@ class standView extends view {
 
     if(helpers.isBeliever(viewState.issue, viewState.position)) {
       frame = "You believe that:";
-      conditionsTitle = "What would it take to change your mind?";
+      conditionsTitle = "to change your mind?";
     } else {
-      if(helpers.isFormerBeliever(viewState.issue, viewState.position)) {
-        frame = "Some people (you used to be among them) believe that:";
-      } else {
-        frame = "Some people believe that:";
-      }
-      convertButton = h('div.button#convert-belief', 'I believe this');
-      conditionsTitle = "What could it take to change their minds?";
+      frame = "Some believe that:";
+      // if(helpers.isFormerBeliever(viewState.issue, viewState.position)) {
+      //   frame = "Some people (you used to be among them) believe that:";
+      // } else {
+      // }
+      convertButton = h('div#convert-belief', 'I believe this');
+      conditionsTitle = "to change their minds?";
     }
 
     if(!_.isEmpty(viewState.issue) && viewState.issue.conditions[viewState.position]) {
@@ -136,10 +136,15 @@ class standView extends view {
       h('div.header', [
         h('div.prompt', frame),
         h('h1', viewState.issue[viewState.position]),
-        h('div#see-other-side', 'See the other side'),
-        convertButton,
+        h('div.actions', [
+          h('div#see-other-side', 'See the other side'),
+          convertButton
+        ])
       ]),
-      h('div.title', conditionsTitle),
+      h('div.title', [
+        h('span', 'What would it take '),
+        h('span', conditionsTitle)
+      ]),
       h('div#contribute', [
         h('div', 'Contribute a what-would-it-take'),
         h('div.input-container.tagline', [

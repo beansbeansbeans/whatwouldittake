@@ -13,30 +13,46 @@
     @extend %text-h1;
     margin-bottom: 1rem;
   }
-  #see-other-side {
+  #see-other-side, #convert-belief {
     @extend %header-font;
     text-transform: uppercase;
     color: $subdued-text-color;
     font-size: 0.8rem;
     cursor: pointer;
+    display: inline-block;
     @include transition(color $transition-duration);
     &:hover {
       color: darken($subdued-text-color, 10%);
-    }
+    }    
+  }
+  #see-other-side {
   }
   #convert-belief {
-    margin-top: 2rem;
+    margin-left: 1rem;
+    &:before {
+      content: "/";
+      display: inline-block;
+      margin-right: 1rem;
+    }
   }
   .title {
+    span {
+      display: block;
+    }
+    // span:first-of-type {
+      @extend %header-font;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: $highlight-text-color;      
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    // }
+    // span:last-of-type {
+    //   font-size: 1.5rem;
+    // }
     text-align: center;
-    @extend %header-font;
-    width: 60%;
-    margin: 3rem auto;
-    font-size: 2.5rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-    color: $highlight-text-color;
+    margin: 4rem auto 4rem;
   }
   .condition {
     padding: 2rem;
