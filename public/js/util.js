@@ -1,4 +1,5 @@
 module.exports = {
+  capitalize: (str) => str.replace(str[0], str[0].toUpperCase()),
   extend(props) {
     var prop, obj;
     obj = Object.create(this);

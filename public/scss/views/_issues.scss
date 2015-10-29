@@ -18,7 +18,6 @@
     cursor: pointer;
     .slug {
       @extend %header-font;
-      text-transform: capitalize;
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
       color: $highlight-text-color;

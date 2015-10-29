@@ -4,6 +4,7 @@ var mediator = require('../mediator');
 var view = require('../view');
 var helpers = require('../util/belief_helpers');
 var state = require('../state');
+var util = require('../util');
 
 var viewState = {
   issues: []
@@ -56,7 +57,7 @@ class issuesView extends view {
             slug: d.slug
           }
         }, [
-          h('div.slug', d.slug),
+          h('div.slug', util.capitalize(d.slug.replace('-', ' '))),
           h("div.description", d.description)
         ]);
       });
