@@ -1,6 +1,41 @@
 #stand-view {
+  width: $content-width * 1%;
+  margin: 3rem auto;
+  .header {
+    text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: solid 1px $border-color;
+  }
+  .prompt {
+    @extend %label;
+  }
+  h1 {
+    @extend %text-h1;
+    margin-bottom: 1rem;
+  }
+  #see-other-side {
+    @extend %header-font;
+    text-transform: uppercase;
+    color: $subdued-text-color;
+    font-size: 0.8rem;
+    cursor: pointer;
+    @include transition(color $transition-duration);
+    &:hover {
+      color: darken($subdued-text-color, 10%);
+    }
+  }
+  .title {
+    text-align: center;
+    @extend %header-font;
+    width: 60%;
+    margin: 3rem auto;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: $highlight-text-color;
+  }
   .condition {
-    border: solid 1px red;
     padding: 2rem;
     cursor: pointer;
     .tagline {

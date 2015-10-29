@@ -133,11 +133,13 @@ class standView extends view {
     }
 
     return h('div#stand-view', [
-      h('h1', frame),
-      h('div', viewState.issue.slug),
-      h('div', viewState.issue[viewState.position]),
-      h('div.button#see-other-side', 'See the other side'),
+      h('div.header', [
+        h('div.prompt', frame),
+        h('h1', viewState.issue[viewState.position]),
+        h('div#see-other-side', 'See the other side')
+      ]),
       convertButton,
+      h('div.title', conditionsTitle),
       h('div#contribute', [
         h('div', 'Contribute a what-would-it-take'),
         h('div.input-container.tagline', [
@@ -151,7 +153,6 @@ class standView extends view {
         h('div.button#submit-what-would-it-take', 'Submit')
       ]),
       h('div.conditions-wrapper', [
-        h('div.title', conditionsTitle),
         conditions
       ])
     ]);
