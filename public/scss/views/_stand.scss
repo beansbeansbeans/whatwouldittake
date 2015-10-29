@@ -24,6 +24,9 @@
       color: darken($subdued-text-color, 10%);
     }
   }
+  #convert-belief {
+    margin-top: 2rem;
+  }
   .title {
     text-align: center;
     @extend %header-font;

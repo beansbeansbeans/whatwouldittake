@@ -136,9 +136,9 @@ class standView extends view {
       h('div.header', [
         h('div.prompt', frame),
         h('h1', viewState.issue[viewState.position]),
-        h('div#see-other-side', 'See the other side')
+        h('div#see-other-side', 'See the other side'),
+        convertButton,
       ]),
-      convertButton,
       h('div.title', conditionsTitle),
       h('div#contribute', [
         h('div', 'Contribute a what-would-it-take'),
