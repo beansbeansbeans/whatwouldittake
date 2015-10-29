@@ -141,11 +141,11 @@ class standView extends view {
           convertButton
         ])
       ]),
-      h('div.title', [
-        h('span', 'What would it take '),
-        h('span', conditionsTitle)
-      ]),
       h('div.body', [
+        h('div.title', [
+          h('span', 'What would it take '),
+          h('span', conditionsTitle)
+        ]),
         h('div#contribute', [
           h('div', "Don't see anything convincing? Let us know what it would take."),
           h('div.input-container.tagline', [
