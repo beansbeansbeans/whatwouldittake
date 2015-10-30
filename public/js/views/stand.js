@@ -99,10 +99,10 @@ class standView extends view {
     var conditionsTitle;
 
     if(helpers.isBeliever(viewState.issue, viewState.position)) {
-      frame = "You believe that:";
+      frame = "You believe:";
       conditionsTitle = "to change your mind?";
     } else {
-      frame = "Some believe that:";
+      frame = "Some believe:";
       // if(helpers.isFormerBeliever(viewState.issue, viewState.position)) {
       //   frame = "Some people (you used to be among them) believe that:";
       // } else {

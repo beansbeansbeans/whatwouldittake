@@ -1,9 +1,9 @@
 #stand-view {
   .header, .body {
-    width: $content-width * 1%;
     margin: 4rem auto;    
   }
   .header {
+    width: $content-width * 1%;
     margin-top: 2rem;
     text-align: center;
     padding-bottom: 4rem;
@@ -38,6 +38,10 @@
       margin-right: 1rem;
     }
   }
+  .body {
+    width: 60%;
+    min-width: $min-content-width;
+  }
   .title {
     @extend %text-h1;
     text-align: center;
@@ -47,7 +51,10 @@
     padding: 2rem 0;
     cursor: pointer;
     .tagline {
-      font-weight: bold;
+      @extend %header-font;
+      color: $highlight-text-color;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
     }
   }
 }
