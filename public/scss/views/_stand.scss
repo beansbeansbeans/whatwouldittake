@@ -47,7 +47,7 @@
     margin: 0rem auto 1rem;
   }
   #contribute {
-    padding-bottom: 4rem;
+    padding-bottom: 4.5rem;
     border-bottom: solid 1px $border-color;
     #toggle-contributing {
       text-align: center;
@@ -112,8 +112,20 @@
       }
     }
   }
+  .body {
+    width: 60%;
+  }
   .conditions-wrapper {
-    padding-top: 2rem;
+    padding-top: 2.5rem;
+    position: relative;
+    &:before {
+      content: "The conditions - by convincingness: ";
+      position: absolute;
+      @extend %label;
+      top: -0.6rem;
+      background: $body-bg-color;
+      padding-right: 0.6rem;
+    }
   }
   .condition {
     cursor: pointer;
