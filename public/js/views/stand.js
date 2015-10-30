@@ -6,9 +6,14 @@ var view = require('../view');
 var util = require('../util');
 var helpers = require('../util/belief_helpers');
 
+var descriptionTextareaMaxLength = 255;
+var moreInfoTextareaMaxLength = 1000;
+
 var viewState = {
   issue: {},
-  activelyContributing: false
+  activelyContributing: false,
+  descriptionTextarea: descriptionTextareaMaxLength,
+  moreInfoTextarea: moreInfoTextareaMaxLength
 };
 
 var dimensions = {};
@@ -164,11 +169,16 @@ class standView extends view {
             h('div.input-container.tagline', [
               h('textarea', { 
                 placeholder: "Description",
-                maxlength: 255
-              })
+                maxlength: descriptionTextareaMaxLength
+              }),
+              h('div.remaining-characters', '' + viewState.descriptionTextarea)
             ]),
             h('div.input-container.more-info', [
-              h('textarea', { placeholder: "More information (optional)" })
+              h('textarea', { 
+                placeholder: "More information (optional)",
+                maxlength: moreInfoTextareaMaxLength
+              }),
+              h('div.remaining-characters', '' + viewState.moreInfoTextarea)
             ]),
             h('div.button-container', [
               h('div.button#submit-what-would-it-take', 'Submit'),
