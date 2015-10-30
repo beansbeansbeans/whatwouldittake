@@ -22,6 +22,10 @@ window.addEventListener("click", (e) => {
   mediator.publish("window_click", e);
 });
 
+window.addEventListener("keydown", (e) => {
+  mediator.publish("window_keydown", e);
+});
+
 var loaded = () => {
   router.initialize();
 

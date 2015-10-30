@@ -22,13 +22,14 @@ class standView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick');
+    _.bindAll(this, 'handleClick', 'handleKeydown');
 
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
     viewState.position = ctx.params.side;
     this.updateState();
 
     mediator.subscribe("window_click", this.handleClick);
+    mediator.subscribe("window_keydown", this.handleKeydown);
   }
 
   didRender() {
@@ -94,6 +95,12 @@ class standView extends view {
     }
   }
 
+  handleKeydown() {
+    viewState.descriptionTextarea = descriptionTextareaMaxLength - d.qs("#contribute .tagline textarea").value.length;
+    viewState.moreInfoTextarea = moreInfoTextareaMaxLength - d.qs("#contribute .more-info textarea").value.length;
+    this.updateState();
+  }
+
   mount() {
     super.mount();
     this.handleResize();
@@ -102,6 +109,7 @@ class standView extends view {
   stop() {
     super.stop();
     mediator.unsubscribe("window_click", this.handleClick);
+    mediator.unsubscribe("window_keydown", this.handleKeydown);
   }
 
   render() {
