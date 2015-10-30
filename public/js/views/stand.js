@@ -7,7 +7,8 @@ var util = require('../util');
 var helpers = require('../util/belief_helpers');
 
 var viewState = {
-  issue: {}
+  issue: {},
+  activelyContributing: false
 };
 
 var dimensions = {};
@@ -79,6 +80,12 @@ class standView extends view {
       });
     } else if(closestCondition) {
       page.show('/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id);
+    } else if(e.target.id === "toggle-contributing") {
+      viewState.activelyContributing = true;
+      this.updateState();
+    } else if(e.target.id === 'cancel-what-would-it-take') {
+      viewState.activelyContributing = false;
+      this.updateState();
     }
   }
 
@@ -146,17 +153,27 @@ class standView extends view {
           h('span', 'What would it take '),
           h('span', conditionsTitle)
         ]),
-        h('div#contribute', [
-          h('div', "Don't see anything convincing? Let us know what it would take."),
-          h('div.input-container.tagline', [
-            h('div.label', 'Tagline'),
-            h('textarea')
-          ]),
-          h('div.input-container.more-info', [
-            h('div.label', 'More information (optional)'),
-            h('textarea')
-          ]),
-          h('div.button#submit-what-would-it-take', 'Submit')
+        h('div#contribute', {
+          dataset: {
+            active: viewState.activelyContributing
+          }
+        }, [
+          h('div.label#toggle-contributing', 'Contribute'),
+          h('div.form-container', [
+            h('div.prompt', "Don't see anything convincing? Let us know what it would take."),
+            h('div.input-container.tagline', [
+              h('div.label', 'Tagline'),
+              h('textarea')
+            ]),
+            h('div.input-container.more-info', [
+              h('div.label', 'More information (optional)'),
+              h('textarea')
+            ]),
+            h('div.button-container', [
+              h('div.button#submit-what-would-it-take', 'Submit'),
+              h('div.button#cancel-what-would-it-take', 'Cancel')
+            ])
+          ])
         ]),
         h('div.conditions-wrapper', [
           conditions

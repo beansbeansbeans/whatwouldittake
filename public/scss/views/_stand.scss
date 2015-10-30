@@ -1,3 +1,15 @@
+%subdued-label {
+  @extend %header-font;
+  text-transform: uppercase;
+  color: $subdued-text-color;
+  font-size: 0.8rem;
+  @include transition(color $transition-duration);
+  cursor: pointer;
+  &:hover {
+    color: darken($subdued-text-color, 10%);
+  } 
+}
+
 #stand-view {
   .header, .body {
     margin: 4rem auto;    
@@ -8,25 +20,17 @@
     text-align: center;
     padding-bottom: 4rem;
     border-bottom: solid 1px $border-color;
-  }
-  .prompt {
-    @extend %label;
+    .prompt {
+      @extend %label;
+    }
   }
   h1 {
     @extend %text-h1;
     margin-bottom: 1rem;
   }
   #see-other-side, #convert-belief {
-    @extend %header-font;
-    text-transform: uppercase;
-    color: $subdued-text-color;
-    font-size: 0.8rem;
-    cursor: pointer;
+    @extend %subdued-label;
     display: inline-block;
-    @include transition(color $transition-duration);
-    &:hover {
-      color: darken($subdued-text-color, 10%);
-    }    
   }
   #see-other-side {
   }
@@ -45,7 +49,31 @@
   .title {
     @extend %text-h1;
     text-align: center;
-    margin: 0rem auto 4rem;
+    margin: 0rem auto 1rem;
+  }
+  #contribute {
+    margin-bottom: 3rem;
+    #toggle-contributing {
+      text-align: center;
+      @extend %subdued-label;
+    }
+    &[data-active="false"] {
+      .form-container {
+        display: none;
+      }
+    }
+    &[data-active="true"] {
+      #toggle-contributing {
+        @extend %label;
+        pointer-events: none;
+      }
+    }
+    .form-container {
+      padding-top: 2rem;
+      .prompt {
+        text-align: center;
+      }
+    }
   }
   .condition {
     padding: 2rem 0;
