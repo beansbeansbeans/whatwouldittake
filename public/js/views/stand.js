@@ -133,8 +133,8 @@ class standView extends view {
           }
         }, [
           h('div.tagline', d.tagline),
-          h('div', pendingCount + " people's opinions are at stake"),
-          h('div', confirmedCount + " people have been convinced by this")
+          h('div', pendingCount + util.pluralize(pendingCount, " person's opinion is", " people's opinions are") + " at stake"),
+          h('div', confirmedCount + util.pluralize(confirmedCount, " person has", " people have") + " been convinced by this")
         ]);
       });
     }
