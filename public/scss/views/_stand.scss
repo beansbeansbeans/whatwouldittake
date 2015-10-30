@@ -12,14 +12,12 @@
 
 #stand-view {
   .header, .body {
-    margin: 4rem auto;    
+    margin: 3.5rem auto;    
   }
   .header {
     width: $content-width * 1%;
     margin-top: 2rem;
     text-align: center;
-    padding-bottom: 4rem;
-    border-bottom: solid 1px $border-color;
     .prompt {
       @extend %label;
     }
@@ -118,7 +116,9 @@
   }
   .condition {
     cursor: pointer;
-    margin-bottom: 3rem;
+    border-top: solid 1px $border-color;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
     .tagline {
       @extend %header-font;
       color: $highlight-text-color;
