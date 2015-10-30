@@ -162,12 +162,13 @@ class standView extends view {
           h('div.form-container', [
             h('div.prompt', "Don't see anything convincing? Let us know what it would take."),
             h('div.input-container.tagline', [
-              h('div.label', 'Tagline'),
-              h('textarea')
+              h('textarea', { 
+                placeholder: "Description",
+                maxlength: 255
+              })
             ]),
             h('div.input-container.more-info', [
-              h('div.label', 'More information (optional)'),
-              h('textarea')
+              h('textarea', { placeholder: "More information (optional)" })
             ]),
             h('div.button-container', [
               h('div.button#submit-what-would-it-take', 'Submit'),

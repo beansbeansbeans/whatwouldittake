@@ -64,14 +64,30 @@
     }
     &[data-active="true"] {
       #toggle-contributing {
-        @extend %label;
+        opacity: 0;
         pointer-events: none;
       }
     }
     .form-container {
-      padding-top: 2rem;
+      width: 50%;
+      min-width: 300px;
+      margin: auto;
+      padding-top: 1rem;
       .prompt {
         text-align: center;
+        margin-bottom: 1rem;
+      }
+      textarea {
+        width: 100%;
+        margin-top: 1rem;
+        resize: vertical;
+      }
+      .button-container {
+        text-align: center;
+        padding-top: 2rem;
+        #submit-what-would-it-take {
+          margin-right: 1rem;
+        }
       }
     }
   }
