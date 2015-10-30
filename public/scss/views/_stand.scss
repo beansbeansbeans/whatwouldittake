@@ -52,7 +52,7 @@
     margin: 0rem auto 1rem;
   }
   #contribute {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     #toggle-contributing {
       text-align: center;
       @extend %subdued-label;
@@ -92,8 +92,8 @@
     }
   }
   .condition {
-    padding: 2rem 0;
     cursor: pointer;
+    margin-bottom: 2rem;
     .tagline {
       @extend %header-font;
       color: $highlight-text-color;
