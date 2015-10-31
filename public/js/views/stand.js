@@ -5,6 +5,7 @@ var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
 var helpers = require('../util/belief_helpers');
+var headerSubview = require('./subviews/belief_header');
 
 var descriptionTextareaMaxLength = 255;
 var moreInfoTextareaMaxLength = 1000;
@@ -113,21 +114,12 @@ class standView extends view {
   }
 
   render() {
-    var convertButton;
-    var frame;
     var conditions;
     var conditionsTitle;
 
     if(helpers.isBeliever(viewState.issue, viewState.position)) {
-      frame = "You believe:";
       conditionsTitle = "to change your mind?";
     } else {
-      frame = "Some believe:";
-      // if(helpers.isFormerBeliever(viewState.issue, viewState.position)) {
-      //   frame = "Some people (you used to be among them) believe that:";
-      // } else {
-      // }
-      convertButton = h('div#convert-belief', 'I believe this');
       conditionsTitle = "to change their minds?";
     }
 
@@ -153,16 +145,10 @@ class standView extends view {
     }
 
     return h('div#stand-view', [
-      h('div.header', [
-        h('div.header-contents', [
-          h('div.prompt', frame),
-          h('h1', viewState.issue[viewState.position]),
-          h('div.actions', [
-            h('div#see-other-side', 'See the other side'),
-            convertButton
-          ])
-        ])
-      ]),
+      headerSubview.render({
+        issue: viewState.issue,
+        position: viewState.position
+      }),
       h('div.body', [
         h('div.title', [
           h('span', 'What would it take '),
