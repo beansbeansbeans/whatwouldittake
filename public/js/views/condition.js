@@ -167,19 +167,22 @@ class conditionView extends view {
 
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
       if(viewState.condition.proofs && viewState.condition.proofs.length) {
-        proofs = viewState.condition.proofs.sort((a, b) => {
-          if(a.believers.length > b.believers.length) { return -1; }
-          if(a.believers.length < b.believers.length) { return 1; }
-          return 0;
-        }).map((d) => {
-          return h('li.proof', {
-            dataset: { id: d._id }
-          }, [
-            h('div.description', d.description),
-            h('div', d.believers.length + ' people were convinced by this'),
-            h('div.vote.button', "I'm convinced")
-          ]);
-        });        
+        proofs = h('div.proofs-wrapper', [
+          h('div.title', 'Proofs'),
+          viewState.condition.proofs.sort((a, b) => {
+            if(a.believers.length > b.believers.length) { return -1; }
+            if(a.believers.length < b.believers.length) { return 1; }
+            return 0;
+          }).map((d) => {
+            return h('li.proof', {
+              dataset: { id: d._id }
+            }, [
+              h('div.description', d.description),
+              h('div', d.believers.length + ' people were convinced by this'),
+              h('div.vote.button', "I'm convinced")
+            ]);
+          })
+        ]);
       } else {
         proofs = h('div', 'No proofs available yet');
       }
@@ -195,10 +198,7 @@ class conditionView extends view {
         h('div.title', viewState.condition.tagline),
         voteOnCondition,
         submitProof,
-        h('div.proofs-wrapper', [
-          h('div.title', 'Proofs'),
-          proofs
-        ]),
+        proofs,
         modal
       ])
     ]);
