@@ -29,7 +29,38 @@ class conditionView extends view {
   }
 
   handleClick(e) {
-    if(e.target.id === "submit-proof-button") {
+    if(e.target.id === 'convert-belief') {
+      var stand = {
+        id: viewState.issue._id,
+        stand: viewState.position
+      };
+
+      if(state.get("user") !== null) {
+        api.post('/vote', stand, (data) => {
+          helpers.refreshIssue(data.data.issue);
+          state.set("user", data.data.user);
+          viewState.issue = data.data.issue;
+          this.updateState();
+        });        
+      } else {
+        var anonymous_activity = state.get("anonymous_activity");
+        if(!anonymous_activity.stands) {
+          anonymous_activity.stands = [];
+        }
+
+        var matchingStand = _.findWhere(anonymous_activity.stands, {id: stand.id });
+        if(matchingStand) {
+          matchingStand.stand = viewState.position;
+        } else {
+          anonymous_activity.stands.push(stand);
+        }
+
+        state.set("anonymous_activity", anonymous_activity);
+        this.updateState();
+      }
+    } else if(e.target.id === 'see-other-side') {
+      page.show('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
+    } else if(e.target.id === "submit-proof-button") {
       api.post("/contribute-proof", {
         id: viewState.issue._id,
         stand: viewState.position,
