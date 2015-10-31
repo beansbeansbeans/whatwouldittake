@@ -171,7 +171,7 @@ class conditionView extends view {
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
       if(viewState.condition.proofs && viewState.condition.proofs.length) {
         proofs = h('div.proofs-wrapper', [
-          h('div.title', 'Submitted proofs'),
+          h('div.title', 'See anything convincing?'),
           h('ul', viewState.condition.proofs.sort((a, b) => {
             if(a.believers.length > b.believers.length) { return -1; }
             if(a.believers.length < b.believers.length) { return 1; }
@@ -180,15 +180,15 @@ class conditionView extends view {
             return h('li.proof', {
               dataset: { id: d._id }
             }, [
-              h('div.description', d.description),
-              h('div', d.believers.length + ' people were convinced by this'),
+              h('div.tagline', d.description),
+              h('div.pending', d.believers.length + ' people convinced'),
               h('div.vote.button', "I'm convinced")
             ]);
           }))
         ]);
       } else {
         proofs = h('div.proofs-wrapper', [
-          h('div.title', 'Submitted proofs'),
+          h('div.title', 'Submitted proofs:'),
           h('div', 'No proofs available yet.')
         ]);
       }
@@ -203,7 +203,7 @@ class conditionView extends view {
         h('div.frame', frame),
         h('div.title', viewState.condition.tagline),
         h('div.pending', pendingCount + util.pluralize(pendingCount, " person's opinion ", " people's opinions ") + " at stake"),
-        h('div.confirmed', confirmedCount + util.pluralize(confirmedCount, " person", " people") + " convinced by this"),
+        h('div.confirmed', confirmedCount + util.pluralize(confirmedCount, " person", " people") + " convinced"),
         voteOnCondition,
         submitProof,
         proofs,

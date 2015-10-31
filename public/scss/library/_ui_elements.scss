@@ -49,6 +49,19 @@
   @extend %label-base;
 }
 
+%subdued-label {
+  @extend %header-font;
+  text-transform: uppercase;
+  color: $subdued-text-color;
+  font-size: 0.8rem;
+  @include transition(color $transition-duration);
+  cursor: pointer;
+  letter-spacing: 1px;
+  &:hover {
+    color: darken($subdued-text-color, 10%);
+  } 
+}
+
 %text-h1 {
   font-size: 1.3rem;
   margin-top: 3rem;
@@ -235,6 +248,29 @@ a {
     @extend %text-h1;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
+  }
+}
+
+%submitted-item {
+  cursor: pointer;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  .tagline {
+    @extend %header-font;
+    color: $highlight-text-color;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .pending, .confirmed {
+    display: inline-block;
+  }
+  .confirmed {
+    margin-left: 0.5rem;    
+    &:before {
+      content: " / ";
+      display: inline-block;;
+      margin-right: 0.4rem;
+    }
   }
 }
 
