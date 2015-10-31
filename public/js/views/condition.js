@@ -185,7 +185,9 @@ class conditionView extends view {
     if(beliefAtStake) {
       frame = 'But this would change your mind:';
     } else {
-      frame = 'But this could change their minds:'
+      if(!helpers.isBeliever(viewState.issue, viewState.position)) {
+        frame = 'But this could change their minds:'
+      }
     }
 
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
@@ -198,12 +200,16 @@ class conditionView extends view {
             if(a.believers.length < b.believers.length) { return 1; }
             return 0;
           }).map((d) => {
+            var button;
+            if(beliefAtStake) {
+              button = h('div.vote.button', "I'm convinced");
+            }
             return h('li.proof', {
               dataset: { id: d._id }
             }, [
               h('div.tagline', d.description),
               h('div.pending', d.believers.length + ' people convinced'),
-              h('div.vote.button', "I'm convinced")
+              button
             ]);
           }))
         ]);
