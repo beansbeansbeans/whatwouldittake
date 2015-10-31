@@ -3,14 +3,7 @@
   margin: auto;
   padding-top: 4rem;
   h1 {
-    @extend %header-font;
-    text-transform: uppercase;
-    color: $highlight-text-color;
-    letter-spacing: 2px;
-    text-align: center;
-    margin-top: 0rem;
-    margin-bottom: 4rem;
-    font-size: 2.5rem;
+    @extend %h1;
   }
   .issue {
     margin: 3rem auto;
