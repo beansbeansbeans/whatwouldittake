@@ -123,7 +123,7 @@ class conditionView extends view {
       id: state.get("user")._id
     });
     var modal;
-    var debug;
+    var frame;
 
     if(!state.get("user") && viewState.anonymousUserAttemptedVote) {
       modal = modalSubview.render({
@@ -154,6 +154,7 @@ class conditionView extends view {
         h('div.button#submit-proof-button', 'Submit')
       ]);
     } else if(!beliefAtStake) {
+      frame = 'Would this change your mind?';
       voteOnCondition = h('div#vote-on-condition', [
         h('div.button#vote-yes-on-condition', 'Yes'),
         h('div.button#vote-no-on-condition', 'No')
@@ -161,7 +162,7 @@ class conditionView extends view {
     }
 
     if(beliefAtStake) {
-      debug = h('div', 'Your belief is at stake.');
+      frame = 'But this would change your mind';
     }
 
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
@@ -189,15 +190,17 @@ class conditionView extends view {
         issue: viewState.issue,
         position: viewState.position
       }),
-      h('div.title', viewState.condition.tagline),
-      debug,
-      voteOnCondition,
-      submitProof,
-      h('div.proofs-wrapper', [
-        h('div.title', 'Proofs'),
-        proofs
-      ]),
-      modal
+      h('div.body', [
+        h('div.frame', frame),
+        h('div.title', viewState.condition.tagline),
+        voteOnCondition,
+        submitProof,
+        h('div.proofs-wrapper', [
+          h('div.title', 'Proofs'),
+          proofs
+        ]),
+        modal
+      ])
     ]);
   }
 }

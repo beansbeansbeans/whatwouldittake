@@ -3,7 +3,28 @@
     @extend %belief-header;
   }
   .proof {
-    padding: 2rem;
-    border: solid 1px red;
+    padding: 2rem 0;
+    list-style: none;
+  }
+  .body {
+    width: 60%;
+    max-width: 900px;
+    margin: auto;
+    padding: 3rem 0;
+    .frame {
+      text-align: center;
+      @extend %naked-label;
+      padding-bottom: 3rem;
+    }
+    .title {
+      margin-bottom: 2rem;
+    }
+    #vote-on-condition {
+      text-align: center;
+      #vote-yes-on-condition {
+        margin-right: 1rem;
+      }
+      padding-bottom: 3rem;
+    }
   }
 }
