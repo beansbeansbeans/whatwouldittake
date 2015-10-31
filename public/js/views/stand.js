@@ -82,6 +82,7 @@ class standView extends view {
         moreInfo: d.qs("#contribute .more-info textarea").value
       }, (data) => {
         viewState.issue = data.data;
+        viewState.activelyContributing = false;
         helpers.refreshIssue(data.data);
         this.updateState();
       });

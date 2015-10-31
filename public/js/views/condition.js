@@ -12,7 +12,8 @@ var headerSubview = require('./subviews/belief_header');
 var viewState = {
   issue: {},
   condition: {},
-  anonymousUserAttemptedVote: false
+  anonymousUserAttemptedVote: false,
+  submittingProof: false
 };
 
 class conditionView extends view {
@@ -105,9 +106,16 @@ class conditionView extends view {
         proofID: closestProof.dataset.id
       }, (data) => {
         helpers.refreshIssue(data.data.issue);
+        viewState.submittingProof = false;
         state.set("user", data.data.user);
         page.show('/stands/' + viewState.issue.slug + '/' + viewState.position)
       });
+    } else if(e.target.id === 'toggle-proof-submission') {
+      viewState.submittingProof = true;
+      this.updateState();
+    } else if(e.target.id === 'cancel-submit-proof-button') {
+      viewState.submittingProof = false;
+      this.updateState();
     }
   }
 
@@ -149,12 +157,22 @@ class conditionView extends view {
     }
 
     if(!helpers.isBeliever(viewState.issue, viewState.position)) {
-      submitProof = h('div#submit-proof', [
-        h('div.textarea-wrapper', [
-          h('div.label', 'Describe the proof'),
-          h('textarea')
-        ]),
-        h('div.button#submit-proof-button', 'Submit')
+      submitProof = h('div#submit-proof', {
+        dataset: { active: viewState.submittingProof }
+      }, [
+        h('div#toggle-proof-submission', 'Contribute'),
+        h('div.form-container', [
+          h('div.textarea-wrapper', [
+            h('textarea', {
+              placeholder: 'Prove the statement above.',
+              maxlength: 1000
+            })
+          ]),
+          h('div.button-container', [
+            h('div.button#submit-proof-button', 'Submit'),
+            h('div.button#cancel-submit-proof-button', 'Cancel')
+          ])
+        ])
       ]);
     } else if(!beliefAtStake) {
       frame = 'Would this change your mind?';

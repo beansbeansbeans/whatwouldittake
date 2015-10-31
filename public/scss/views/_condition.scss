@@ -5,6 +5,8 @@
   .proof {
     list-style: none;
     @extend %submitted-item;
+    cursor: default;
+    padding-bottom: 1.75rem;
     .pending {
       display: block !important;
       margin-bottom: 1rem;
@@ -45,6 +47,40 @@
       text-align: center;
       @extend %naked-label;      
     }
+    #submit-proof {
+      #toggle-proof-submission {
+        @extend %subdued-label;
+        text-align: center;
+      }
+      .form-container {
+        width: 50%;
+        min-width: 300px;
+        margin: auto;
+        position: relative;
+        padding-top: 1rem;
+        textarea {
+          width: 100%;
+          resize: vertical;
+        }
+        .button-container {
+          text-align: center;
+          padding-top: 1.5rem;
+          #submit-proof-button {
+            margin-right: 1rem;
+          }
+        }
+      }
+      &[data-active="true"] {
+        #toggle-proof-submission {
+          display: none;
+        }
+      }
+      &[data-active="false"] {
+        .form-container {
+          display: none;
+        }
+      }
+    }
     .proofs-wrapper {
       padding-top: 3rem;
       ul {
@@ -59,6 +95,8 @@
           top: -0.6rem;
           background: white;
           padding-right: 0.5rem;
+          pointer-events: none !important;
+          color: $subdued-text-color !important;
         }
       }
     }
