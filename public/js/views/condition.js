@@ -162,14 +162,14 @@ class conditionView extends view {
     }
 
     if(beliefAtStake) {
-      frame = 'But this would change your mind';
+      frame = 'But this would change your mind:';
     }
 
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
       if(viewState.condition.proofs && viewState.condition.proofs.length) {
         proofs = h('div.proofs-wrapper', [
           h('div.title', 'Submitted proofs'),
-          viewState.condition.proofs.sort((a, b) => {
+          h('ul', viewState.condition.proofs.sort((a, b) => {
             if(a.believers.length > b.believers.length) { return -1; }
             if(a.believers.length < b.believers.length) { return 1; }
             return 0;
@@ -181,7 +181,7 @@ class conditionView extends view {
               h('div', d.believers.length + ' people were convinced by this'),
               h('div.vote.button', "I'm convinced")
             ]);
-          })
+          }))
         ]);
       } else {
         proofs = h('div.proofs-wrapper', [

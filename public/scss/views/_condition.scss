@@ -29,8 +29,10 @@
       @extend %naked-label;      
     }
     .proofs-wrapper {
-      border-top: solid 1px $border-color;
-      padding-top: 3rem;
+      padding-top: 1rem;
+      ul {
+        padding: 0;
+      }
     }
   }
 }
