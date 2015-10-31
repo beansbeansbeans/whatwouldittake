@@ -174,6 +174,7 @@ class conditionView extends view {
       if(viewState.condition.proofs && viewState.condition.proofs.length) {
         proofs = h('div.proofs-wrapper', [
           h('div.title', 'See anything convincing?'),
+          submitProof,
           h('ul', viewState.condition.proofs.sort((a, b) => {
             if(a.believers.length > b.believers.length) { return -1; }
             if(a.believers.length < b.believers.length) { return 1; }
@@ -190,7 +191,8 @@ class conditionView extends view {
         ]);
       } else {
         proofs = h('div.proofs-wrapper', [
-          h('div.title', 'No proofs available yet.')
+          h('div.title', 'No proofs available yet.'),
+          submitProof
         ]);
       }
     }
@@ -206,7 +208,6 @@ class conditionView extends view {
         h('div.pending', pendingCount + util.pluralize(pendingCount, " person's opinion ", " people's opinions ") + " at stake"),
         h('div.confirmed', confirmedCount + util.pluralize(confirmedCount, " person", " people") + " convinced"),
         voteOnCondition,
-        submitProof,
         proofs,
         modal
       ])
