@@ -3,7 +3,7 @@
     @extend %belief-header;
   }
   .proof {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     list-style: none;
   }
   .body {
@@ -12,10 +12,22 @@
     margin: auto;
     padding: 3rem 0;
     .frame {
-      padding-bottom: 3rem;
+      padding-bottom: 2rem;
     }
     .title {
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .pending, .confirmed {
+      display: inline-block;
+    }
+    .confirmed {
+      margin-left: 0.5rem;
+      &:before {
+        content: ' / ';
+        display: inline-block;
+        margin-right: 0.4rem;
+      }
     }
     #vote-on-condition {
       text-align: center;
@@ -29,8 +41,9 @@
       @extend %naked-label;      
     }
     .proofs-wrapper {
-      padding-top: 1rem;
+      padding-top: 3rem;
       ul {
+        margin: 0;
         padding: 0;
       }
     }

@@ -116,8 +116,15 @@
       margin-bottom: 0.5rem;
     }
     .pending, .confirmed {
-      line-height: 1.9;
-      font-size: 0.9rem;
+      display: inline-block;
+    }
+    .confirmed {
+      margin-left: 0.5rem;    
+      &:before {
+        content: " / ";
+        display: inline-block;;
+        margin-right: 0.4rem;
+      }
     }
   }
 }

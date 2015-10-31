@@ -3,6 +3,7 @@ var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
 var auth = require('../auth');
+var util = require('../util');
 var state = require('../state');
 var modalSubview = require('./subviews/modal');
 var helpers = require('../util/belief_helpers');
@@ -124,6 +125,8 @@ class conditionView extends view {
     });
     var modal;
     var frame;
+    var pendingCount = viewState.condition.dependents && viewState.condition.dependents.filter(x => x.status === 'pending').length;
+    var confirmedCount = viewState.condition.dependents && viewState.condition.dependents.filter(x => x.status === 'confirmed').length;
 
     if(!state.get("user") && viewState.anonymousUserAttemptedVote) {
       modal = modalSubview.render({
@@ -199,6 +202,8 @@ class conditionView extends view {
       h('div.body', [
         h('div.frame', frame),
         h('div.title', viewState.condition.tagline),
+        h('div.pending', pendingCount + util.pluralize(pendingCount, " person's opinion ", " people's opinions ") + " at stake"),
+        h('div.confirmed', confirmedCount + util.pluralize(confirmedCount, " person", " people") + " convinced by this"),
         voteOnCondition,
         submitProof,
         proofs,
