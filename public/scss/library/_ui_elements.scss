@@ -21,13 +21,17 @@
   }
 }
 
-%label {
+%label-base {
   text-transform: uppercase;
   @extend %header-font;
   font-weight: 500;
   letter-spacing: 1px;
   font-size: 0.8rem;
-  color: $highlight-text-color;    
+  color: $highlight-text-color; 
+}
+
+%label {
+  @extend %label-base; 
   position: relative;
   &:after {
     content: "";
@@ -41,6 +45,10 @@
   }
 }
 
+%naked-label {
+  @extend %label-base;
+}
+
 %text-h1 {
   font-size: 1.3rem;
   margin-top: 3rem;
@@ -49,6 +57,7 @@
 
 %auth-base {
   width: 50vw;
+  max-width: 500px;
   padding-top: 4rem;
   margin-left: auto;
   margin-right: auto;

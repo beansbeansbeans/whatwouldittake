@@ -146,19 +146,21 @@ class standView extends view {
           }
         }, [
           h('div.tagline', d.tagline),
-          h('div', pendingCount + util.pluralize(pendingCount, " person's opinion ", " people's opinions ") + " at stake"),
-          h('div', confirmedCount + util.pluralize(confirmedCount, " person", " people") + " convinced by this")
+          h('div.pending', pendingCount + util.pluralize(pendingCount, " person's opinion ", " people's opinions ") + " at stake"),
+          h('div.confirmed', confirmedCount + util.pluralize(confirmedCount, " person", " people") + " convinced by this")
         ]);
       });
     }
 
     return h('div#stand-view', [
       h('div.header', [
-        h('div.prompt', frame),
-        h('h1', viewState.issue[viewState.position]),
-        h('div.actions', [
-          h('div#see-other-side', 'See the other side'),
-          convertButton
+        h('div.header-contents', [
+          h('div.prompt', frame),
+          h('h1', viewState.issue[viewState.position]),
+          h('div.actions', [
+            h('div#see-other-side', 'See the other side'),
+            convertButton
+          ])
         ])
       ]),
       h('div.body', [
@@ -173,7 +175,6 @@ class standView extends view {
         }, [
           h('div.label#toggle-contributing', 'Contribute'),
           h('div.form-container', [
-            h('div.prompt', "Don't see anything convincing? Let us know what it would take."),
             h('div.input-container.tagline', [
               h('textarea', { 
                 placeholder: "Description",

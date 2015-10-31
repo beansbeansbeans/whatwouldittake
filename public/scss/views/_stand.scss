@@ -1,3 +1,7 @@
+%adapted-naked-label {
+  @extend %label;
+}
+
 %subdued-label {
   @extend %header-font;
   text-transform: uppercase;
@@ -5,26 +9,30 @@
   font-size: 0.8rem;
   @include transition(color $transition-duration);
   cursor: pointer;
+  letter-spacing: 1px;
   &:hover {
     color: darken($subdued-text-color, 10%);
   } 
 }
 
 #stand-view {
-  .header, .body {
+  .header-contents, .body {
     width: $content-width * 1%;
-    margin: 3.5rem auto;    
+    margin-left: auto;
+    margin-right: auto;
     min-width: $min-content-width;
   }
   .header {
-    margin-top: 2rem;
+    padding: 3rem 0;
+    background: $alabaster;
     text-align: center;
     .prompt {
-      @extend %label;
+      @extend %naked-label;
     }
   }
   h1 {
     @extend %text-h1;
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
   }
   #see-other-side, #convert-belief {
@@ -42,13 +50,12 @@
     }
   }
   .title {
-    @extend %text-h1;
+    @extend %naked-label;
     text-align: center;
     margin: 0rem auto 1rem;
   }
   #contribute {
-    padding-bottom: 4.5rem;
-    border-bottom: solid 1px $border-color;
+    padding-bottom: 3rem;
     #toggle-contributing {
       text-align: center;
       @extend %subdued-label;
@@ -68,20 +75,7 @@
       width: 50%;
       min-width: 300px;
       margin: auto;
-      padding-top: 2rem;
       position: relative;
-      &:before {
-        content: "";
-        position: absolute;
-        display: block;
-        width: 2rem;
-        height: 2px;
-        background: $border-color;
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        margin-left: -1rem;
-      }
       .prompt {
         text-align: center;
         margin-bottom: 1rem;
@@ -93,9 +87,11 @@
         line-height: 1;
         text-align: right;
       }
+      .more-info textarea {
+        margin-top: 1rem;
+      }
       textarea {
         width: 100%;
-        margin-top: 1rem;
         resize: vertical;
         &:focus {
           + .remaining-characters {
@@ -113,29 +109,39 @@
     }
   }
   .body {
+    margin-top: 3.5rem;
+    margin-bottom: 3.5rem;
     width: 60%;
+    max-width: 900px;
   }
   .conditions-wrapper {
-    padding-top: 2.5rem;
+    padding-top: 2rem;
     position: relative;
+    border-top: solid 1px $border-color;
     &:before {
-      content: "The conditions - by convincingness: ";
+      content: "In order of convincingness: ";
+      @extend %naked-label;
       position: absolute;
-      @extend %label;
       top: -0.6rem;
       background: $body-bg-color;
-      padding-right: 0.6rem;
+      padding-right: 0.5rem;
+      color: $subdued-text-color;
+      font-weight: 300;
     }
   }
   .condition {
     cursor: pointer;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
     .tagline {
       @extend %header-font;
       color: $highlight-text-color;
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
+    }
+    .pending, .confirmed {
+      line-height: 1.9;
+      font-size: 0.9rem;
     }
   }
 }
