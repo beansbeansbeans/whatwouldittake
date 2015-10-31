@@ -166,6 +166,8 @@ class conditionView extends view {
 
     if(beliefAtStake) {
       frame = 'But this would change your mind:';
+    } else {
+      frame = 'But this could change their minds:'
     }
 
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
@@ -188,8 +190,7 @@ class conditionView extends view {
         ]);
       } else {
         proofs = h('div.proofs-wrapper', [
-          h('div.title', 'Submitted proofs:'),
-          h('div', 'No proofs available yet.')
+          h('div.title', 'No proofs available yet.')
         ]);
       }
     }
