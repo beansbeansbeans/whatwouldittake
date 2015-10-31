@@ -1,4 +1,7 @@
 #condition-view {
+  .header {
+    @extend %belief-header;
+  }
   .proof {
     padding: 2rem;
     border: solid 1px red;

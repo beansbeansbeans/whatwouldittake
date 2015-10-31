@@ -6,6 +6,7 @@ var auth = require('../auth');
 var state = require('../state');
 var modalSubview = require('./subviews/modal');
 var helpers = require('../util/belief_helpers');
+var headerSubview = require('./subviews/belief_header');
 
 var viewState = {
   issue: {},
@@ -153,6 +154,10 @@ class conditionView extends view {
     }
 
     return h('#condition-view', [
+      headerSubview.render({
+        issue: viewState.issue,
+        position: viewState.position
+      }),
       h('div.title', viewState.condition.tagline),
       debug,
       voteOnCondition,
