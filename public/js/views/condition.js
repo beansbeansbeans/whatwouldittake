@@ -168,7 +168,7 @@ class conditionView extends view {
     if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
       if(viewState.condition.proofs && viewState.condition.proofs.length) {
         proofs = h('div.proofs-wrapper', [
-          h('div.title', 'Proofs'),
+          h('div.title', 'Submitted proofs'),
           viewState.condition.proofs.sort((a, b) => {
             if(a.believers.length > b.believers.length) { return -1; }
             if(a.believers.length < b.believers.length) { return 1; }
@@ -184,7 +184,10 @@ class conditionView extends view {
           })
         ]);
       } else {
-        proofs = h('div', 'No proofs available yet');
+        proofs = h('div.proofs-wrapper', [
+          h('div.title', 'Submitted proofs'),
+          h('div', 'No proofs available yet.')
+        ]);
       }
     }
 
