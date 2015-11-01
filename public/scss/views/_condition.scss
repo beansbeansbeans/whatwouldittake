@@ -21,17 +21,16 @@
       padding-bottom: 1rem;
     }
     .main-condition {
+      .title {
+        margin-bottom: 0.5rem;
+      }
       .source-list {
         @extend %source-list;
-        margin-top: 0.75rem;
-        margin-bottom: 1rem;
-        .label, a {
-          font-size: 0.8rem;
-        }
+        margin-top: 1rem;
       }
       .pending, .confirmed {
         display: inline-block;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         @extend %header-font;
         font-weight: 100;
       }

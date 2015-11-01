@@ -284,17 +284,16 @@ a {
 }
 
 %source-list {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.75rem;
   .label {
     @extend %naked-label;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     margin-bottom: 0.25rem;
   }
   a {
     display: block;
     @extend %header-font;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     margin-bottom: 0.25rem;
     font-weight: 100;
     @include transition(opacity $transition-duration);
