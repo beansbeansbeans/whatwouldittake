@@ -283,7 +283,7 @@ class conditionView extends view {
         h('div.main-condition', [
           h('div.title', viewState.condition.tagline),
           sourcesForCondition,
-          h('div.pending', pendingCount + " opinions at stake"),
+          h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
           h('div.confirmed', confirmedCount + " convinced"),
         ]),
         voteOnCondition,
