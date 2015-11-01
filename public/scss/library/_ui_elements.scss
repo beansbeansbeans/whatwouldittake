@@ -79,6 +79,27 @@
   font-size: 2.5rem;
 }
 
+%contribute-form {
+  input {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .sources-container {
+    margin-bottom: 1rem;
+    .source-wrapper {
+      margin-top: 1rem;
+    }
+    .label, .add-more {
+      @extend %naked-label;
+      margin-bottom: 1rem;
+    }
+    .add-more {
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+  }
+}
+
 %auth-base {
   width: 50vw;
   max-width: 500px;
@@ -269,7 +290,7 @@ a {
   .tagline {
     @extend %header-font;
     color: $highlight-text-color;
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
   }
   .pending, .confirmed {

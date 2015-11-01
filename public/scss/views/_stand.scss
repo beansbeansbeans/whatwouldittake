@@ -35,6 +35,7 @@
       }
     }
     .form-container {
+      @extend %contribute-form;
       width: 50%;
       min-width: 300px;
       margin: auto;

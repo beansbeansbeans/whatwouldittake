@@ -12,6 +12,7 @@ var moreInfoTextareaMaxLength = 1000;
 
 var viewState = {
   issue: {},
+  sourceCount: 1,
   activelyContributing: false,
   descriptionTextarea: descriptionTextareaMaxLength,
   moreInfoTextarea: moreInfoTextareaMaxLength
@@ -78,11 +79,20 @@ class standView extends view {
       api.post('/contribute', {
         id: viewState.issue._id,
         stand: viewState.position,
+        sources: [].filter.call(d.qsa('.source-wrapper'), (el) => {
+          return el.querySelector(".source-href").value.length;
+        }).map((el) => {
+          return {
+            address: el.querySelector(".source-href").value,
+            display: el.querySelector(".source-display").value
+          }
+        }),
         tagline: d.qs("#contribute .tagline textarea").value,
         moreInfo: d.qs("#contribute .more-info textarea").value
       }, (data) => {
         viewState.issue = data.data;
         viewState.activelyContributing = false;
+        viewState.sourceCount = 1;
         helpers.refreshIssue(data.data);
         this.updateState();
       });
@@ -93,6 +103,10 @@ class standView extends view {
       this.updateState();
     } else if(e.target.id === 'cancel-what-would-it-take') {
       viewState.activelyContributing = false;
+      viewState.sourceCount = 1;
+      this.updateState();
+    } else if(e.target.classList.contains("add-more")) {
+      viewState.sourceCount++;
       this.updateState();
     }
   }
@@ -145,6 +159,24 @@ class standView extends view {
       });
     }
 
+    var sourceList = [];
+    for(var i=0; i<viewState.sourceCount; i++) {
+      sourceList.push(h('div.source-wrapper', [
+        h('div.label', 'Source ' + (i + 1)),
+        h('input.source-href', {
+          placeholder: 'link address'
+        }),
+        h('input.source-display', {
+          placeholder: 'link display'
+        })
+      ]));
+    }
+
+    var addMoreSources;
+    if(viewState.sourceCount < 5) {
+      addMoreSources = h('div.add-more', '+ Add source');
+    }
+
     return h('div#stand-view', [
       headerSubview.render({
         issue: viewState.issue,
@@ -168,6 +200,10 @@ class standView extends view {
                 maxlength: descriptionTextareaMaxLength
               }),
               h('div.remaining-characters', '' + viewState.descriptionTextarea)
+            ]),
+            h('div.sources-container', [
+              h('div.source-list', sourceList),
+              addMoreSources
             ]),
             h('div.input-container.more-info', [
               h('textarea', { 
