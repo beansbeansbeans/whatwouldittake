@@ -146,6 +146,19 @@ class standView extends view {
       }).map((d) => {
         var pendingCount = d.dependents.filter(x => x.status === 'pending').length;
         var confirmedCount = d.dependents.filter(x => x.status === 'confirmed').length;
+        var sourceList;
+
+        if(d.sources && d.sources.length) {
+          sourceList = h('div.source-list', [
+            h('div.label', 'Sources:'),
+            d.sources.map((source) => {
+              return h('a.source', {
+                href: source.address,
+                target: '_blank'
+              }, source.display.length ? source.display : source.address)
+            })
+          ]);
+        }
 
         return h('div.condition', {
           dataset: {
@@ -153,6 +166,7 @@ class standView extends view {
           }
         }, [
           h('div.tagline', d.tagline),
+          sourceList,
           h('div.pending', pendingCount + " opinions at stake"),
           h('div.confirmed', confirmedCount + " convinced")
         ]);

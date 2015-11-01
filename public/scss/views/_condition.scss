@@ -20,21 +20,33 @@
     .frame {
       padding-bottom: 1rem;
     }
-    .title {
-      margin-bottom: 0.5rem;
-      font-size: 1.3rem;
-    }
-    .pending, .confirmed {
-      display: inline-block;
-      font-size: 0.8rem;
-    }
-    .confirmed {
-      margin-left: 0.5rem;
-      &:before {
-        content: ' / ';
-        display: inline-block;
-        margin-right: 0.4rem;
+    .main-condition {
+      .source-list {
+        @extend %source-list;
+        margin-top: 0.75rem;
+        margin-bottom: 1rem;
+        .label, a {
+          font-size: 0.8rem;
+        }
       }
+      .pending, .confirmed {
+        display: inline-block;
+        font-size: 0.9rem;
+        @extend %header-font;
+        font-weight: 100;
+      }
+      .confirmed {
+        margin-left: 0.5rem;
+        &:before {
+          content: ' / ';
+          display: inline-block;
+          margin-right: 0.4rem;
+        }
+      }      
+    }
+    .title {
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
     }
     #vote-on-condition {
       padding-top: 2rem;

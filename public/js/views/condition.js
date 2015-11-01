@@ -259,6 +259,20 @@ class conditionView extends view {
       }
     }
 
+    var sourcesForCondition;
+
+    if(viewState.condition.sources && viewState.condition.sources.length) {
+      sourcesForCondition = h('div.source-list', [
+        h('div.label', 'Sources:'),
+        viewState.condition.sources.map((source) => {
+          return h('a.source', {
+            href: source.address,
+            target: '_blank'
+          }, source.display.length ? source.display : source.address)
+        })
+      ]);
+    }
+
     return h('#condition-view', [
       headerSubview.render({
         issue: viewState.issue,
@@ -266,9 +280,12 @@ class conditionView extends view {
       }),
       h('div.body', [
         h('div.frame', frame),
-        h('div.title', viewState.condition.tagline),
-        h('div.pending', pendingCount + " opinions at stake"),
-        h('div.confirmed', confirmedCount + " convinced"),
+        h('div.main-condition', [
+          h('div.title', viewState.condition.tagline),
+          sourcesForCondition,
+          h('div.pending', pendingCount + " opinions at stake"),
+          h('div.confirmed', confirmedCount + " convinced"),
+        ]),
         voteOnCondition,
         proofs,
         modal

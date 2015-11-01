@@ -283,6 +283,27 @@ a {
   }
 }
 
+%source-list {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  .label {
+    @extend %naked-label;
+    font-size: 0.7rem;
+    margin-bottom: 0.25rem;
+  }
+  a {
+    display: block;
+    @extend %header-font;
+    font-size: 0.7rem;
+    margin-bottom: 0.25rem;
+    font-weight: 100;
+    @include transition(opacity $transition-duration);
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
 %submitted-item {
   cursor: pointer;
   padding-top: 1.25rem;
@@ -290,13 +311,15 @@ a {
   .tagline {
     @extend %header-font;
     color: $highlight-text-color;
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-bottom: 0rem;
   }
   .pending, .confirmed {
     display: inline-block;
     margin-top: 0.5rem;
     font-size: 0.8rem;
+    @extend %header-font;
+    font-weight: 100;
   }
   .confirmed {
     margin-left: 0.5rem;    
@@ -305,6 +328,9 @@ a {
       display: inline-block;;
       margin-right: 0.4rem;
     }
+  }
+  .source-list {
+    @extend %source-list;
   }
 }
 
