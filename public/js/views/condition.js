@@ -164,7 +164,7 @@ class conditionView extends view {
         h('div.form-container', [
           h('div.textarea-wrapper', [
             h('textarea', {
-              placeholder: 'Prove the statement above.',
+              placeholder: 'Respond to the statement above.',
               maxlength: 1000
             })
           ]),
@@ -215,7 +215,7 @@ class conditionView extends view {
         ]);
       } else {
         proofs = h('div.proofs-wrapper', [
-          h('div.title', 'No proofs available yet.'),
+          h('div.title', 'No responses available yet.'),
           submitProof
         ]);
       }
