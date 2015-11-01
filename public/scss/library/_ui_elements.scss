@@ -283,6 +283,7 @@ a {
     @extend %text-h1;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    line-height: $body-font-line-height;
   }
 }
 
@@ -314,6 +315,7 @@ a {
   padding-bottom: 1.25rem;
   .tagline {
     font-size: 1rem;
+    line-height: $body-font-line-height;
     margin-bottom: 0rem;
   }
   .pending, .confirmed {

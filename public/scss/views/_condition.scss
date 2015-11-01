@@ -8,7 +8,7 @@
     cursor: default;
     padding-bottom: 1rem;
     .button {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
     }
   }
   .body {
@@ -22,6 +22,7 @@
     .main-condition {
       .title {
         margin-bottom: 0rem;
+        line-height: $body-font-line-height;
       }
       .source-list {
         @extend %source-list;
