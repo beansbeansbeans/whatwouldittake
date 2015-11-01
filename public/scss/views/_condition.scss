@@ -7,10 +7,6 @@
     @extend %submitted-item;
     cursor: default;
     padding-bottom: 1rem;
-    .pending {
-      display: block !important;
-      margin-bottom: 1rem;
-    }
     .button {
       margin-top: 1rem;
     }
@@ -29,13 +25,13 @@
       }
       .source-list {
         @extend %source-list;
-        margin-top: 1rem;
       }
       .pending, .confirmed {
         display: inline-block;
         font-size: 0.8rem;
-        @extend %header-font;
-        font-weight: 100;
+        @extend %subdued-label;
+        margin-bottom: 0.5rem;
+        pointer-events: none;
       }
       .confirmed {
         margin-left: 0.5rem;
@@ -97,20 +93,9 @@
     .proofs-wrapper {
       padding-top: 3rem;
       ul {
-        border-top: solid 1px $border-color;
-        margin: 3rem auto;
-        padding: 2rem 0;
+        margin: 1rem auto;
+        padding: 0;
         position: relative;
-        &:before {
-          content: "Submitted responses:";
-          @extend %subdued-label;
-          position: absolute;
-          top: -0.6rem;
-          background: white;
-          padding-right: 0.5rem;
-          pointer-events: none !important;
-          color: $subdued-text-color !important;
-        }
       }
     }
   }

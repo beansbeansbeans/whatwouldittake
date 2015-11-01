@@ -18,7 +18,7 @@
     margin: 0rem auto 1rem;
   }
   #contribute {
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
     #toggle-contributing {
       text-align: center;
       @extend %subdued-label;
@@ -76,19 +76,6 @@
     max-width: 900px;
   }
   .conditions-wrapper {
-    padding-top: 2rem;
-    position: relative;
-    border-top: solid 1px $border-color;
-    &:before {
-      content: "In order of convincingness: ";
-      @extend %naked-label;
-      position: absolute;
-      top: -0.6rem;
-      background: $body-bg-color;
-      padding-right: 0.5rem;
-      color: $subdued-text-color;
-      font-weight: 300;
-    }
   }
   .condition {
     @extend %submitted-item;

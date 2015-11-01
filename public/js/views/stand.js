@@ -165,9 +165,9 @@ class standView extends view {
             id: d._id
           }
         }, [
-          h('div.tagline', d.tagline),
           h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
           h('div.confirmed', confirmedCount + " convinced"),
+          h('div.tagline', d.tagline),
           sourceList
         ]);
       });
