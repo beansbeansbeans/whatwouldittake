@@ -13,7 +13,8 @@ var viewState = {
   issue: {},
   condition: {},
   anonymousUserAttemptedVote: false,
-  submittingProof: false
+  submittingProof: false,
+  sourceCount: 1
 };
 
 class conditionView extends view {
@@ -66,10 +67,19 @@ class conditionView extends view {
       api.post("/contribute-proof", {
         id: viewState.issue._id,
         stand: viewState.position,
+        sources: [].filter.call(d.qsa('.source-wrapper'), (el) => {
+          return el.querySelector(".source-href").value.length;
+        }).map((el) => {
+          return {
+            address: el.querySelector(".source-href").value,
+            display: el.querySelector(".source-display").value
+          }
+        }),
         conditionID: viewState.condition._id,
         description: d.qs("#submit-proof textarea").value
       }, (data) => {
         viewState.submittingProof = false;
+        viewState.sourceCount = 1;
         viewState.issue = data.data;
         viewState.condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
         helpers.refreshIssue(data.data);
@@ -107,6 +117,7 @@ class conditionView extends view {
         proofID: closestProof.dataset.id
       }, (data) => {
         helpers.refreshIssue(data.data.issue);
+        viewState.sourceCount = 1;
         viewState.submittingProof = false;
         state.set("user", data.data.user);
         page.show('/stands/' + viewState.issue.slug + '/' + viewState.position)
@@ -115,7 +126,11 @@ class conditionView extends view {
       viewState.submittingProof = true;
       this.updateState();
     } else if(e.target.id === 'cancel-submit-proof-button') {
+      viewState.sourceCount = 1;
       viewState.submittingProof = false;
+      this.updateState();
+    } else if(e.target.classList.contains("add-more")) {
+      viewState.sourceCount++;
       this.updateState();
     }
   }
@@ -157,6 +172,24 @@ class conditionView extends view {
       });
     }
 
+    var sourceList = [];
+    for(var i=0; i<viewState.sourceCount; i++) {
+      sourceList.push(h('div.source-wrapper', [
+        h('div.label', 'Source ' + (i + 1)),
+        h('input.source-href', {
+          placeholder: 'link address'
+        }),
+        h('input.source-display', {
+          placeholder: 'link display'
+        })
+      ]));
+    }
+ 
+    var addMoreSources;
+    if(viewState.sourceCount < 5) {
+      addMoreSources = h('div.add-more', '+ Add source');
+    }
+
     if(!helpers.isBeliever(viewState.issue, viewState.position)) {
       submitProof = h('div#submit-proof', {
         dataset: { active: viewState.submittingProof }
@@ -168,6 +201,10 @@ class conditionView extends view {
               placeholder: 'Respond to the statement above.',
               maxlength: 1000
             })
+          ]),
+          h('div.sources-container', [
+            h('div.source-list', sourceList),
+            addMoreSources
           ]),
           h('div.button-container', [
             h('div.button#submit-proof-button', 'Submit'),
