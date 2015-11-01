@@ -288,7 +288,7 @@ a {
 }
 
 %source-list {
-  margin-top: 0.7rem;
+  margin-top: 1rem;
   .label {
     @extend %naked-label;
     font-size: 0.8rem;
@@ -306,6 +306,18 @@ a {
     &:not(:last-of-type) {
       margin-bottom: 0.25rem;
     }
+    padding-left: 1rem;
+    position: relative;
+    &:before {
+      content: "";
+      @include square(4px);
+      border-radius: 50%;
+      background: darken($border-color, 5%);
+      position: absolute;
+      top: 50%;
+      margin-top: -2px;
+      left: 3px;
+    }
   }
 }
 
@@ -320,7 +332,7 @@ a {
   }
   .pending, .confirmed {
     display: inline-block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     font-size: 0.7rem;
     @extend %subdued-label;
     pointer-events: none;
