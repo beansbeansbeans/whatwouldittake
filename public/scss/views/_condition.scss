@@ -90,7 +90,7 @@
         padding: 2rem 0;
         position: relative;
         &:before {
-          content: "Submitted proofs:";
+          content: "Submitted responses:";
           @extend %subdued-label;
           position: absolute;
           top: -0.6rem;
