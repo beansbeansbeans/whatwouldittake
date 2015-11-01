@@ -239,6 +239,20 @@ class conditionView extends view {
             return 0;
           }).map((d) => {
             var button;
+            var sourcesOfProof;
+
+            if(d.sources && d.sources.length) {
+              sourcesOfProof = h('div.source-list', [
+                h('div.label', 'Sources:'),
+                d.sources.map((source) => {
+                  return h('a.source', {
+                    href: source.address,
+                    target: '_blank'
+                  }, source.display.length ? source.display : source.address)
+                })
+              ]);
+            }
+
             if(beliefAtStake) {
               button = h('div.vote.button', "I'm convinced");
             }
@@ -247,6 +261,7 @@ class conditionView extends view {
             }, [
               h('div.tagline', d.description),
               h('div.pending', d.believers.length + ' convinced'),
+              sourcesOfProof,
               button
             ]);
           }))
