@@ -69,6 +69,7 @@ class conditionView extends view {
         conditionID: viewState.condition._id,
         description: d.qs("#submit-proof textarea").value
       }, (data) => {
+        viewState.submittingProof = false;
         viewState.issue = data.data;
         viewState.condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
         helpers.refreshIssue(data.data);
