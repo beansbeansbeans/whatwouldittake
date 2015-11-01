@@ -190,29 +190,29 @@ class conditionView extends view {
       addMoreSources = h('div.add-more', '+ Add source');
     }
 
-    if(!helpers.isBeliever(viewState.issue, viewState.position)) {
-      submitProof = h('div#submit-proof', {
-        dataset: { active: viewState.submittingProof }
-      }, [
-        h('div#toggle-proof-submission', 'Contribute'),
-        h('div.form-container', [
-          h('div.textarea-wrapper', [
-            h('textarea', {
-              placeholder: 'Respond to the statement above.',
-              maxlength: 1000
-            })
-          ]),
-          h('div.sources-container', [
-            h('div.source-list', sourceList),
-            addMoreSources
-          ]),
-          h('div.button-container', [
-            h('div.button#submit-proof-button', 'Submit'),
-            h('div.button#cancel-submit-proof-button', 'Cancel')
-          ])
+    submitProof = h('div#submit-proof', {
+      dataset: { active: viewState.submittingProof }
+    }, [
+      h('div#toggle-proof-submission', 'Contribute'),
+      h('div.form-container', [
+        h('div.textarea-wrapper', [
+          h('textarea', {
+            placeholder: 'Respond to the statement above.',
+            maxlength: 1000
+          })
+        ]),
+        h('div.sources-container', [
+          h('div.source-list', sourceList),
+          addMoreSources
+        ]),
+        h('div.button-container', [
+          h('div.button#submit-proof-button', 'Submit'),
+          h('div.button#cancel-submit-proof-button', 'Cancel')
         ])
-      ]);
-    } else if(!beliefAtStake) {
+      ])
+    ]);
+
+    if(helpers.isBeliever(viewState.issue, viewState.position) && !beliefAtStake) {
       frame = 'Would this change your mind?';
       voteOnCondition = h('div#vote-on-condition', [
         h('div.button#vote-yes-on-condition', 'Yes'),
@@ -228,50 +228,48 @@ class conditionView extends view {
       }
     }
 
-    if((!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake)) {
-      if(viewState.condition.proofs && viewState.condition.proofs.length) {
-        proofs = h('div.proofs-wrapper', [
-          h('div.title', 'See anything convincing?'),
-          submitProof,
-          h('ul', viewState.condition.proofs.sort((a, b) => {
-            if(a.believers.length > b.believers.length) { return -1; }
-            if(a.believers.length < b.believers.length) { return 1; }
-            return 0;
-          }).map((d) => {
-            var button;
-            var sourcesOfProof;
+    if(viewState.condition.proofs && viewState.condition.proofs.length) {
+      proofs = h('div.proofs-wrapper', [
+        h('div.title', 'See anything convincing?'),
+        submitProof,
+        h('ul', viewState.condition.proofs.sort((a, b) => {
+          if(a.believers.length > b.believers.length) { return -1; }
+          if(a.believers.length < b.believers.length) { return 1; }
+          return 0;
+        }).map((d) => {
+          var button;
+          var sourcesOfProof;
 
-            if(d.sources && d.sources.length) {
-              sourcesOfProof = h('div.source-list', [
-                h('div.label', 'Sources:'),
-                d.sources.map((source) => {
-                  return h('a.source', {
-                    href: source.address,
-                    target: '_blank'
-                  }, source.display.length ? source.display : source.address)
-                })
-              ]);
-            }
-
-            if(beliefAtStake) {
-              button = h('div.vote.button', "I'm convinced");
-            }
-            return h('li.proof', {
-              dataset: { id: d._id }
-            }, [
-              h('div.pending', d.believers.length + ' convinced'),
-              h('div.tagline', d.description),
-              sourcesOfProof,
-              button
+          if(d.sources && d.sources.length) {
+            sourcesOfProof = h('div.source-list', [
+              h('div.label', 'Sources:'),
+              d.sources.map((source) => {
+                return h('a.source', {
+                  href: source.address,
+                  target: '_blank'
+                }, source.display.length ? source.display : source.address)
+              })
             ]);
-          }))
-        ]);
-      } else {
-        proofs = h('div.proofs-wrapper', [
-          h('div.title', 'No responses available yet.'),
-          submitProof
-        ]);
-      }
+          }
+
+          if(!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake) {
+            button = h('div.vote.button', "I'm convinced");
+          }
+          return h('li.proof', {
+            dataset: { id: d._id }
+          }, [
+            h('div.pending', d.believers.length + ' convinced'),
+            h('div.tagline', d.description),
+            sourcesOfProof,
+            button
+          ]);
+        }))
+      ]);
+    } else {
+      proofs = h('div.proofs-wrapper', [
+        h('div.title', 'No responses available yet.'),
+        submitProof
+      ]);
     }
 
     var sourcesForCondition;
