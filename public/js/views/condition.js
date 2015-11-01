@@ -209,7 +209,7 @@ class conditionView extends view {
               dataset: { id: d._id }
             }, [
               h('div.tagline', d.description),
-              h('div.pending', d.believers.length + ' people convinced'),
+              h('div.pending', d.believers.length + ' convinced'),
               button
             ]);
           }))
@@ -230,8 +230,8 @@ class conditionView extends view {
       h('div.body', [
         h('div.frame', frame),
         h('div.title', viewState.condition.tagline),
-        h('div.pending', pendingCount + util.pluralize(pendingCount, " person's opinion ", " people's opinions ") + " at stake"),
-        h('div.confirmed', confirmedCount + util.pluralize(confirmedCount, " person", " people") + " convinced"),
+        h('div.pending', pendingCount + " opinions at stake"),
+        h('div.confirmed', confirmedCount + " convinced"),
         voteOnCondition,
         proofs,
         modal
