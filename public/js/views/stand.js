@@ -10,13 +10,14 @@ var headerSubview = require('./subviews/belief_header');
 var descriptionTextareaMaxLength = 255;
 var moreInfoTextareaMaxLength = 1000;
 
-var viewState = {
+var pristineState = {
   issue: {},
   sourceCount: 1,
   activelyContributing: false,
   descriptionTextarea: descriptionTextareaMaxLength,
   moreInfoTextarea: moreInfoTextareaMaxLength
 };
+var viewState = JSON.parse(JSON.stringify(pristineState));
 
 var dimensions = {};
 
@@ -128,6 +129,7 @@ class standView extends view {
     super.stop();
     mediator.unsubscribe("window_click", this.handleClick);
     mediator.unsubscribe("window_keydown", this.handleKeydown);
+    viewState = JSON.parse(JSON.stringify(pristineState));
   }
 
   render() {
