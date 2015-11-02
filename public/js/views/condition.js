@@ -10,7 +10,7 @@ var helpers = require('../util/belief_helpers');
 var headerSubview = require('./subviews/belief_header');
 
 var descriptionTextareaMaxLength = 1000;
-var viewState = {
+var pristineState = {
   issue: {},
   condition: {},
   anonymousUserAttemptedVote: false,
@@ -18,6 +18,7 @@ var viewState = {
   sourceCount: 1,
   descriptionTextarea: descriptionTextareaMaxLength
 };
+var viewState = JSON.parse(JSON.stringify(pristineState));
 
 class conditionView extends view {
   start(ctx) {
@@ -149,6 +150,7 @@ class conditionView extends view {
     super.stop();
     mediator.unsubscribe("window_click", this.handleClick);
     mediator.unsubscribe("window_keyup", this.handleKeyup);
+    viewState = JSON.parse(JSON.stringify(pristineState));
   }
 
   render() {
