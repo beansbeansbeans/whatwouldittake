@@ -27,6 +27,9 @@
       .source-list {
         @extend %source-list;
       }
+      .more-info {
+        margin-top: 0.5rem;
+      }
       @extend %pending-confirmed-author;      
     }
     .title {
