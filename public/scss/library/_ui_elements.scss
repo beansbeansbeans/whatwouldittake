@@ -330,12 +330,20 @@ a {
     line-height: $body-font-line-height;
     margin-bottom: 0rem;
   }
-  .pending, .confirmed {
+  .pending, .confirmed, .author {
     display: inline-block;
     margin-bottom: 1rem;
     font-size: 0.7rem;
     @extend %subdued-label;
     pointer-events: none;
+  }
+  .author {
+    margin-right: 0.5rem;
+    &:after {
+      content: "/";
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
   }
   .confirmed {
     margin-left: 0.5rem;    

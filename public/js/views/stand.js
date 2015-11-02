@@ -160,11 +160,17 @@ class standView extends view {
           ]);
         }
 
+        var author;
+        if(d.author) {
+          author = h('div.author', 'by ' + d.author.name);
+        }
+
         return h('div.condition', {
           dataset: {
             id: d._id
           }
         }, [
+          author,
           h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
           h('div.confirmed', confirmedCount + " convinced"),
           h('div.tagline', d.tagline),
