@@ -371,6 +371,9 @@ a {
     font-size: 1rem;
     line-height: $body-font-line-height;
     margin-bottom: 0rem;
+    span:last-of-type {
+      color: $subdued-text-color;
+    }
   }
   @extend %pending-confirmed-author;
   .source-list {

@@ -177,7 +177,10 @@ class standView extends view {
           author,
           h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
           h('div.confirmed', confirmedCount + " convinced"),
-          h('div.tagline', d.tagline),
+          h('div.tagline', [
+            h('span', d.tagline),
+            h('span', ' (' + d.proofs.length + util.pluralize(d.proofs.length, ' response') + ')')
+          ]),
           sourceList
         ]);
       });
