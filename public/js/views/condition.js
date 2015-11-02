@@ -255,9 +255,15 @@ class conditionView extends view {
           if(!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake) {
             button = h('div.vote.button', "I'm convinced");
           }
+
+          var author;
+          if(d.author) {
+            author = h('div.author', 'by ' + d.author.name);
+          }
           return h('li.proof', {
             dataset: { id: d._id }
           }, [
+            author,
             h('div.pending', d.believers.length + ' convinced'),
             h('div.tagline', d.description),
             sourcesOfProof,
