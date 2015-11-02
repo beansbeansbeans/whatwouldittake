@@ -76,26 +76,28 @@ class standView extends view {
     } else if(e.target.id === 'see-other-side') {
       page.show('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
     } else if(e.target.id === 'submit-what-would-it-take') {
-      api.post('/contribute', {
-        id: viewState.issue._id,
-        stand: viewState.position,
-        sources: [].filter.call(d.qsa('.source-wrapper'), (el) => {
-          return el.querySelector(".source-href").value.length;
-        }).map((el) => {
-          return {
-            address: el.querySelector(".source-href").value,
-            display: el.querySelector(".source-display").value
-          }
-        }),
-        tagline: d.qs("#contribute .tagline textarea").value,
-        moreInfo: d.qs("#contribute .more-info textarea").value
-      }, (data) => {
-        viewState.issue = data.data;
-        viewState.activelyContributing = false;
-        viewState.sourceCount = 1;
-        helpers.refreshIssue(data.data);
-        this.updateState();
-      });
+      if(d.qs("#contribute .tagline textarea").value.length) {
+        api.post('/contribute', {
+          id: viewState.issue._id,
+          stand: viewState.position,
+          sources: [].filter.call(d.qsa('.source-wrapper'), (el) => {
+            return el.querySelector(".source-href").value.length;
+          }).map((el) => {
+            return {
+              address: el.querySelector(".source-href").value,
+              display: el.querySelector(".source-display").value
+            }
+          }),
+          tagline: d.qs("#contribute .tagline textarea").value,
+          moreInfo: d.qs("#contribute .more-info textarea").value
+        }, (data) => {
+          viewState.issue = data.data;
+          viewState.activelyContributing = false;
+          viewState.sourceCount = 1;
+          helpers.refreshIssue(data.data);
+          this.updateState();
+        });
+      }
     } else if(closestCondition) {
       page.show('/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id);
     } else if(e.target.id === "toggle-contributing") {

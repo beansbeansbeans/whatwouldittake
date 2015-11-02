@@ -64,27 +64,29 @@ class conditionView extends view {
     } else if(e.target.id === 'see-other-side') {
       page.show('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
     } else if(e.target.id === "submit-proof-button") {
-      api.post("/contribute-proof", {
-        id: viewState.issue._id,
-        stand: viewState.position,
-        sources: [].filter.call(d.qsa('.source-wrapper'), (el) => {
-          return el.querySelector(".source-href").value.length;
-        }).map((el) => {
-          return {
-            address: el.querySelector(".source-href").value,
-            display: el.querySelector(".source-display").value
-          }
-        }),
-        conditionID: viewState.condition._id,
-        description: d.qs("#submit-proof textarea").value
-      }, (data) => {
-        viewState.submittingProof = false;
-        viewState.sourceCount = 1;
-        viewState.issue = data.data;
-        viewState.condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
-        helpers.refreshIssue(data.data);
-        this.updateState();
-      });
+      if(d.qs("#submit-proof textarea").value.length) {
+        api.post("/contribute-proof", {
+          id: viewState.issue._id,
+          stand: viewState.position,
+          sources: [].filter.call(d.qsa('.source-wrapper'), (el) => {
+            return el.querySelector(".source-href").value.length;
+          }).map((el) => {
+            return {
+              address: el.querySelector(".source-href").value,
+              display: el.querySelector(".source-display").value
+            }
+          }),
+          conditionID: viewState.condition._id,
+          description: d.qs("#submit-proof textarea").value
+        }, (data) => {
+          viewState.submittingProof = false;
+          viewState.sourceCount = 1;
+          viewState.issue = data.data;
+          viewState.condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
+          helpers.refreshIssue(data.data);
+          this.updateState();
+        });
+      }
     } else if(e.target.id === "vote-yes-on-condition") {
       if(state.get("user") !== null) {
         api.post("/vote-on-condition", {
