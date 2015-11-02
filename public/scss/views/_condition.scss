@@ -27,21 +27,7 @@
       .source-list {
         @extend %source-list;
       }
-      .pending, .confirmed {
-        display: inline-block;
-        font-size: 0.7rem;
-        @extend %subdued-label;
-        margin-bottom: 1rem;
-        pointer-events: none;
-      }
-      .confirmed {
-        margin-left: 0.5rem;
-        &:before {
-          content: ' / ';
-          display: inline-block;
-          margin-right: 0.4rem;
-        }
-      }      
+      @extend %pending-confirmed-author;      
     }
     .title {
       margin-bottom: 1rem;

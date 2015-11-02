@@ -286,6 +286,11 @@ class conditionView extends view {
       ]);
     }
 
+    var mainConditionAuthor;
+    if(viewState.condition.author) {
+      mainConditionAuthor = h('div.author', 'by ' + viewState.condition.author.name);
+    }
+
     return h('#condition-view', [
       headerSubview.render({
         issue: viewState.issue,
@@ -294,6 +299,7 @@ class conditionView extends view {
       h('div.body', [
         h('div.frame', frame),
         h('div.main-condition', [
+          mainConditionAuthor,
           h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
           h('div.confirmed', confirmedCount + " convinced"),
           h('div.title', viewState.condition.tagline),

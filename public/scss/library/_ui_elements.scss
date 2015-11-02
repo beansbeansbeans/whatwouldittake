@@ -321,15 +321,7 @@ a {
   }
 }
 
-%submitted-item {
-  cursor: pointer;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-  .tagline {
-    font-size: 1rem;
-    line-height: $body-font-line-height;
-    margin-bottom: 0rem;
-  }
+%pending-confirmed-author {
   .pending, .confirmed, .author {
     display: inline-block;
     margin-bottom: 1rem;
@@ -353,6 +345,18 @@ a {
       margin-right: 0.5rem;
     }
   }
+}
+
+%submitted-item {
+  cursor: pointer;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  .tagline {
+    font-size: 1rem;
+    line-height: $body-font-line-height;
+    margin-bottom: 0rem;
+  }
+  @extend %pending-confirmed-author;
   .source-list {
     @extend %source-list;
   }
