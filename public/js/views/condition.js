@@ -229,8 +229,12 @@ class conditionView extends view {
     }
 
     if(viewState.condition.proofs && viewState.condition.proofs.length) {
+      var titleText = 'Responses:';
+      if(beliefAtStake) {
+        titleText = 'See anything convincing?';
+      }
       proofs = h('div.proofs-wrapper', [
-        h('div.title', 'See anything convincing?'),
+        h('div.title', titleText),
         submitProof,
         h('ul', viewState.condition.proofs.sort((a, b) => {
           if(a.believers.length > b.believers.length) { return -1; }
