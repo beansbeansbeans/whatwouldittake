@@ -42,24 +42,8 @@
         text-align: center;
         margin-bottom: 1rem;
       }
-      .remaining-characters {
-        opacity: 0;
-        @include transition(opacity $transition-duration);
-        font-size: 0.8rem;
-        line-height: 1;
-        text-align: right;
-      }
       .more-info textarea {
         margin-top: 1rem;
-      }
-      textarea {
-        width: 100%;
-        resize: vertical;
-        &:focus {
-          + .remaining-characters {
-            opacity: 1;
-          }
-        }
       }
       .button-container {
         text-align: center;

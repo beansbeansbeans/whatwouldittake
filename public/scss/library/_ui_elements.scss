@@ -87,6 +87,22 @@
     width: 100%;
     margin-bottom: 1rem;
   }
+  textarea {
+    width: 100%;
+    resize: vertical;
+    &:focus {
+      + .remaining-characters {
+        opacity: 1;
+      }
+    }
+  }
+  .remaining-characters {
+    opacity: 0;
+    @include transition(opacity $transition-duration);
+    font-size: 0.8rem;
+    line-height: 1;
+    text-align: right;
+  }
   .sources-container {
     margin-bottom: 1rem;
     .source-wrapper {

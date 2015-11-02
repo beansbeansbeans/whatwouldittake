@@ -9,19 +9,21 @@ var modalSubview = require('./subviews/modal');
 var helpers = require('../util/belief_helpers');
 var headerSubview = require('./subviews/belief_header');
 
+var descriptionTextareaMaxLength = 1000;
 var viewState = {
   issue: {},
   condition: {},
   anonymousUserAttemptedVote: false,
   submittingProof: false,
-  sourceCount: 1
+  sourceCount: 1,
+  descriptionTextarea: descriptionTextareaMaxLength
 };
 
 class conditionView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick');
+    _.bindAll(this, 'handleClick', 'handleKeyup');
 
     viewState.position = ctx.params.side;
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
@@ -29,6 +31,7 @@ class conditionView extends view {
     this.updateState();
 
     mediator.subscribe("window_click", this.handleClick);
+    mediator.subscribe("window_keyup", this.handleKeyup);
   }
 
   handleClick(e) {
@@ -137,9 +140,15 @@ class conditionView extends view {
     }
   }
 
+  handleKeyup() {
+    viewState.descriptionTextarea = descriptionTextareaMaxLength - d.qs("#submit-proof textarea").value.length;
+    this.updateState();
+  }
+
   stop() {
     super.stop();
     mediator.unsubscribe("window_click", this.handleClick);
+    mediator.unsubscribe("window_keyup", this.handleKeyup);
   }
 
   render() {
@@ -200,8 +209,9 @@ class conditionView extends view {
         h('div.textarea-wrapper', [
           h('textarea', {
             placeholder: 'Respond to the statement above.',
-            maxlength: 1000
-          })
+            maxlength: descriptionTextareaMaxLength
+          }),
+          h('div.remaining-characters', '' + viewState.descriptionTextarea)
         ]),
         h('div.sources-container', [
           h('div.source-list', sourceList),
