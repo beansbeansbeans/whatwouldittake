@@ -256,7 +256,7 @@ class conditionView extends view {
             ]);
           }
 
-          if(!helpers.isBeliever(viewState.issue, viewState.position) || beliefAtStake) {
+          if(beliefAtStake) {
             button = h('div.vote.button', "I'm convinced");
           }
 
