@@ -340,7 +340,7 @@ a {
 %pending-confirmed-author {
   .pending, .confirmed, .author {
     display: inline-block;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     font-size: 0.7rem;
     @extend %subdued-label;
     pointer-events: none;
@@ -372,6 +372,7 @@ a {
     line-height: $body-font-line-height;
     margin-bottom: 0rem;
     span:last-of-type {
+      margin-left: 0.25rem;
       color: $subdued-text-color;
     }
   }
