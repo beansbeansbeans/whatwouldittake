@@ -36,7 +36,7 @@ class issuesView extends view {
       if(stand) {
         page.show('stands/' + issue.dataset.slug + '/' + stand.stand);
       } else {
-        page.show('vote/' + issue.dataset.slug);
+        page.show('/vote/' + issue.dataset.slug);
       }
     }
   }
