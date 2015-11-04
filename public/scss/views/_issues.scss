@@ -9,6 +9,7 @@
     margin: 3rem auto;
     width: 60%;
     cursor: pointer;
+    min-width: 500px;
     .slug {
       @extend %header-font;
       font-size: 1.1rem;
