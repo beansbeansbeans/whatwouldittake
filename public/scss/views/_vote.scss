@@ -11,4 +11,14 @@
   .button {
     margin: 0.5rem;
   }
+  #agree-button {
+    &:hover {
+      background-color: $agreement-color;
+    }
+  }
+  #disagree-button {
+    &:hover {
+      background-color: $disagreement-color;
+    }
+  }
 }

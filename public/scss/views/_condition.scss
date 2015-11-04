@@ -9,6 +9,9 @@
     padding-bottom: 1rem;
     .button {
       margin-top: 1rem;
+      &:hover {
+        background-color: $agreement-color;
+      }
     }
   }
   .body {
@@ -43,6 +46,14 @@
       text-align: center;
       #vote-yes-on-condition {
         margin-right: 1rem;
+        &:hover {
+          background-color: $agreement-color;
+        }
+      }
+      #vote-no-on-condition {
+        &:hover {
+          background-color: $disagreement-color;
+        }
       }
     }
     .proofs-wrapper .title, .frame {
