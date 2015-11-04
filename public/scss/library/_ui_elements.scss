@@ -344,10 +344,14 @@ a {
     font-size: 0.7rem;
     @extend %subdued-label;
     pointer-events: none;
+    &[data-exists="true"] {
+      color: $de-york;
+    }
   }
   .author {
     margin-right: 0.5rem;
     &:after {
+      color: $subdued-text-color !important;
       content: "/";
       display: inline-block;
       margin-left: 0.5rem;
@@ -356,6 +360,7 @@ a {
   .confirmed {
     margin-left: 0.5rem;    
     &:before {
+      color: $subdued-text-color !important;
       content: " / ";
       display: inline-block;;
       margin-right: 0.5rem;

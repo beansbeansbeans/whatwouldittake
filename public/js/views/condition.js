@@ -282,7 +282,11 @@ class conditionView extends view {
             dataset: { id: d._id }
           }, [
             author,
-            h('div.pending', d.believers.length + ' convinced'),
+            h('div.pending', {
+              dataset: {
+                exists: confirmedCount > 0
+              }
+            }, d.believers.length + ' convinced'),
             h('div.tagline', d.description),
             sourcesOfProof,
             button
@@ -330,7 +334,11 @@ class conditionView extends view {
         h('div.main-condition', [
           mainConditionAuthor,
           h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
-          h('div.confirmed', confirmedCount + " convinced"),
+          h('div.confirmed', {
+            dataset: {
+              exists: confirmedCount > 0
+            }
+          }, confirmedCount + " convinced"),
           h('div.title', viewState.condition.tagline),
           moreInfo,
           sourcesForCondition

@@ -137,9 +137,9 @@ class standView extends view {
     var conditionsTitle;
 
     if(helpers.isBeliever(viewState.issue, viewState.position)) {
-      conditionsTitle = "to change your mind?";
+      conditionsTitle = "What would it take to change your mind?";
     } else {
-      conditionsTitle = "to change their minds?";
+      conditionsTitle = "What it would take to change their minds:";
     }
 
     if(!_.isEmpty(viewState.issue) && viewState.issue.conditions[viewState.position]) {
@@ -176,7 +176,11 @@ class standView extends view {
         }, [
           author,
           h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
-          h('div.confirmed', confirmedCount + " convinced"),
+          h('div.confirmed', {
+            dataset: {
+              exists: confirmedCount > 0
+            }
+          }, confirmedCount + " convinced"),
           h('div.tagline', [
             h('span', d.tagline),
             h('span', ' (' + d.proofs.length + util.pluralize(d.proofs.length, ' response') + ')')
@@ -210,10 +214,7 @@ class standView extends view {
         position: viewState.position
       }),
       h('div.body', [
-        h('div.title', [
-          h('span', 'What would it take '),
-          h('span', conditionsTitle)
-        ]),
+        h('div.title', conditionsTitle),
         h('div#contribute', {
           dataset: {
             active: viewState.activelyContributing
