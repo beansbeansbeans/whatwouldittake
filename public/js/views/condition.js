@@ -231,7 +231,7 @@ class conditionView extends view {
         h('div.textarea-wrapper', [
           h('textarea', {
             placeholder: 'Respond to the statement above.',
-            maxlength: descriptionTextareaMaxLength
+            maxLength: descriptionTextareaMaxLength
           }),
           h('div.remaining-characters', '' + viewState.descriptionTextarea)
         ]),

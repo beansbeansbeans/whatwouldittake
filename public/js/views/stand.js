@@ -270,7 +270,7 @@ class standView extends view {
             h('div.input-container.tagline', [
               h('textarea', { 
                 placeholder: "Description",
-                maxlength: descriptionTextareaMaxLength
+                maxLength: descriptionTextareaMaxLength
               }),
               h('div.remaining-characters', '' + viewState.descriptionTextarea)
             ]),
@@ -281,7 +281,7 @@ class standView extends view {
             h('div.input-container.more-info', [
               h('textarea', { 
                 placeholder: "More information (optional)",
-                maxlength: moreInfoTextareaMaxLength
+                maxLength: moreInfoTextareaMaxLength
               }),
               h('div.remaining-characters', '' + viewState.moreInfoTextarea)
             ]),
