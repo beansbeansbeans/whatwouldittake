@@ -31,10 +31,16 @@ var vote = (stand) => {
     if(!anonymous_activity.stands) {
       anonymous_activity.stands = [];
     }
-    anonymous_activity.stands.push({
-      id: viewState.issue._id,
-      stand: stand
-    });
+    var matchingStand = _.findWhere(anonymous_activity.stands, { id: viewState.issue._id});
+
+    if(matchingStand) {
+      matchingStand.stand = stand;
+    } else {
+      anonymous_activity.stands.push({
+        id: viewState.issue._id,
+        stand: stand
+      });
+    }
     state.set("anonymous_activity", anonymous_activity);
     page.show('/stands/' + viewState.issue.slug + '/' + stand);
   }
