@@ -19,6 +19,8 @@
         opacity: 0;
       }
       .tagline {
+        margin-top: 0.2rem;
+        margin-bottom: 1.3rem;
         @include transform(scale(1.3));
       }
     }
