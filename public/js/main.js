@@ -10,6 +10,7 @@ var useragent = require('./useragent');
 // views
 var nav = require('./views/nav');
 
+util.initialize();
 nav.start();
 
 if(window.location.hostname === "localhost") {

@@ -13,6 +13,12 @@ body {
   color: $text-color;
   @include border-radius(50%);
   @extend %body-font;
+  #content {
+    @include transition(opacity $transition-duration);
+    &.fade-out-view {
+      opacity: 0;
+    }
+  }
 }
 
 * {

@@ -12,10 +12,22 @@ var viewState = {
 
 var dimensions = {};
 
+var fadeOutEndHandler = (e) => {
+  d.gbID("content").classList.remove("fade-out-view");
+  d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+  page.show(viewState.nextRoute);
+}
+
+var fadeOut = (nextRoute) => {
+  viewState.nextRoute = nextRoute;
+  d.gbID("content").classList.add("fade-out-view");
+  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+}
+
 var vote = (stand) => {
   if(state.get("user") !== null) {
     if(helpers.isBeliever(viewState.issue, stand)) {
-      page.show('/stands/' + viewState.issue.slug + '/' + stand);
+      fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
     } else {
       api.post('/vote', {
         id: viewState.issue._id,
@@ -23,7 +35,7 @@ var vote = (stand) => {
       }, (data) => {
         helpers.refreshIssue(data.data.issue);
         state.set("user", data.data.user);
-        page.show('/stands/' + viewState.issue.slug + '/' + stand);
+        fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
       });                  
     }
   } else {
@@ -42,7 +54,7 @@ var vote = (stand) => {
       });
     }
     state.set("anonymous_activity", anonymous_activity);
-    page.show('/stands/' + viewState.issue.slug + '/' + stand);
+    fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
   }
 };
 
