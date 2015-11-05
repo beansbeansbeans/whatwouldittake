@@ -43,7 +43,7 @@ class standView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick', 'handleKeydown', 'convertBeliefTransition', 'convertBeliefTransitionEnd');
+    _.bindAll(this, 'handleClick', 'handleKeydown', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInCondition', 'animateInConditionEnd');
 
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
     viewState.position = ctx.params.side;
@@ -70,6 +70,19 @@ class standView extends view {
 
   handleResize() {
 
+  }
+
+  animateInConditionEnd() {
+    d.qs('.target-condition').removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateInConditionEnd);
+    page.show(viewState.nextRoute);
+  }
+
+  animateInCondition(closestCondition) {
+    document.body.classList.add("animating-in-condition");
+    closestCondition.classList.add("target-condition");
+
+    viewState.nextRoute = '/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id;
+    closestCondition.addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateInConditionEnd);
   }
 
   handleClick(e) {
@@ -129,7 +142,7 @@ class standView extends view {
         });
       }
     } else if(closestCondition) {
-      page.show('/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id);
+      this.animateInCondition(closestCondition);
     } else if(e.target.id === "toggle-contributing") {
       viewState.activelyContributing = true;
       this.updateState();

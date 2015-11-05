@@ -24,7 +24,11 @@ class conditionView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd');
+    if(document.body.classList.contains("animating-in-condition")) {
+      d.qs(".body .frame").addEventListener(util.prefixedAnimationEnd[util.prefixedProperties.animation.js], this.animateInFromStandAnimationEnd);
+    }
+
+    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInFromStandAnimationEnd');
 
     viewState.position = ctx.params.side;
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
@@ -33,6 +37,11 @@ class conditionView extends view {
 
     mediator.subscribe("window_click", this.handleClick);
     mediator.subscribe("window_keyup", this.handleKeyup);
+  }
+
+  animateInFromStandAnimationEnd() {
+    document.body.classList.remove("animating-in-condition");
+    d.qs(".body .frame").removeEventListener(util.prefixedAnimationEnd[util.prefixedProperties.animation.js], this.animateInFromStandAnimationEnd);
   }
 
   convertBeliefTransition() {

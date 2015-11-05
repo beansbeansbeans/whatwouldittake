@@ -4,6 +4,14 @@
       opacity: 0;
     }
   }
+  
+  .animating-in-condition & {
+    .body .frame, .proofs-wrapper {
+      opacity: 0;
+      @include animation(fade-in $transition-duration $transition-duration / 2 forwards);
+    }    
+  }
+
   .body .frame {
     @include transition(opacity $transition-duration);
   }

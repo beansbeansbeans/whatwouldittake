@@ -9,9 +9,35 @@
       opacity: 0;
     }
   }
-  .body .title {
+
+  .animating-in-condition & {
+    .body .title, #contribute, .condition:not(.target-condition) {
+      opacity: 0;
+    }
+    .target-condition {
+      @include transform(translateY(-250px));
+      .tagline span:last-of-type {
+        opacity: 0;
+      }
+      .tagline {
+        @include transform(scale(1.3));
+      }
+    }
+  }
+
+  .body .title, #contribute {
     @include transition(opacity $transition-duration);
   }
+  .condition {
+    &, span, .tagline {
+      @include transition(all $transition-duration);
+    }
+    .tagline {
+      -webkit-transform-origin: left;
+      transform-origin: left;
+    }
+  }
+
   .body {
     width: $content-width * 1%;
     margin-left: auto;
