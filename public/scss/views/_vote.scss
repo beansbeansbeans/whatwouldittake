@@ -1,4 +1,6 @@
 #vote-page {
+  opacity: 0;
+  @include animation(fade-in $transition-duration forwards);
   width: $content-width * 1%;
   margin: 5rem auto;
   text-align: center;

@@ -23,6 +23,16 @@ nav {
       @extend %active-nav-link;
     }
   }
+  [data-active-route="signup"] & {
+    #signup {
+      @extend %active-nav-link;
+    }
+  }
+  [data-active-route="login"] & {
+    #login {
+      @extend %active-nav-link;
+    }
+  }
   .contents {
     padding: 2rem 0;
     width: $content-width * 1%;

@@ -10,6 +10,20 @@ var viewState = {
   issues: []
 };
 
+var fadeOutEndHandler = (e) => {
+  if(e.target.id === "content") {
+    d.gbID("content").classList.remove("fade-out-view");
+    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+    page.show(viewState.nextRoute);    
+  }
+}
+
+var fadeOut = (nextRoute) => {
+  viewState.nextRoute = nextRoute;
+  d.gbID("content").classList.add("fade-out-view");
+  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+}
+
 class issuesView extends view {
   start() {
     super.start();
@@ -34,9 +48,9 @@ class issuesView extends view {
       }
 
       if(stand) {
-        page.show('/stands/' + issue.dataset.slug + '/' + stand.stand);
+        fadeOut('/stands/' + issue.dataset.slug + '/' + stand.stand);
       } else {
-        page.show('/vote/' + issue.dataset.slug);
+        fadeOut('/vote/' + issue.dataset.slug);
       }
     }
   }

@@ -3,7 +3,24 @@ var api = require('../api');
 var mediator = require('../mediator');
 var view = require('../view');
 var auth = require('../auth');
+var util = require('../util');
 var state = require('../state');
+
+var viewState = {};
+
+var fadeOutEndHandler = (e) => {
+  if(e.target.id === "content") {
+    d.gbID("content").classList.remove("fade-out-view");
+    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+    page.show(viewState.nextRoute);    
+  }
+}
+
+var fadeOut = (nextRoute) => {
+  viewState.nextRoute = nextRoute;
+  d.gbID("content").classList.add("fade-out-view");
+  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+}
 
 class navView extends view {
   start() {
@@ -18,6 +35,16 @@ class navView extends view {
         api.post('/logout', {}, () => {
           auth.deauthenticated();
         });
+      } else if(e.target.id === 'login-anchor') {
+        fadeOut('/login');
+      } else if(e.target.id === 'signup-anchor') {
+        fadeOut('/signup');
+      } else if(e.target.id === 'logo-anchor') {
+        fadeOut('/issues');
+      } else if(e.target.id === 'about-anchor') {
+        fadeOut('/about');
+      } else if(e.target.id === 'issues-anchor') {
+        fadeOut('/issues');
       }
     });
   }
@@ -36,26 +63,26 @@ class navView extends view {
       logout = h('li#logout-button', 'logout');
     } else {
       login = h('li#login', [
-        h('a', { href: './login' }, 'login')
+        h('a#login-anchor', 'login')
       ]);
       signup = h('li#signup', [
-        h('a', { href: './signup' }, 'signup')
+        h('a#signup-anchor', 'signup')
       ]);
     }
 
     return h('nav', [
       h('div.contents', [
         h('li#logo', [
-          h('a', { href: './issues'}, 'WWIT')
+          h('a#logo-anchor', 'WWIT')
         ]),
         login,
         signup,
         logout,
         h('li#go-to-about', [
-          h('a', { href: './about' }, 'about')
+          h('a#about-anchor', 'about')
         ]),
         h('li#go-to-issues', [
-          h('a.text', { href: './issues' }, 'issues')
+          h('a.text#issues-anchor', 'issues')
         ])
       ])
     ]);
