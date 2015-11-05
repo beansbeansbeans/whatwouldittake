@@ -24,7 +24,7 @@ class conditionView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick', 'handleKeyup');
+    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd');
 
     viewState.position = ctx.params.side;
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
@@ -33,6 +33,17 @@ class conditionView extends view {
 
     mediator.subscribe("window_click", this.handleClick);
     mediator.subscribe("window_keyup", this.handleKeyup);
+  }
+
+  convertBeliefTransition() {
+    d.gbID("condition-view").classList.add("converting-belief");
+    d.gbID("condition-view").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convertBeliefTransitionEnd);
+  }
+
+  convertBeliefTransitionEnd(e) {
+    d.gbID("condition-view").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convertBeliefTransitionEnd);
+    this.updateState();
+    d.gbID("condition-view").classList.remove("converting-belief");
   }
 
   handleClick(e) {
@@ -47,7 +58,7 @@ class conditionView extends view {
           helpers.refreshIssue(data.data.issue);
           state.set("user", data.data.user);
           viewState.issue = data.data.issue;
-          this.updateState();
+          this.convertBeliefTransition();
         });        
       } else {
         var anonymous_activity = state.get("anonymous_activity");
@@ -63,7 +74,7 @@ class conditionView extends view {
         }
 
         state.set("anonymous_activity", anonymous_activity);
-        this.updateState();
+        this.convertBeliefTransition();
       }
     } else if(e.target.id === 'see-other-side') {
       page.show('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));

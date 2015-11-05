@@ -4,6 +4,14 @@
 
 #stand-view {
   @include animation(fade-in $transition-duration forwards);
+  &.converting-belief {
+    .prompt, .actions, .body .title {
+      opacity: 0;
+    }
+  }
+  .body .title {
+    @include transition(opacity $transition-duration);
+  }
   .body {
     width: $content-width * 1%;
     margin-left: auto;

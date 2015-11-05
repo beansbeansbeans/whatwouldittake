@@ -27,7 +27,7 @@
   cursor: pointer;
   text-transform: uppercase;
   @extend %header-font;
-  @include transition(all $transition-duration);
+  @include transition(background-color $transition-duration);
   &[data-type="severe"] {
     color: white;
     border-color: $bittersweet;

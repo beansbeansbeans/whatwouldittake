@@ -33,13 +33,17 @@ var fadeOut = (nextRoute) => {
   d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
 }
 
+var convertBeliefTransition = () => {
+  d.gbID("condition-view").classList.add("converting-belief");
+}
+
 var dimensions = {};
 
 class standView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick', 'handleKeydown');
+    _.bindAll(this, 'handleClick', 'handleKeydown', 'convertBeliefTransition', 'convertBeliefTransitionEnd');
 
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
     viewState.position = ctx.params.side;
@@ -47,6 +51,17 @@ class standView extends view {
 
     mediator.subscribe("window_click", this.handleClick);
     mediator.subscribe("window_keydown", this.handleKeydown);
+  }
+
+  convertBeliefTransition() {
+    d.gbID("stand-view").classList.add("converting-belief");
+    d.gbID("stand-view").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convertBeliefTransitionEnd);
+  }
+
+  convertBeliefTransitionEnd(e) {
+    d.gbID("stand-view").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convertBeliefTransitionEnd);
+    this.updateState();
+    d.gbID("stand-view").classList.remove("converting-belief");
   }
 
   didRender() {
@@ -70,7 +85,7 @@ class standView extends view {
           helpers.refreshIssue(data.data.issue);
           state.set("user", data.data.user);
           viewState.issue = data.data.issue;
-          this.updateState();
+          this.convertBeliefTransition();
         });        
       } else {
         var anonymous_activity = state.get("anonymous_activity");
@@ -86,7 +101,7 @@ class standView extends view {
         }
 
         state.set("anonymous_activity", anonymous_activity);
-        this.updateState();
+        this.convertBeliefTransition();
       }
     } else if(e.target.id === 'see-other-side') {
       fadeOut('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));

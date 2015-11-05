@@ -274,6 +274,9 @@ a {
   padding: 3rem 0 2.8rem 0;
   background: $alabaster;
   text-align: center;
+  .prompt, .actions {
+    @include transition(opacity $transition-duration);
+  }
   .prompt {
     @extend %naked-label;
   }

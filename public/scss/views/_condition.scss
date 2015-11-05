@@ -1,4 +1,12 @@
 #condition-view {
+  &.converting-belief {
+    .prompt, .actions, .body .frame {
+      opacity: 0;
+    }
+  }
+  .body .frame {
+    @include transition(opacity $transition-duration);
+  }
   .header {
     @extend %belief-header;
   }
