@@ -13,9 +13,11 @@ var viewState = {
 var dimensions = {};
 
 var fadeOutEndHandler = (e) => {
-  d.gbID("content").classList.remove("fade-out-view");
-  d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-  page.show(viewState.nextRoute);
+  if(e.target.id === "content") {
+    d.gbID("content").classList.remove("fade-out-view");
+    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+    page.show(viewState.nextRoute);    
+  }
 }
 
 var fadeOut = (nextRoute) => {
