@@ -12,6 +12,34 @@ var viewState = {
 
 var dimensions = {};
 
+var vote = (stand) => {
+  if(state.get("user") !== null) {
+    if(helpers.isBeliever(viewState.issue, stand)) {
+      page.show('/stands/' + viewState.issue.slug + '/' + stand);
+    } else {
+      api.post('/vote', {
+        id: viewState.issue._id,
+        stand: stand
+      }, (data) => {
+        helpers.refreshIssue(data.data.issue);
+        state.set("user", data.data.user);
+        page.show('/stands/' + viewState.issue.slug + '/' + stand);
+      });                  
+    }
+  } else {
+    var anonymous_activity = state.get("anonymous_activity");
+    if(!anonymous_activity.stands) {
+      anonymous_activity.stands = [];
+    }
+    anonymous_activity.stands.push({
+      id: viewState.issue._id,
+      stand: stand
+    });
+    state.set("anonymous_activity", anonymous_activity);
+    page.show('/stands/' + viewState.issue.slug + '/' + stand);
+  }
+};
+
 class voteView extends view {
   start(ctx) {
     if(!ctx.params.issue) {
@@ -38,57 +66,9 @@ class voteView extends view {
 
   handleClick(e) {
     if(e.target.id === "agree-button") {
-      if(state.get("user") !== null) {
-        if(helpers.isBeliever(viewState.issue, 'aff')) {
-          page.show('/stands/' + viewState.issue.slug + '/aff');
-        } else {
-          api.post('/vote', {
-            id: viewState.issue._id,
-            stand: 'aff'
-          }, (data) => {
-            helpers.refreshIssue(data.data.issue);
-            state.set("user", data.data.user);
-            page.show('/stands/' + viewState.issue.slug + '/aff');
-          });                  
-        }
-      } else {
-        var anonymous_activity = state.get("anonymous_activity");
-        if(!anonymous_activity.stands) {
-          anonymous_activity.stands = [];
-        }
-        anonymous_activity.stands.push({
-          id: viewState.issue._id,
-          stand: 'aff'
-        });
-        state.set("anonymous_activity", anonymous_activity);
-        page.show('/stands/' + viewState.issue.slug + '/aff');
-      }
+      vote('aff');
     } else if(e.target.id === "disagree-button") {
-      if(state.get("user") !== null) {
-        if(helpers.isBeliever(viewState.issue, 'neg')) {
-          page.show('/stands/' + viewState.issue.slug + '/neg');
-        } else {
-          api.post('/vote', {
-            id: viewState.issue._id,
-            stand: 'neg'
-          }, (data) => {
-            helpers.refreshIssue(data.data.issue);
-            state.set("user", data.data.user);
-            page.show('/stands/' + viewState.issue.slug + '/neg');
-          });                  
-        }
-      } else {
-        var anonymous_activity = state.get("anonymous_activity");
-        if(!anonymous_activity.stands) {
-          anonymous_activity.stands = [];
-        }
-        anonymous_activity.stands.push({
-          id: viewState.issue._id,
-          stand: 'neg'
-        });
-        state.set("anonymous_activity", anonymous_activity);
-        page.show('/stands/' + viewState.issue.slug + '/neg');
-      }
+      vote('neg');
     }
   }
 
