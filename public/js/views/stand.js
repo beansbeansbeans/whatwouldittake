@@ -19,6 +19,20 @@ var pristineState = {
 };
 var viewState = JSON.parse(JSON.stringify(pristineState));
 
+var fadeOutEndHandler = (e) => {
+  if(e.target.id === "content") {
+    d.gbID("content").classList.remove("fade-out-view");
+    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+    page.show(viewState.nextRoute);    
+  }
+}
+
+var fadeOut = (nextRoute) => {
+  viewState.nextRoute = nextRoute;
+  d.gbID("content").classList.add("fade-out-view");
+  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+}
+
 var dimensions = {};
 
 class standView extends view {
@@ -75,7 +89,7 @@ class standView extends view {
         this.updateState();
       }
     } else if(e.target.id === 'see-other-side') {
-      page.show('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
+      fadeOut('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
     } else if(e.target.id === 'submit-what-would-it-take') {
       if(d.qs("#contribute .tagline textarea").value.length) {
         api.post('/contribute', {
@@ -100,7 +114,7 @@ class standView extends view {
         });
       }
     } else if(closestCondition) {
-      page.show('/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id);
+      fadeOut('/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id);
     } else if(e.target.id === "toggle-contributing") {
       viewState.activelyContributing = true;
       this.updateState();
