@@ -3,6 +3,7 @@
 }
 
 #stand-view {
+  @include animation(fade-in $transition-duration forwards);
   .body {
     width: $content-width * 1%;
     margin-left: auto;
