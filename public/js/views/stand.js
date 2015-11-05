@@ -129,7 +129,7 @@ class standView extends view {
         });
       }
     } else if(closestCondition) {
-      fadeOut('/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id);
+      page.show('/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id);
     } else if(e.target.id === "toggle-contributing") {
       viewState.activelyContributing = true;
       this.updateState();
