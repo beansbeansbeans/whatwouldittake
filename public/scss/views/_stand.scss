@@ -15,7 +15,6 @@
       opacity: 0;
     }
     .target-condition {
-      @include transform(translateY(-250px));
       .tagline span:last-of-type {
         opacity: 0;
       }
