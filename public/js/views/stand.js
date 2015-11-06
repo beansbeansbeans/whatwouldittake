@@ -76,7 +76,7 @@ class standView extends view {
   }
 
   animateInCondition(closestCondition) {
-    var y = (closestCondition.getBoundingClientRect().top + window.scrollY) - (d.qs('.body .title').getBoundingClientRect().top + window.scrollY) - 15;
+    var y = (closestCondition.getBoundingClientRect().top) - (d.qs('.body .title').getBoundingClientRect().top) - 15 - window.scrollY;
 
     document.body.classList.add("animating-in-condition");
     closestCondition.style[util.prefixedProperties.transform.js] = "translateY(" + (-y) + "px)";

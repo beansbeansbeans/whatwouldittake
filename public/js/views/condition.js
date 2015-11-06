@@ -24,6 +24,8 @@ class conditionView extends view {
   start(ctx) {
     super.start();
 
+    document.body.scrollTop = 0;
+
     if(document.body.classList.contains("animating-in-condition")) {
       d.qs(".body .frame").addEventListener(util.prefixedAnimationEnd[util.prefixedProperties.animation.js], this.animateInFromStandAnimationEnd);
     }
