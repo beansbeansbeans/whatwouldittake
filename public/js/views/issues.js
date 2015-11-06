@@ -71,7 +71,7 @@ class issuesView extends view {
             slug: d.slug
           }
         }, [
-          h('div.slug', util.capitalize(d.slug.replace('-', ' '))),
+          h('div.slug', d.title),
           h("div.description", d.description)
         ]);
       });
