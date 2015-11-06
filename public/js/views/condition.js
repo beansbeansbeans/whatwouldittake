@@ -339,11 +339,6 @@ class conditionView extends view {
       mainConditionAuthor = h('div.author', 'by ' + viewState.condition.author.name);
     }
 
-    var moreInfo;
-    if(viewState.condition.moreInfo && viewState.condition.moreInfo.length) {
-      moreInfo = h('div.more-info', viewState.condition.moreInfo);
-    }
-
     return h('#condition-view', [
       headerSubview.render({
         issue: viewState.issue,
@@ -360,7 +355,6 @@ class conditionView extends view {
             }
           }, confirmedCount + " convinced"),
           h('div.title', viewState.condition.tagline),
-          moreInfo,
           sourcesForCondition
         ]),
         voteOnCondition,

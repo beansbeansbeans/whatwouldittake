@@ -7,15 +7,13 @@ var util = require('../util');
 var helpers = require('../util/belief_helpers');
 var headerSubview = require('./subviews/belief_header');
 
-var descriptionTextareaMaxLength = 255;
-var moreInfoTextareaMaxLength = 1000;
+var descriptionTextareaMaxLength = 1000;
 
 var pristineState = {
   issue: {},
   sourceCount: 1,
   activelyContributing: false,
-  descriptionTextarea: descriptionTextareaMaxLength,
-  moreInfoTextarea: moreInfoTextareaMaxLength
+  descriptionTextarea: descriptionTextareaMaxLength
 };
 var viewState = JSON.parse(JSON.stringify(pristineState));
 
@@ -134,8 +132,7 @@ class standView extends view {
               display: el.querySelector(".source-display").value
             }
           }),
-          tagline: d.qs("#contribute .tagline textarea").value,
-          moreInfo: d.qs("#contribute .more-info textarea").value
+          tagline: d.qs("#contribute .tagline textarea").value
         }, (data) => {
           viewState.issue = data.data;
           viewState.activelyContributing = false;
@@ -161,7 +158,6 @@ class standView extends view {
 
   handleKeydown() {
     viewState.descriptionTextarea = descriptionTextareaMaxLength - d.qs("#contribute .tagline textarea").value.length;
-    viewState.moreInfoTextarea = moreInfoTextareaMaxLength - d.qs("#contribute .more-info textarea").value.length;
     this.updateState();
   }
 
@@ -277,13 +273,6 @@ class standView extends view {
             h('div.sources-container', [
               h('div.source-list', sourceList),
               addMoreSources
-            ]),
-            h('div.input-container.more-info', [
-              h('textarea', { 
-                placeholder: "More information (optional)",
-                maxLength: moreInfoTextareaMaxLength
-              }),
-              h('div.remaining-characters', '' + viewState.moreInfoTextarea)
             ]),
             h('div.button-container', [
               h('div.button#submit-what-would-it-take', 'Submit'),
