@@ -43,6 +43,7 @@ class conditionView extends view {
 
   animateInFromStandAnimationEnd() {
     document.body.classList.remove("animating-in-condition");
+    document.body.classList.remove("scroll-jumping");
     d.qs(".body .frame").removeEventListener(util.prefixedAnimationEnd[util.prefixedProperties.animation.js], this.animateInFromStandAnimationEnd);
   }
 

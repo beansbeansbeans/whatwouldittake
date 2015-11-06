@@ -9,6 +9,12 @@
       opacity: 0;
     }
   }
+  
+  .scroll-jumping & {
+    .header {
+      opacity: 0;
+    }
+  }
 
   .animating-in-condition & {
     .body .title, #contribute, .condition:not(.target-condition) {
@@ -39,7 +45,7 @@
     }
   }
 
-  .body .title, #contribute {
+  .body .title, #contribute, .header {
     @include transition(opacity $transition-duration);
   }
   .condition {
