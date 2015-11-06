@@ -200,7 +200,7 @@ class conditionView extends view {
       if(d.gbID("vote-on-condition")) {
         conditionBottom = d.gbID("vote-on-condition").getBoundingClientRect().bottom;
       } else {
-        conditionBottom = d.qs(".main-condition .title").getBoundingClientRect().bottom;
+        conditionBottom = d.qs(".main-condition").getBoundingClientRect().bottom;
       }
 
       d.qs(".proofs-wrapper").style[util.prefixedProperties.transform.js] = "translateY(" + (conditionBottom - bodyTop) + "px)";
