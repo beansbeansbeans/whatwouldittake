@@ -35,7 +35,7 @@ class conditionView extends view {
       document.body.classList.remove("fading-in");
     }, 100);
 
-    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInFromStandAnimationEnd');
+    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInFromStandAnimationEnd', 'vote', 'voteEnd');
 
     viewState.position = ctx.params.side;
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
@@ -61,6 +61,17 @@ class conditionView extends view {
     d.gbID("condition-view").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convertBeliefTransitionEnd);
     this.updateState();
     d.gbID("condition-view").classList.remove("converting-belief");
+  }
+
+  vote() {
+    d.gbID("condition-view").classList.add("placing-stake");
+    d.gbID("condition-view").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.voteEnd);
+  }
+
+  voteEnd(e) {
+    d.gbID("condition-view").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.voteEnd);
+    this.updateState();
+    d.gbID("condition-view").classList.remove("placing-stake");
   }
 
   handleClick(e) {
@@ -130,11 +141,11 @@ class conditionView extends view {
           viewState.issue = data.data;
           viewState.condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
           helpers.refreshIssue(data.data);
-          this.updateState();
+          this.vote();
         });
       } else {
         viewState.anonymousUserAttemptedVote = true;
-        this.updateState();
+        this.vote();
       }
     } else if(e.target.id === "vote-no-on-condition") {
       page.show('/stands/' + viewState.issue.slug + '/' + viewState.position);

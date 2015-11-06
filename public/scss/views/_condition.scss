@@ -4,6 +4,12 @@
       opacity: 0;
     }
   }
+
+  &.placing-stake {
+    .body .frame, .proofs-wrapper .title {
+      opacity: 0;
+    }
+  }
   
   .animating-in-condition & {
     .body .frame, .proofs-wrapper {
@@ -119,9 +125,14 @@
       .fading-in & {
         @include transition(none);
       }
+      .title {
+        @include transition(opacity $transition-duration);
+      }
       position: absolute;
       padding-top: 3.5rem;
       top: 0;
+      left: 0;
+      right: 0;
       @include transition(all $transition-duration);
       ul {
         margin: 0 auto;
