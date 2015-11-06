@@ -46,9 +46,10 @@
     }
   }
   .body {
-    width: 60%;
-    max-width: 900px;
-    min-width: 500px;
+    margin-bottom: 3.5rem;
+    width: $content-width * 1%;
+    min-width: $min-content-width;
+    max-width: $max-content-width;
     margin: auto;
     padding: 3.5rem 0;
     position: relative;

@@ -58,12 +58,6 @@
     }
   }
 
-  .body {
-    width: $content-width * 1%;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: $min-content-width;
-  }
   .header {
     @extend %belief-header;
   }
@@ -107,10 +101,13 @@
     }
   }
   .body {
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 3.5rem;
     margin-bottom: 3.5rem;
-    width: 60%;
-    max-width: 900px;
+    width: $content-width * 1%;
+    min-width: $min-content-width;
+    max-width: $max-content-width;
   }
   .conditions-wrapper {
   }
