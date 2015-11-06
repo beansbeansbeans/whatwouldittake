@@ -134,6 +134,7 @@ class standView extends view {
           }),
           tagline: d.qs("#contribute .tagline textarea").value
         }, (data) => {
+          d.qs("#contribute .tagline textarea").value = '';
           viewState.issue = data.data;
           viewState.activelyContributing = false;
           viewState.sourceCount = 1;

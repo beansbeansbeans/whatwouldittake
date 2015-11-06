@@ -103,6 +103,7 @@ class conditionView extends view {
           conditionID: viewState.condition._id,
           description: d.qs("#submit-proof textarea").value
         }, (data) => {
+          d.qs("#submit-proof textarea").value = '';
           viewState.submittingProof = false;
           viewState.sourceCount = 1;
           viewState.issue = data.data;
