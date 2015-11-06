@@ -212,7 +212,8 @@ class conditionView extends view {
     var proofs;
     var voteOnCondition;
     var beliefAtStake = state.get("user") && viewState.condition.dependents && !!_.findWhere(viewState.condition.dependents, {
-      id: state.get("user")._id
+      id: state.get("user")._id,
+      status: "pending"
     });
     var modal;
     var frame;
