@@ -30,6 +30,11 @@ class conditionView extends view {
       d.qs(".body .frame").addEventListener(util.prefixedAnimationEnd[util.prefixedProperties.animation.js], this.animateInFromStandAnimationEnd);
     }
 
+    document.body.classList.add("fading-in");
+    setTimeout(() => {
+      document.body.classList.remove("fading-in");
+    }, 100);
+
     _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInFromStandAnimationEnd');
 
     viewState.position = ctx.params.side;
@@ -177,6 +182,20 @@ class conditionView extends view {
     viewState = JSON.parse(JSON.stringify(pristineState));
   }
 
+  didRender() {
+    _.defer(() => {
+      var bodyTop = d.qs(".body").getBoundingClientRect().top;
+      var conditionBottom;
+      if(d.gbID("vote-on-condition")) {
+        conditionBottom = d.gbID("vote-on-condition").getBoundingClientRect().bottom;
+      } else {
+        conditionBottom = d.qs(".main-condition .title").getBoundingClientRect().bottom;
+      }
+
+      d.qs(".proofs-wrapper").style[util.prefixedProperties.transform.js] = "translateY(" + (conditionBottom - bodyTop) + "px)";
+    });
+  }
+
   render() {
     var submitProof;
     var proofs;
@@ -268,10 +287,11 @@ class conditionView extends view {
 
     if(viewState.condition.proofs && viewState.condition.proofs.length) {
       var titleText = 'Responses:';
+
       if(beliefAtStake) {
         titleText = 'See anything convincing?';
       }
-      proofs = h('div.proofs-wrapper', [
+      proofs = h('div.proofs-wrapper', { key: 1 }, [
         h('div.title', titleText),
         submitProof,
         h('ul', viewState.condition.proofs.sort((a, b) => {

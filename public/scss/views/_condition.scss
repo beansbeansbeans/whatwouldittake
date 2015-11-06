@@ -31,6 +31,8 @@
     cursor: default;
     padding-bottom: 1rem;
     .button {
+      opacity: 0;
+      @include animation(fade-in $transition-duration forwards);
       margin-top: 1rem;
       &:hover {
         background-color: $agreement-color;
@@ -43,6 +45,7 @@
     min-width: 500px;
     margin: auto;
     padding: 3.5rem 0;
+    position: relative;
     .frame {
       padding-bottom: 1rem;
     }
@@ -64,6 +67,9 @@
       padding-top: 2rem;
       padding-bottom: 1rem;
       text-align: center;
+      @include transform(none !important);
+      opacity: 0;
+      @include animation(fade-in $transition-duration $transition-duration / 2 forwards);
       #vote-yes-on-condition {
         margin-right: 1rem;
         &:hover {
@@ -110,7 +116,13 @@
       }
     }
     .proofs-wrapper {
+      .fading-in & {
+        @include transition(none);
+      }
+      position: absolute;
       padding-top: 3.5rem;
+      top: 0;
+      @include transition(all $transition-duration);
       ul {
         margin: 0 auto;
         padding: 0;
