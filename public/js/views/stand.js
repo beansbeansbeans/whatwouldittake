@@ -81,6 +81,17 @@ class standView extends view {
     document.body.classList.add("animating-in-condition");
     closestCondition.style[util.prefixedProperties.transform.js] = "translateY(" + (-y) + "px)";
     closestCondition.classList.add("target-condition");
+    var dummyCondition = d.createElement("div");
+    var dummyTagline = d.createElement("div");
+    dummyTagline.textContent = closestCondition.querySelector(".tagline span:first-of-type").textContent;
+    dummyCondition.appendChild(dummyTagline);
+    if(closestCondition.querySelector(".source-list")) {
+      var dummySourceList = closestCondition.querySelector(".source-list").cloneNode(true);
+      dummyCondition.appendChild(dummySourceList);
+    }
+    dummyCondition.classList.add("dummy-condition");
+    dummyTagline.classList.add("tagline");
+    closestCondition.appendChild(dummyCondition);
 
     viewState.nextRoute = '/stands/' + viewState.issue.slug + '/' + viewState.position + '/' + closestCondition.dataset.id;
     closestCondition.addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateInConditionEnd);

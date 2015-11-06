@@ -19,9 +19,22 @@
         opacity: 0;
       }
       .tagline {
-        margin-top: 0.2rem;
-        margin-bottom: 1.3rem;
-        @include transform(scale(1.3));
+        opacity: 0;
+      }
+      .source-list {
+        opacity: 0;
+      }
+      .dummy-condition {
+        position: absolute;
+        top: 3.1rem;
+        .tagline {
+          @include transform(none);
+          font-size: 1.3rem;
+          @include animation(fade-in $transition-duration forwards);
+        }
+        .source-list {
+          @include animation(fade-in $transition-duration forwards);
+        }
       }
     }
   }
