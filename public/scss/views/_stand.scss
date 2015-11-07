@@ -10,12 +10,32 @@
     }
   }
 
+  &.animating-in-form, &.animating-out-form {
+    .conditions-wrapper {
+      @include transition(transform $transition-duration);
+    }    
+  }
+
   &.animating-in-form {
     #toggle-contributing {
       opacity: 0;
     }
-    .conditions-wrapper {
-      @include transition(transform $transition-duration);
+  }
+
+  &.animating-out-form {
+    #toggle-contributing {
+      opacity: 1 !important;
+    }
+    .form-container {
+      opacity: 1;
+      @include animation(fade-out $transition-duration forwards);
+    }
+  }
+
+  &:not(.animating-out-form) {
+    #contribute[data-active="true"] .form-container {
+      opacity: 0;
+      @include animation(fade-in $transition-duration forwards);
     }
   }
   
@@ -91,10 +111,6 @@
       #toggle-contributing {
         opacity: 0;
         pointer-events: none;
-      }
-      .form-container {
-        opacity: 0;
-        @include animation(fade-in $transition-duration forwards);
       }
     }
     .form-container {

@@ -41,7 +41,7 @@ class standView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick', 'handleKeydown', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInCondition', 'animateInConditionEnd', 'animateInForm', 'animateInFormEnd');
+    _.bindAll(this, 'handleClick', 'handleKeydown', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInCondition', 'animateInConditionEnd', 'animateInForm', 'animateInFormEnd', 'animateOutForm', 'animateOutFormEnd');
 
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
     viewState.position = ctx.params.side;
@@ -70,9 +70,25 @@ class standView extends view {
 
   }
 
+  animateOutFormEnd() {
+    d.qs(".form-container").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateOutFormEnd);
+    d.gbID("stand-view").classList.remove("animating-out-form");
+    d.qs(".conditions-wrapper").style[util.prefixedProperties.transform.js] = "";
+    viewState.activelyContributing = false;
+    viewState.sourceCount = 1;
+    this.updateState();
+  }
+
+  animateOutForm() {
+    var translateY = d.qs(".form-container").getBoundingClientRect().height;
+    d.gbID("stand-view").classList.add("animating-out-form");
+    d.qs(".conditions-wrapper").style[util.prefixedProperties.transform.js] = "translateY(-" + translateY + "px)";
+    d.qs(".form-container").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateOutFormEnd);
+  }
+
   animateInFormEnd() {
-    d.gbID("stand-view").classList.remove("animating-in-form");
     d.gbID("toggle-contributing").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateInFormEnd);
+    d.gbID("stand-view").classList.remove("animating-in-form");
     d.qs(".conditions-wrapper").style[util.prefixedProperties.transform.js] = "";
     viewState.activelyContributing = true;
     this.updateState();
@@ -187,9 +203,7 @@ class standView extends view {
     } else if(e.target.id === "toggle-contributing") {
       this.animateInForm();
     } else if(e.target.id === 'cancel-what-would-it-take') {
-      viewState.activelyContributing = false;
-      viewState.sourceCount = 1;
-      this.updateState();
+      this.animateOutForm();
     } else if(e.target.classList.contains("add-more")) {
       viewState.sourceCount++;
       this.updateState();

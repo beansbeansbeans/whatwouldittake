@@ -7,6 +7,15 @@
   }
 }
 
+@include keyframes(fade-out) {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @include keyframes(fade-in-out) {
   0%, 100% {
     opacity: 0;
