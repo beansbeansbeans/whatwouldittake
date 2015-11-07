@@ -35,7 +35,7 @@ class conditionView extends view {
       document.body.classList.remove("fading-in");
     }, 100);
 
-    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInFromStandAnimationEnd', 'vote', 'voteEnd');
+    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInFromStandAnimationEnd', 'vote', 'voteEnd', 'animateInForm', 'animateInFormEnd', 'animateOutForm', 'animateOutFormEnd');
 
     viewState.position = ctx.params.side;
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
@@ -44,6 +44,46 @@ class conditionView extends view {
 
     mediator.subscribe("window_click", this.handleClick);
     mediator.subscribe("window_keyup", this.handleKeyup);
+  }
+
+  animateOutFormEnd() {
+    d.qs(".form-container").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateOutFormEnd);
+    d.gbID("condition-view").classList.remove("animating-out-form");
+    d.qs(".responses-wrapper").style[util.prefixedProperties.transform.js] = "";
+    viewState.submittingProof = false;
+    viewState.sourceCount = 1;
+    this.updateState();
+  }
+
+  animateOutForm() {
+    var translateY = d.qs(".form-container").getBoundingClientRect().height;
+    d.gbID("condition-view").classList.add("animating-out-form");
+    d.qs(".responses-wrapper").style[util.prefixedProperties.transform.js] = "translateY(-" + translateY + "px)";
+    d.qs(".form-container").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateOutFormEnd);
+  }
+
+  animateInFormEnd() {
+    d.gbID("toggle-proof-submission").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateInFormEnd);
+    d.gbID("condition-view").classList.remove("animating-in-form");
+    d.qs(".responses-wrapper").style[util.prefixedProperties.transform.js] = "";
+    viewState.submittingProof = true;
+    this.updateState();
+  }
+
+  animateInForm() {
+    d.qs(".form-container").style.visibility = "hidden";
+    d.qs(".form-container").style.position = "absolute";
+    d.qs(".form-container").style.display = "block";
+    var translateY = d.qs(".form-container").getBoundingClientRect().height;
+    d.qs(".form-container").style.visibility = "";
+    d.qs(".form-container").style.position = "";
+    d.qs(".form-container").style.display = "";
+
+    _.defer(() => {
+      d.gbID("condition-view").classList.add("animating-in-form");
+      d.qs(".responses-wrapper").style[util.prefixedProperties.transform.js] = "translateY(" + translateY + "px)";
+      d.gbID("toggle-proof-submission").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateInFormEnd);
+    });
   }
 
   animateInFromStandAnimationEnd() {
@@ -169,12 +209,9 @@ class conditionView extends view {
         page.show('/stands/' + viewState.issue.slug + '/' + viewState.position)
       });
     } else if(e.target.id === 'toggle-proof-submission') {
-      viewState.submittingProof = true;
-      this.updateState();
+      this.animateInForm();
     } else if(e.target.id === 'cancel-submit-proof-button') {
-      viewState.sourceCount = 1;
-      viewState.submittingProof = false;
-      this.updateState();
+      this.animateOutForm();
     } else if(e.target.classList.contains("add-more")) {
       viewState.sourceCount++;
       this.updateState();
@@ -306,7 +343,7 @@ class conditionView extends view {
       proofs = h('div.proofs-wrapper', { key: 1 }, [
         h('div.title', titleText),
         submitProof,
-        h('ul', viewState.condition.proofs.sort((a, b) => {
+        h('ul.responses-wrapper', viewState.condition.proofs.sort((a, b) => {
           if(a.believers.length > b.believers.length) { return -1; }
           if(a.believers.length < b.believers.length) { return 1; }
           return 0;

@@ -10,6 +10,35 @@
       opacity: 0;
     }
   }
+
+  &.animating-in-form, &.animating-out-form {
+    .responses-wrapper {
+      @include transition(transform $transition-duration);
+    }    
+  }
+
+  &.animating-in-form {
+    #toggle-proof-submission {
+      opacity: 0;
+    }
+  }
+
+  &.animating-out-form {
+    #toggle-proof-submission {
+      opacity: 1 !important;
+    }
+    .form-container {
+      opacity: 1;
+      @include animation(fade-out $transition-duration forwards);
+    }
+  }
+
+  &:not(.animating-out-form) {
+    #submit-proof[data-active="true"] .form-container {
+      opacity: 0;
+      @include animation(fade-in $transition-duration forwards);
+    }
+  }
   
   .animating-in-condition & {
     .body .frame, .proofs-wrapper {
@@ -100,6 +129,7 @@
       #toggle-proof-submission {
         @extend %subdued-label;
         text-align: center;
+        @include transition(all $transition-duration);
       }
       .form-container {
         @extend %contribute-form;
@@ -116,7 +146,8 @@
       }
       &[data-active="true"] {
         #toggle-proof-submission {
-          display: none;
+          opacity: 0;
+          pointer-events: none;
         }
       }
       &[data-active="false"] {
