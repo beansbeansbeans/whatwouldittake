@@ -35,7 +35,7 @@ class conditionView extends view {
       document.body.classList.remove("fading-in");
     }, 100);
 
-    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInFromStandAnimationEnd', 'vote', 'voteEnd', 'animateInForm', 'animateInFormEnd', 'animateOutForm', 'animateOutFormEnd');
+    _.bindAll(this, 'handleClick', 'handleKeyup', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInFromStandAnimationEnd', 'vote', 'voteEnd', 'animateInForm', 'animateInFormEnd', 'animateOutForm', 'animateOutFormEnd', 'convincedByProof', 'convincedByProofEnd');
 
     viewState.position = ctx.params.side;
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
@@ -44,6 +44,57 @@ class conditionView extends view {
 
     mediator.subscribe("window_click", this.handleClick);
     mediator.subscribe("window_keyup", this.handleKeyup);
+  }
+
+  convincedByProofEnd() {
+    // go to new route
+  }
+
+  convincedByProof(closestProof) {
+    var condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
+    condition.dependents.some((d) => {
+      if(d.id === state.get("user").id) {
+        d.status = "confirmed";
+        return true;
+      }
+      return false;
+    });
+    condition.proofs.some((d) => {
+      if(d._id === closestProof.dataset.id) {
+        d.believers.push(state.get("user").id);
+        return true;
+      }
+      return false;
+    });
+    helpers.refreshIssue(viewState.issue);
+
+    var user = state.get("user");
+    user.stands.some((d) => {
+      if(d.id === viewState.issue._id) {
+        var stand = 'aff';
+        if(viewState.position === 'aff') { stand = 'neg'; }
+        d.stand = stand;
+        d.previous = {
+          conditionID: viewState.condition._id,
+          proofID: closestProof.dataset.id
+        };
+        return true;
+      }
+      return false;
+    });
+    state.set("user", user);
+
+    api.post('/convinced-by-proof', {
+      id: viewState.issue._id,
+      stand: viewState.position,
+      conditionID: viewState.condition._id,
+      proofID: closestProof.dataset.id
+    }, (data) => {
+      helpers.refreshIssue(data.data.issue);
+      state.set("user", data.data.user);
+    });
+
+    d.gbID("condition-view").classList.add("convincing");
   }
 
   animateOutFormEnd() {
@@ -196,18 +247,7 @@ class conditionView extends view {
       page.show('/signup');
     } else if(e.target.classList.contains("vote")) {
       var closestProof = e.target.closest(".proof");
-      api.post('/convinced-by-proof', {
-        id: viewState.issue._id,
-        stand: viewState.position,
-        conditionID: viewState.condition._id,
-        proofID: closestProof.dataset.id
-      }, (data) => {
-        helpers.refreshIssue(data.data.issue);
-        viewState.sourceCount = 1;
-        viewState.submittingProof = false;
-        state.set("user", data.data.user);
-        page.show('/stands/' + viewState.issue.slug + '/' + viewState.position)
-      });
+      this.convincedByProof(closestProof);
     } else if(e.target.id === 'toggle-proof-submission') {
       this.animateInForm();
     } else if(e.target.id === 'cancel-submit-proof-button') {
@@ -377,7 +417,7 @@ class conditionView extends view {
             author,
             h('div.pending', {
               dataset: {
-                exists: confirmedCount > 0
+                exists: d.believers.length > 0
               }
             }, d.believers.length + ' convinced'),
             h('div.tagline', d.description),
