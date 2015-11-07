@@ -38,4 +38,7 @@
     border-color: $bittersweet;
     background: $bittersweet;
   }
+  &:hover {
+    background: lighten($gray, 20%);
+  }
 }
