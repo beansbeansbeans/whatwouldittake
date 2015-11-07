@@ -145,7 +145,7 @@ class conditionView extends view {
         });
       } else {
         viewState.anonymousUserAttemptedVote = true;
-        this.vote();
+        this.updateState();
       }
     } else if(e.target.id === "vote-no-on-condition") {
       page.show('/stands/' + viewState.issue.slug + '/' + viewState.position);
