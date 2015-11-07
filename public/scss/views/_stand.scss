@@ -9,6 +9,15 @@
       opacity: 0;
     }
   }
+
+  &.animating-in-form {
+    #toggle-contributing {
+      opacity: 0;
+    }
+    .conditions-wrapper {
+      @include transition(transform $transition-duration);
+    }
+  }
   
   .scroll-jumping & {
     .header {
@@ -71,6 +80,7 @@
     #toggle-contributing {
       text-align: center;
       @extend %subdued-label;
+      @include transition(all $transition-duration);
     }
     &[data-active="false"] {
       .form-container {
@@ -81,6 +91,10 @@
       #toggle-contributing {
         opacity: 0;
         pointer-events: none;
+      }
+      .form-container {
+        opacity: 0;
+        @include animation(fade-in $transition-duration forwards);
       }
     }
     .form-container {

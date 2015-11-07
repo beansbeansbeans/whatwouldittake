@@ -41,7 +41,7 @@ class standView extends view {
   start(ctx) {
     super.start();
 
-    _.bindAll(this, 'handleClick', 'handleKeydown', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInCondition', 'animateInConditionEnd');
+    _.bindAll(this, 'handleClick', 'handleKeydown', 'convertBeliefTransition', 'convertBeliefTransitionEnd', 'animateInCondition', 'animateInConditionEnd', 'animateInForm', 'animateInFormEnd');
 
     viewState.issue = _.findWhere(state.get("issues"), {slug: ctx.params.issue});
     viewState.position = ctx.params.side;
@@ -68,6 +68,30 @@ class standView extends view {
 
   handleResize() {
 
+  }
+
+  animateInFormEnd() {
+    d.gbID("stand-view").classList.remove("animating-in-form");
+    d.gbID("toggle-contributing").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateInFormEnd);
+    d.qs(".conditions-wrapper").style[util.prefixedProperties.transform.js] = "";
+    viewState.activelyContributing = true;
+    this.updateState();
+  }
+
+  animateInForm() {
+    d.qs(".form-container").style.visibility = "hidden";
+    d.qs(".form-container").style.position = "absolute";
+    d.qs(".form-container").style.display = "block";
+    var translateY = d.qs(".form-container").getBoundingClientRect().height;
+    d.qs(".form-container").style.visibility = "";
+    d.qs(".form-container").style.position = "";
+    d.qs(".form-container").style.display = "";
+
+    _.defer(() => {
+      d.gbID("stand-view").classList.add("animating-in-form");
+      d.qs(".conditions-wrapper").style[util.prefixedProperties.transform.js] = "translateY(" + translateY + "px)";
+      d.gbID("toggle-contributing").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.animateInFormEnd);
+    });
   }
 
   animateInConditionEnd() {
@@ -161,8 +185,7 @@ class standView extends view {
     } else if(closestCondition) {
       this.animateInCondition(closestCondition);
     } else if(e.target.id === "toggle-contributing") {
-      viewState.activelyContributing = true;
-      this.updateState();
+      this.animateInForm();
     } else if(e.target.id === 'cancel-what-would-it-take') {
       viewState.activelyContributing = false;
       viewState.sourceCount = 1;
