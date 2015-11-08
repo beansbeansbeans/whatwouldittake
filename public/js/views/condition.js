@@ -61,6 +61,16 @@ class conditionView extends view {
   }
 
   convincedByProof(closestProof) {
+    api.post('/convinced-by-proof', {
+      id: viewState.issue._id,
+      stand: viewState.position,
+      conditionID: viewState.condition._id,
+      proofID: closestProof.dataset.id
+    }, (data) => { // just in case...
+      helpers.refreshIssue(data.data.issue);
+      state.set("user", data.data.user);
+    });
+
     var condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
     condition.dependents.some((d) => {
       if(d.id === state.get("user").id) {
@@ -94,30 +104,22 @@ class conditionView extends view {
     });
     state.set("user", user);
 
-    api.post('/convinced-by-proof', {
-      id: viewState.issue._id,
-      stand: viewState.position,
-      conditionID: viewState.condition._id,
-      proofID: closestProof.dataset.id
-    }, (data) => { // just in case...
-      helpers.refreshIssue(data.data.issue);
-      state.set("user", data.data.user);
-    });
+    setTimeout(() => {
+      d.gbID("condition-view").classList.add("convincing");
+      closestProof.classList.add("target");
 
-    d.gbID("condition-view").classList.add("convincing");
-    closestProof.classList.add("target");
+      var target = d.qs(".responses-wrapper li:first-of-type").getBoundingClientRect().top;
+      var current = closestProof.getBoundingClientRect().top;
 
-    var target = d.qs(".responses-wrapper li:first-of-type").getBoundingClientRect().top;
-    var current = closestProof.getBoundingClientRect().top;
+      closestProof.style[util.prefixedProperties.transform.js] = "translateY(" + (target - current) + "px)";
 
-    closestProof.style[util.prefixedProperties.transform.js] = "translateY(" + (target - current) + "px)";
+      var currentTotalNumberConvinced = d.qs(".main-condition .confirmed").dataset.confirmedCount;
+      d.qs(".main-condition .confirmed").innerHTML = `${+currentTotalNumberConvinced + 1} convinced`;
+      var currentNumberConvinced = closestProof.querySelector(".pending").dataset.believerCount;
+      closestProof.querySelector(".pending").innerHTML = `${+currentNumberConvinced + 1} convinced`;
 
-    var currentTotalNumberConvinced = d.qs(".main-condition .confirmed").dataset.confirmedCount;
-    d.qs(".main-condition .confirmed").innerHTML = `${+currentTotalNumberConvinced + 1} convinced`;
-    var currentNumberConvinced = closestProof.querySelector(".pending").dataset.believerCount;
-    closestProof.querySelector(".pending").innerHTML = `${+currentNumberConvinced + 1} convinced`;
-
-    d.qs(".proofs-wrapper .title").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convincedByProofEnd);
+      d.qs(".proofs-wrapper .title").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convincedByProofEnd);
+    }, 150);
   }
 
   animateOutFormEnd() {
