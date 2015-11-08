@@ -47,6 +47,16 @@ class conditionView extends view {
   }
 
   convincedByProofEnd() {
+    d.qs(".proofs-wrapper .title").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convincedByProofEnd);
+
+    var oppPosition = 'neg';
+    if(viewState.position === 'neg') { oppPosition = 'aff'; }
+    d.qs(".header-contents h1").innerHTML = viewState.issue[oppPosition];
+    d.qs(".body .frame").innerHTML = "What it took to change your mind:";
+    d.qs(".proofs-wrapper .title").innerHTML = "response:";
+
+    d.gbID("condition-view").classList.add("convincing-outro");
+
     // go to new route
   }
 
@@ -89,12 +99,25 @@ class conditionView extends view {
       stand: viewState.position,
       conditionID: viewState.condition._id,
       proofID: closestProof.dataset.id
-    }, (data) => {
+    }, (data) => { // just in case...
       helpers.refreshIssue(data.data.issue);
       state.set("user", data.data.user);
     });
 
     d.gbID("condition-view").classList.add("convincing");
+    closestProof.classList.add("target");
+
+    var target = d.qs(".responses-wrapper li:first-of-type").getBoundingClientRect().top;
+    var current = closestProof.getBoundingClientRect().top;
+
+    closestProof.style[util.prefixedProperties.transform.js] = "translateY(" + (target - current) + "px)";
+
+    var currentTotalNumberConvinced = d.qs(".main-condition .confirmed").dataset.confirmedCount;
+    d.qs(".main-condition .confirmed").innerHTML = `${+currentTotalNumberConvinced + 1} convinced`;
+    var currentNumberConvinced = closestProof.querySelector(".pending").dataset.believerCount;
+    closestProof.querySelector(".pending").innerHTML = `${+currentNumberConvinced + 1} convinced`;
+
+    d.qs(".proofs-wrapper .title").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convincedByProofEnd);
   }
 
   animateOutFormEnd() {
@@ -417,6 +440,7 @@ class conditionView extends view {
             author,
             h('div.pending', {
               dataset: {
+                believerCount: d.believers.length,
                 exists: d.believers.length > 0
               }
             }, d.believers.length + ' convinced'),
@@ -462,8 +486,10 @@ class conditionView extends view {
         h('div.main-condition', [
           mainConditionAuthor,
           h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
+          h('span.separator', '/'),
           h('div.confirmed', {
             dataset: {
+              confirmedCount: confirmedCount,
               exists: confirmedCount > 0
             }
           }, confirmedCount + " convinced"),

@@ -24,3 +24,12 @@
     opacity: 1;
   }
 }
+
+@include keyframes(pulse) {
+  0%, 100% {
+    @include transform(scale(1));
+  }
+  50% {
+    @include transform(scale(1.2));
+  }
+}
