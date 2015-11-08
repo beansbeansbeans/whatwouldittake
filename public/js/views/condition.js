@@ -119,7 +119,7 @@ class conditionView extends view {
       closestProof.querySelector(".pending").innerHTML = `${+currentNumberConvinced + 1} convinced`;
 
       d.qs(".proofs-wrapper .title").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], this.convincedByProofEnd);
-    }, 150);
+    }, 50);
   }
 
   animateOutFormEnd() {
