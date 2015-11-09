@@ -107,9 +107,9 @@ class conditionView extends view {
       d.gbID("condition-view").classList.add("convincing");
       closestProof.classList.add("target");
 
-      var bodyTarget = d.qs("h1").getBoundingClientRect().bottom - 20;
+      var bodyTarget = d.qs("h1").getBoundingClientRect().bottom - 15;
       var bodyCurrent = d.qs(".body").getBoundingClientRect().top;
-      var proofTarget = d.qs(".main-condition").getBoundingClientRect().bottom;
+      var proofTarget = d.qs(".main-condition").getBoundingClientRect().bottom - 12;
       var proofCurrent = closestProof.getBoundingClientRect().top;
 
       d.qs(".body").style[util.prefixedProperties.transform.js] = "translateY(" + (bodyTarget - bodyCurrent) + "px)";
