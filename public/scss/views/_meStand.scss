@@ -45,6 +45,8 @@
     @extend %highlight-submitted-item;
     &:before {
       bottom: calc(100% - 2.25rem);
+      opacity: 1;
+      @include animation(none);
     }
     padding-top: 2.6rem;
   }

@@ -38,6 +38,7 @@ class meStandView extends view {
     var user = state.get("user");
     var userOnIssue;
     var stand;
+    var proof;
     var condition;
     var conditionTagline;
     var conditionAuthor;
@@ -61,7 +62,20 @@ class meStandView extends view {
       confirmedCount = condition.dependents && condition.dependents.filter(x => x.status === 'confirmed').length;
 
       conditionTagline = condition.tagline;
-      proofTagline = _.findWhere(condition.proofs, { _id: userOnIssue.previous.proofID }).description;
+      proof = _.findWhere(condition.proofs, { _id: userOnIssue.previous.proofID });
+      proofTagline = proof.description;
+
+      if(proof.sources && proof.sources.length) {
+        sourcesOfProof = h('div.source-list', [
+          h('div.label', 'Sources:'),
+          proof.sources.map((source) => {
+            return h('a.source', {
+              href: source.address,
+              target: '_blank'
+            }, source.display.length ? source.display : source.address)
+          })
+        ]);
+      }
     }
 
     return h('div#me-stand', [
