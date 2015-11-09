@@ -54,7 +54,9 @@ class meStandView extends view {
 
       condition = _.findWhere(viewState.issue.conditions[stand === 'aff' ? 'neg' : 'aff'], {_id: userOnIssue.previous.conditionID});
 
-      conditionAuthor = condition.author ? condition.author.name : '';
+      if(condition.author) {
+        conditionAuthor = h('div.author', 'by ' + condition.author.name);
+      }
       pendingCount = condition.dependents && condition.dependents.filter(x => x.status === 'pending').length;
       confirmedCount = condition.dependents && condition.dependents.filter(x => x.status === 'confirmed').length;
 
@@ -63,29 +65,34 @@ class meStandView extends view {
     }
 
     return h('div#me-stand', [
-      h('div.header', [
-        h('div.prompt', "You believe:"),
-        h('h1', issue)
-      ]),
-      h("div.body", [
-        h('div.frame', 'What it took to change your mind:'),
-        h('div.main-condition', [
-          conditionAuthor,
-          h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
-          h('span.separator', '/'),
-          h('div.confirmed', {
-            dataset: {
-              confirmedCount: confirmedCount,
-              exists: confirmedCount > 0
-            }
-          }, confirmedCount + " convinced"),
-          h('div.title', conditionTagline),
-          sourcesForCondition
+      h('div.contents', [
+        h('div.header', [
+          h('div.prompt', "You believe:"),
+          h('h1', issue)
+        ]),
+        h("div.body", [
+          h('div.frame', 'What it took to change your mind:'),
+          h('div.main-condition', [
+            conditionAuthor,
+            h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
+            h('span.separator', '/'),
+            h('div.confirmed', {
+              dataset: {
+                confirmedCount: confirmedCount,
+                exists: confirmedCount > 0
+              }
+            }, confirmedCount + " convinced"),
+            h('div.title', conditionTagline),
+            sourcesForCondition
+          ])
+        ]),
+        h('div.proof', [
+          h('div.tagline', proofTagline),
+          sourcesOfProof
         ])
       ]),
-      h('div.proof', [
-        h('div.tagline', proofTagline),
-        sourcesOfProof
+      h('div.chart', [
+        h('div.chart-title', 'Hello chart.')
       ])
     ]);
   }
