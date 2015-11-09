@@ -53,7 +53,6 @@ class conditionView extends view {
     if(viewState.position === 'neg') { oppPosition = 'aff'; }
     d.qs(".header-contents h1").innerHTML = viewState.issue[oppPosition];
     d.qs(".body .frame").innerHTML = "What it took to change your mind:";
-    d.qs(".proofs-wrapper .title").innerHTML = "response:";
 
     d.gbID("condition-view").classList.add("convincing-outro");
 
@@ -108,10 +107,13 @@ class conditionView extends view {
       d.gbID("condition-view").classList.add("convincing");
       closestProof.classList.add("target");
 
-      var target = d.qs(".responses-wrapper li:first-of-type").getBoundingClientRect().top;
-      var current = closestProof.getBoundingClientRect().top;
+      var bodyTarget = d.qs("h1").getBoundingClientRect().bottom - 20;
+      var bodyCurrent = d.qs(".body").getBoundingClientRect().top;
+      var proofTarget = d.qs(".main-condition").getBoundingClientRect().bottom;
+      var proofCurrent = closestProof.getBoundingClientRect().top;
 
-      closestProof.style[util.prefixedProperties.transform.js] = "translateY(" + (target - current) + "px)";
+      d.qs(".body").style[util.prefixedProperties.transform.js] = "translateY(" + (bodyTarget - bodyCurrent) + "px)";
+      closestProof.style[util.prefixedProperties.transform.js] = "translateY(" + (proofTarget - proofCurrent) + "px)";
 
       var currentTotalNumberConvinced = d.qs(".main-condition .confirmed").dataset.confirmedCount;
       d.qs(".main-condition .confirmed").innerHTML = `${+currentTotalNumberConvinced + 1} convinced`;

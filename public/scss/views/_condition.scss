@@ -3,7 +3,7 @@
   &.convincing {
     .proof:not(.target) {
       opacity: 0;
-      @include transition(opacity $transition-duration);
+      @include transition(opacity $transition-duration / 2);
       @include animation(none);
     }
     .vote.button,
@@ -13,22 +13,28 @@
     .body .frame,
     .proofs-wrapper .title {
       opacity: 0;
-      @include transition(all $transition-duration $transition-duration / 2 !important);
+      @include transition(all $transition-duration / 2 !important);
       @include animation(none);
     }
     .proof.target {
-      @include transition(all $transition-duration $transition-duration / 2 !important);
+      @include transition(all $transition-duration $transition-duration !important);
     }
     .main-condition .confirmed, .proof.target .pending {
       color: $agreement-color;
-      @include animation(pulse $transition-duration * 1.5 $transition-duration / 2 forwards);
+      @include animation(pulse $transition-duration forwards);
+    }
+    .header {
+      background: none;
+      @include transition(all $transition-duration $transition-duration);
+    }
+    .body {
+      @include transition(all $transition-duration $transition-duration);
     }
   }
 
   &.convincing-outro {
     .header-contents h1,
-    .body .frame,
-    .proofs-wrapper .title {
+    .body .frame {
       @include animation(fade-in $transition-duration forwards);
     }
   }
