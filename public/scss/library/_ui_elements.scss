@@ -395,6 +395,20 @@ a {
   }
 }
 
+%highlight-submitted-item {
+  &:before {
+    opacity: 0;
+    @include animation(fade-in $transition-duration forwards);
+    content: "";
+    width: 3px;
+    height: 1000px;
+    background-color: darken($alabaster, 3%);
+    position: absolute;
+    left: 0.7rem;
+    bottom: calc(100% - 3rem);
+  }
+}
+
 textarea, input {
   border-radius: 4px;
   border: solid 1px $border-color;

@@ -56,7 +56,11 @@ class conditionView extends view {
 
     d.gbID("condition-view").classList.add("convincing-outro");
 
-    // go to new route
+    d.qs(".proof.target").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], (e) => {
+      if(e.target.classList.contains("target")) {
+        page.show('/me/' + viewState.issue.slug);
+      }
+    });
   }
 
   convincedByProof(closestProof) {

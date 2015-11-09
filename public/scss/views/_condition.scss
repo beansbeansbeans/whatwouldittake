@@ -19,17 +19,7 @@
     }
     .proof.target {
       @include transition(all $transition-duration $transition-duration !important);
-      &:before {
-        opacity: 0;
-        @include animation(fade-in $transition-duration forwards);
-        content: "";
-        width: 3px;
-        height: 1000px;
-        background-color: darken($alabaster, 3%);
-        position: absolute;
-        left: 0.7rem;
-        bottom: calc(100% - 3rem);
-      }
+      @extend %highlight-submitted-item;
     }
     .main-condition .confirmed {
       color: $agreement-color;
