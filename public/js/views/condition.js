@@ -115,6 +115,8 @@ class conditionView extends view {
       d.qs(".body").style[util.prefixedProperties.transform.js] = "translateY(" + (bodyTarget - bodyCurrent) + "px)";
       closestProof.style[util.prefixedProperties.transform.js] = "translateY(" + (proofTarget - proofCurrent) + "px)";
 
+      var currentTotalNumberPending = d.qs(".main-condition .pending").dataset.pendingCount;
+      d.qs(".main-condition .pending").innerHTML = `${+currentTotalNumberPending - 1} ${util.pluralize(currentTotalNumberPending, 'opinion')} at stake`;
       var currentTotalNumberConvinced = d.qs(".main-condition .confirmed").dataset.confirmedCount;
       d.qs(".main-condition .confirmed").innerHTML = `${+currentTotalNumberConvinced + 1} convinced`;
       var currentNumberConvinced = closestProof.querySelector(".pending").dataset.believerCount;
@@ -489,7 +491,11 @@ class conditionView extends view {
         h('div.frame', frame),
         h('div.main-condition', [
           mainConditionAuthor,
-          h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
+          h('div.pending', {
+            dataset: {
+              pendingCount: pendingCount
+            }
+          }, pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
           h('span.separator', '/'),
           h('div.confirmed', {
             dataset: {
