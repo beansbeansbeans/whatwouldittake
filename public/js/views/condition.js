@@ -463,7 +463,8 @@ class conditionView extends view {
     } else {
       proofs = h('div.proofs-wrapper', { key: 1 }, [
         h('div.title', 'No responses available yet.'),
-        submitProof
+        submitProof,
+        h('ul.responses-wrapper')
       ]);
     }
 
