@@ -1,3 +1,42 @@
 #me-stand {
-  
+  width: $content-width * 1%;
+  min-width: $min-content-width;
+  max-width: $max-content-width;
+  margin: auto;
+  .frame, .prompt {
+    text-align: center;
+    @extend %naked-label;
+  }
+  .header {
+    @extend %belief-header;
+    background: none;
+    padding-bottom: 1rem;
+  }
+  .frame {
+    padding-bottom: 1rem;
+  }
+  .main-condition {
+    .title {
+      margin-bottom: 0rem;
+      line-height: $body-font-line-height;
+      font-size: $font-size-medium;
+    }
+    .source-list {
+      @extend %source-list;
+    }
+    @extend %pending-confirmed-author;     
+    .confirmed {
+      &:before {
+        display: none;
+      }
+    } 
+    .separator {
+      display: inline-block;
+      margin-left: 0.5rem;
+      margin-right: -0.1rem;
+    }
+  }
+  .proof {
+    @extend %submitted-item;
+  }
 }

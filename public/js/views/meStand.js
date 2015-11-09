@@ -68,7 +68,7 @@ class meStandView extends view {
         h('h1', issue)
       ]),
       h("div.body", [
-        h('div.title', 'What it took to change your mind:'),
+        h('div.frame', 'What it took to change your mind:'),
         h('div.main-condition', [
           conditionAuthor,
           h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
