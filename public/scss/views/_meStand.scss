@@ -59,5 +59,8 @@
     min-height: 400px;
     opacity: 0;
     @include animation(fade-in $transition-duration forwards);
+    .chart-title {
+      @extend %naked-label;
+    }
   }
 }

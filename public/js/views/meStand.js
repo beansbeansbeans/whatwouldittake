@@ -117,7 +117,8 @@ class meStandView extends view {
         proofEl
       ]),
       h('div.chart', [
-        h('div.chart-title', 'Hello chart.')
+        h('div.chart-title', 'How opinions have changed:'),
+        h('div.chart-contents')
       ])
     ]);
   }
