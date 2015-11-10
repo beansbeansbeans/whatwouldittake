@@ -39,6 +39,7 @@ class meStandView extends view {
     var userOnIssue;
     var stand;
     var proof;
+    var proofEl;
     var condition;
     var conditionTagline;
     var conditionAuthor;
@@ -47,9 +48,12 @@ class meStandView extends view {
     var sourcesForCondition;
     var sourcesOfProof;
     var proofTagline;
+    var userOnIssue = viewState.issue && _.findWhere(user.stands, { id: viewState.issue._id});
+    var prompt;
+    var body;
 
-    if(viewState.issue && user) {
-      userOnIssue = _.findWhere(user.stands, { id: viewState.issue._id});
+    if(viewState.issue && user && userOnIssue && userOnIssue.previous) {
+      prompt = "You believe:";
       stand = userOnIssue.stand;
       issue = viewState.issue[stand];
 
@@ -76,34 +80,41 @@ class meStandView extends view {
           })
         ]);
       }
+
+      body = h("div.body", [
+        h('div.frame', 'What it took to change your mind:'),
+        h('div.main-condition', [
+          conditionAuthor,
+          h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
+          h('span.separator', '/'),
+          h('div.confirmed', {
+            dataset: {
+              confirmedCount: confirmedCount,
+              exists: confirmedCount > 0
+            }
+          }, confirmedCount + " convinced"),
+          h('div.title', conditionTagline),
+          sourcesForCondition
+        ])
+      ]);
+
+      proofEl = h('div.proof', [
+        h('div.tagline', proofTagline),
+        sourcesOfProof
+      ]);
+    } else {
+      prompt = "The issue:";
+      issue = viewState.issue && viewState.issue.description;
     }
 
     return h('div#me-stand', [
       h('div.contents', [
         h('div.header', [
-          h('div.prompt', "You believe:"),
+          h('div.prompt', prompt),
           h('h1', issue)
         ]),
-        h("div.body", [
-          h('div.frame', 'What it took to change your mind:'),
-          h('div.main-condition', [
-            conditionAuthor,
-            h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
-            h('span.separator', '/'),
-            h('div.confirmed', {
-              dataset: {
-                confirmedCount: confirmedCount,
-                exists: confirmedCount > 0
-              }
-            }, confirmedCount + " convinced"),
-            h('div.title', conditionTagline),
-            sourcesForCondition
-          ])
-        ]),
-        h('div.proof', [
-          h('div.tagline', proofTagline),
-          sourcesOfProof
-        ])
+        body,
+        proofEl
       ]),
       h('div.chart', [
         h('div.chart-title', 'Hello chart.')
