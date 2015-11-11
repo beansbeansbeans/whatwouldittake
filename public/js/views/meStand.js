@@ -1,4 +1,5 @@
 var h = require('virtual-dom/h');
+var svg = require('virtual-dom/virtual-hyperscript/svg');
 var api = require('../api');
 var state = require('../state');
 var mediator = require('../mediator');
@@ -9,6 +10,8 @@ var viewState = {}
 
 var dimensions = {};
 
+var chartWidthOverHeight = 2;
+
 class meStandView extends view {
   start(ctx) {
     super.start();
@@ -17,7 +20,28 @@ class meStandView extends view {
   }
 
   didRender() {
+    if(!viewState.issue) { return; }
 
+    var chartWrapper = d3.select(".chart-contents");
+    var availableWidth = chartWrapper[0][0].offsetWidth;
+    var availableHeight = availableWidth / chartWidthOverHeight;
+
+    var minY = Math.min(Math.min.apply(Math, viewState.issue.data.aff), Math.min.apply(Math, viewState.issue.data.neg));
+    var maxY = Math.max(Math.max.apply(Math, viewState.issue.data.aff), Math.max.apply(Math, viewState.issue.data.neg));
+
+    var yScale = d3.scale.linear().domain([minY, maxY]).range([0, 100]);
+    var y = _.identity;
+    var x = (d, i) => {
+      return i * 50;
+    };
+    var line = d3.svg.line().x(x).y(y).interpolate("cardinal");
+
+    var chartEl = chartWrapper.select("svg");
+    chartEl.attr("width", availableWidth).attr("height", availableHeight);
+    var sparklines = chartEl.selectAll("path").data([viewState.issue.data.aff, viewState.issue.data.neg]);
+    sparklines.enter().append("path");
+
+    sparklines.attr("d", line);
   }
 
   handleResize() {
@@ -51,6 +75,7 @@ class meStandView extends view {
     var userOnIssue = viewState.issue && _.findWhere(user.stands, { id: viewState.issue._id});
     var prompt;
     var body;
+    var source;
 
     if(viewState.issue && user && userOnIssue && userOnIssue.previous) {
       prompt = "You believe:";
@@ -107,6 +132,13 @@ class meStandView extends view {
       issue = viewState.issue && viewState.issue.description;
     }
 
+    if(viewState.issue) {
+      source = h('div.chart-source', [
+        h('div.label', 'Source:'),
+        h('a.link', {href: viewState.issue.data.source.address}, viewState.issue.data.source.display)
+      ]);
+    }
+
     return h('div#me-stand', [
       h('div.contents', [
         h('div.header', [
@@ -118,7 +150,8 @@ class meStandView extends view {
       ]),
       h('div.chart', [
         h('div.chart-title', 'How opinions have changed:'),
-        h('div.chart-contents')
+        h('div.chart-contents', [svg('svg')]),
+        source
       ])
     ]);
   }

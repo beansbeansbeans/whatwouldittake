@@ -62,5 +62,11 @@
     .chart-title {
       @extend %naked-label;
     }
+    .chart-contents {
+      width: $content-width * 1%;
+      min-width: $min-content-width;
+      max-width: $max-content-width;
+      margin: auto;
+    }
   }
 }
