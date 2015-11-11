@@ -68,11 +68,12 @@
       max-width: $max-content-width;
       margin: auto;
       margin-top: 2.5rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 4rem;
       text {
         @extend %header-font;
         font-size: 0.8rem;
-        fill: $text-color;
+        fill: lighten($text-color, 5%);
+        font-weight: 100;
       }
       svg {
         overflow: visible;

@@ -48,7 +48,9 @@ class meStandView extends view {
 
     var dateMarkers = chartEl.select(".date-markers").selectAll("text").data(viewState.issue.data.times);
     dateMarkers.enter().append("text");
-    dateMarkers.text(d => moment.unix(d).format('M/YY')).attr("x", x).attr("y", availableHeight - 5);
+    dateMarkers.text(d => moment.unix(d).format('M/YY')).attr("x", (d, i) => { return x(d, i) + 5}).attr("y", availableHeight - 5)
+      .attr("transform", (d, i) => { return `rotate(-90, ${x(d, i) + 5}, ${availableHeight - 5})`; })
+      .attr("text-anchor", "end");
 
     if(!d.qs(".y-axis-markers")) {
       chartEl.append("g").attr("class", "y-axis-markers");
@@ -67,7 +69,7 @@ class meStandView extends view {
 
     var yAxisMarkers = chartEl.select(".y-axis-markers").selectAll("text").data(yAxisData);
     yAxisMarkers.enter().append("text");
-    yAxisMarkers.text(d => Math.round(d)).attr("y", (d, i) => { 
+    yAxisMarkers.text(d => Math.round(d)).attr("text-anchor", "end").attr("y", (d, i) => { 
       return (availableHeight - dateBuffer) - i * ((availableHeight - dateBuffer - yAxisLabelHeight) / (yAxisData.length - 1));
     });
 
