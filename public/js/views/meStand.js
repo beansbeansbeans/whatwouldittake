@@ -10,7 +10,7 @@ var viewState = {}
 
 var dimensions = {};
 
-var chartWidthOverHeight = 3;
+var chartWidthOverHeight = 2.75;
 
 class meStandView extends view {
   start(ctx) {
@@ -22,6 +22,7 @@ class meStandView extends view {
   didRender() {
     if(!viewState.issue) { return; }
 
+    var dateBuffer = 25;
     var chartWrapper = d3.select(".chart-contents");
     var availableWidth = chartWrapper[0][0].offsetWidth;
     var availableHeight = availableWidth / chartWidthOverHeight;
@@ -29,7 +30,7 @@ class meStandView extends view {
     var minY = Math.min(Math.min.apply(Math, viewState.issue.data.aff), Math.min.apply(Math, viewState.issue.data.neg));
     var maxY = Math.max(Math.max.apply(Math, viewState.issue.data.aff), Math.max.apply(Math, viewState.issue.data.neg));
 
-    var yScale = d3.scale.linear().domain([minY, maxY]).range([0, availableHeight]);
+    var yScale = d3.scale.linear().domain([minY, maxY]).range([0, availableHeight - dateBuffer]);
     var y = d => yScale(d);
     var x = (d, i) => {
       return i * (availableWidth / (viewState.issue.data.aff.length - 1));
@@ -38,10 +39,16 @@ class meStandView extends view {
 
     var chartEl = chartWrapper.select("svg");
     chartEl.attr("width", availableWidth).attr("height", availableHeight);
+
     var sparklines = chartEl.selectAll("path").data([viewState.issue.data.aff, viewState.issue.data.neg]);
     sparklines.enter().append("path");
-
     sparklines.attr("d", line);
+
+    chartEl.append("g").attr("class", "date-markers");
+
+    var dateMarkers = chartEl.select(".date-markers").selectAll("text").data(viewState.issue.data.times);
+    dateMarkers.enter().append("text");
+    dateMarkers.text(d => moment.unix(d).format('M/YY')).attr("x", x).attr("y", availableHeight - 5);
   }
 
   handleResize() {
