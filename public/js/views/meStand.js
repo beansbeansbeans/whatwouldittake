@@ -10,7 +10,7 @@ var viewState = {}
 
 var dimensions = {};
 
-var chartWidthOverHeight = 2;
+var chartWidthOverHeight = 3;
 
 class meStandView extends view {
   start(ctx) {
@@ -29,10 +29,10 @@ class meStandView extends view {
     var minY = Math.min(Math.min.apply(Math, viewState.issue.data.aff), Math.min.apply(Math, viewState.issue.data.neg));
     var maxY = Math.max(Math.max.apply(Math, viewState.issue.data.aff), Math.max.apply(Math, viewState.issue.data.neg));
 
-    var yScale = d3.scale.linear().domain([minY, maxY]).range([0, 100]);
-    var y = _.identity;
+    var yScale = d3.scale.linear().domain([minY, maxY]).range([0, availableHeight]);
+    var y = d => yScale(d);
     var x = (d, i) => {
-      return i * 50;
+      return i * (availableWidth / (viewState.issue.data.aff.length - 1));
     };
     var line = d3.svg.line().x(x).y(y).interpolate("cardinal");
 
