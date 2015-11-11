@@ -67,6 +67,30 @@
       min-width: 400px;
       max-width: $max-content-width;
       margin: auto;
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
+      text {
+        @extend %header-font;
+        font-size: 0.8rem;
+        fill: $text-color;
+      }
+      svg {
+        overflow: visible;
+      }
+      line {
+        stroke: darken($smoke, 2%);
+      }
+      path {
+        fill: none;
+        stroke-width: 3px;
+        stroke-linecap: round;
+      }
+      path:first-of-type {
+        stroke: $agreement-color;
+      }
+      path:last-of-type {
+        stroke: $disagreement-color;
+      }
     }
   }
 }

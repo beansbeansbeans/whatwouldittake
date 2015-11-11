@@ -42,10 +42,6 @@ class meStandView extends view {
     chartEl.attr("width", availableWidth + yAxisWidth).attr("height", availableHeight)
       .style("margin-left", -1 * yAxisWidth);
 
-    var sparklines = chartEl.selectAll("path").data([viewState.issue.data.aff, viewState.issue.data.neg]);
-    sparklines.enter().append("path");
-    sparklines.attr("d", line);
-
     if(!d.qs(".date-markers")) {
       chartEl.append("g").attr("class", "date-markers");
     }
@@ -74,6 +70,18 @@ class meStandView extends view {
     yAxisMarkers.text(d => Math.round(d)).attr("y", (d, i) => { 
       return (availableHeight - dateBuffer) - i * ((availableHeight - dateBuffer - yAxisLabelHeight) / (yAxisData.length - 1));
     });
+
+    if(!d.qs(".x-axis-ticks")) {
+      chartEl.append("g").attr("class", "x-axis-ticks");
+    }
+
+    var xAxisTicks = chartEl.select(".x-axis-ticks").selectAll("line").data(viewState.issue.data.times);
+    xAxisTicks.enter().append("line");
+    xAxisTicks.attr("x1", x).attr("x2", x).attr("y1", 0).attr("y2", availableHeight - dateBuffer);
+
+    var sparklines = chartEl.selectAll("path").data([viewState.issue.data.aff, viewState.issue.data.neg]);
+    sparklines.enter().append("path");
+    sparklines.attr("d", line);
   }
 
   handleResize() {
