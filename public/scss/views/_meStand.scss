@@ -87,10 +87,10 @@
         stroke-linecap: round;
       }
       path:first-of-type {
-        stroke: $agreement-color;
+        stroke: $disagreement-color;
       }
       path:last-of-type {
-        stroke: $disagreement-color;
+        stroke: $agreement-color;
       }
     }
   }
