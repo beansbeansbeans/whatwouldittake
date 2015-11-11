@@ -64,15 +64,15 @@ class conditionView extends view {
   }
 
   convincedByProof(closestProof) {
-    // api.post('/convinced-by-proof', {
-    //   id: viewState.issue._id,
-    //   stand: viewState.position,
-    //   conditionID: viewState.condition._id,
-    //   proofID: closestProof.dataset.id
-    // }, (data) => { // just in case...
-    //   helpers.refreshIssue(data.data.issue);
-    //   state.set("user", data.data.user);
-    // });
+    api.post('/convinced-by-proof', {
+      id: viewState.issue._id,
+      stand: viewState.position,
+      conditionID: viewState.condition._id,
+      proofID: closestProof.dataset.id
+    }, (data) => { // just in case...
+      helpers.refreshIssue(data.data.issue);
+      state.set("user", data.data.user);
+    });
 
     var condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
     condition.dependents.some((d) => {
