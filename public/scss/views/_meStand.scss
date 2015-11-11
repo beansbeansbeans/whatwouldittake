@@ -62,13 +62,15 @@
     .chart-title {
       @extend %naked-label;
     }
-    .chart-contents {
-      width: 60%;
-      min-width: 400px;
+    .chart-contents, .chart-source {
+      width: $content-width * 1%;
+      min-width: $min-content-width;
       max-width: $max-content-width;
-      margin: auto;
+      margin: auto;      
+    }
+    .chart-contents {
       margin-top: 2.5rem;
-      margin-bottom: 4rem;
+      margin-bottom: 2.5rem;
       text {
         @extend %header-font;
         font-size: 0.8rem;
@@ -91,6 +93,23 @@
       }
       path:last-of-type {
         stroke: $agreement-color;
+      }
+    }
+    .chart-source {
+      text-align: right;
+      @extend %naked-label;
+      .label {
+        margin-right: 0.5rem;
+      }
+      .label, a {
+        font-weight: 300;
+        color: $dove-gray;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0.7rem;
+      }
+      a {
+        margin-right: -0.5rem;
       }
     }
   }

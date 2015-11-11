@@ -22,7 +22,7 @@ class meStandView extends view {
   didRender() {
     if(!viewState.issue) { return; }
 
-    var yAxisWidth = 25;
+    var yAxisWidth = 20;
     var dateBuffer = 25;
     var chartWrapper = d3.select(".chart-contents");
     var availableWidth = chartWrapper[0][0].offsetWidth;
@@ -177,7 +177,10 @@ class meStandView extends view {
     if(viewState.issue) {
       source = h('div.chart-source', [
         h('div.label', 'Source:'),
-        h('a.link', {href: viewState.issue.data.source.address}, viewState.issue.data.source.display)
+        h('a.link', {
+          href: viewState.issue.data.source.address,
+          target: "_blank"
+        }, viewState.issue.data.source.display)
       ]);
     }
 
