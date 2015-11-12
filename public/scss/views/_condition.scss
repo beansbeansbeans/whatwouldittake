@@ -137,6 +137,7 @@
       }
       .source-list {
         @extend %source-list;
+        margin-bottom: 0.5rem;
       }
       @extend %pending-confirmed-author;     
       .confirmed {

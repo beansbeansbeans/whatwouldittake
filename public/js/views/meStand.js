@@ -162,6 +162,18 @@ class meStandView extends view {
         ]);
       }
 
+      if(condition.sources && condition.sources.length) {
+        sourcesForCondition = h('div.source-list', [
+          h('div.label', 'Sources:'),
+          condition.sources.map((source) => {
+            return h('a.source', {
+              href: source.address,
+              target: '_blank'
+            }, source.display.length ? source.display : source.address)
+          })
+        ]);
+      }
+
       body = h("div.body", [
         h('div.frame', 'What it took to change your mind:'),
         h('div.main-condition', [
