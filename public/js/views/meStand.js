@@ -33,8 +33,9 @@ class meStandView extends view {
 
     var yScale = d3.scale.linear().domain([minY, maxY]).range([0, availableHeight - dateBuffer]);
     var y = d => yScale(d);
-    var x = (d, i) => {
-      return yAxisWidth + i * (availableWidth / (viewState.issue.data.aff.length - 1));
+    var x = (d, i, data) => {
+      data = data || viewState.issue.data.aff;
+      return yAxisWidth + i * (availableWidth / (data.length - 1));
     };
     var line = d3.svg.line().x(x).y(y).interpolate("cardinal");
 
@@ -46,10 +47,15 @@ class meStandView extends view {
       chartEl.append("g").attr("class", "date-markers");
     }
 
-    var dateMarkers = chartEl.select(".date-markers").selectAll("text").data(viewState.issue.data.times);
+    var times = viewState.issue.data.times;
+    if(times.length > 20) {
+      times = viewState.issue.data.times.filter((d, i) => { return i%2 === 0; });
+    }
+
+    var dateMarkers = chartEl.select(".date-markers").selectAll("text").data(times);
     dateMarkers.enter().append("text");
-    dateMarkers.text(d => moment.unix(d).format('M/YY')).attr("x", (d, i) => { return x(d, i) + 5}).attr("y", availableHeight - 5)
-      .attr("transform", (d, i) => { return `rotate(-90, ${x(d, i) + 5}, ${availableHeight - 5})`; })
+    dateMarkers.text(d => moment.unix(d).format('M/YY')).attr("x", (d, i) => { return x(d, i, times) + 5}).attr("y", availableHeight - 5)
+      .attr("transform", (d, i) => { return `rotate(-90, ${x(d, i, times) + 5}, ${availableHeight - 5})`; })
       .attr("text-anchor", "end");
 
     if(!d.qs(".y-axis-markers")) {
@@ -77,9 +83,11 @@ class meStandView extends view {
       chartEl.append("g").attr("class", "x-axis-ticks");
     }
 
-    var xAxisTicks = chartEl.select(".x-axis-ticks").selectAll("line").data(viewState.issue.data.times);
+    var xAxisTicks = chartEl.select(".x-axis-ticks").selectAll("line").data(times);
     xAxisTicks.enter().append("line");
-    xAxisTicks.attr("x1", x).attr("x2", x).attr("y1", 0).attr("y2", availableHeight - dateBuffer);
+    xAxisTicks.attr("x1", (d, i) => { return x(d, i, times)})
+      .attr("x2", (d, i) => { return x(d, i, times)})
+      .attr("y1", 0).attr("y2", availableHeight - dateBuffer);
 
     var sparklines = chartEl.selectAll("path").data([viewState.issue.data.aff, viewState.issue.data.neg]);
     sparklines.enter().append("path");
