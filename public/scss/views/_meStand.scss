@@ -63,13 +63,12 @@
     .chart-title {
       @extend %naked-label;
     }
-    .chart-contents, .chart-source {
+    .chart-contents {
       width: $content-width * 1%;
       min-width: $min-content-width;
       max-width: $max-content-width;
+      @extend %clearfix;
       margin: auto;      
-    }
-    .chart-contents {
       margin-top: 2.5rem;
       margin-bottom: 3rem;
       text {
@@ -105,6 +104,7 @@
       }
     }
     .chart-source {
+      margin-top: 3.5rem;
       text-align: right;
       @extend %naked-label;
       .label {
@@ -119,6 +119,33 @@
       }
       a {
         margin-right: -0.5rem;
+      }
+    }
+    .key {
+      margin-top: 3.5rem;
+      float: left;
+      .aff, .neg {
+        @extend %header-font;
+        font-weight: 100;
+        text-align: left;
+        position: relative;
+        padding-left: 2.5rem;
+        padding-bottom: 0.5rem;
+        font-size: 0.9rem;
+        &:before {
+          content: "";
+          @include size(2rem, 0.2rem);
+          position: absolute;
+          left: -3px;
+          top: 0.5rem;
+          display: block;          
+        }
+      }
+      .aff:before {
+        background: $agreement-color;
+      }
+      .neg:before {
+        background: $disagreement-color;
       }
     }
   }

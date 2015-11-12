@@ -131,6 +131,7 @@ class meStandView extends view {
     var prompt;
     var body;
     var source;
+    var key;
 
     if(viewState.issue && user && userOnIssue && userOnIssue.previous) {
       prompt = "You believe:";
@@ -195,6 +196,11 @@ class meStandView extends view {
           target: "_blank"
         }, viewState.issue.data.source.display)
       ]);
+
+      key = h('div.key', [
+        h('div.aff', viewState.issue.aff),
+        h('div.neg', viewState.issue.neg)
+      ]);
     }
 
     return h('div#me-stand', [
@@ -208,8 +214,11 @@ class meStandView extends view {
       ]),
       h('div.chart', [
         h('div.chart-title', 'How opinions have changed:'),
-        h('div.chart-contents', [svg('svg')]),
-        source
+        h('div.chart-contents', [
+          svg('svg'),
+          key,
+          source
+        ])
       ])
     ]);
   }
