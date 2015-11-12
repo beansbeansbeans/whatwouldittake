@@ -88,6 +88,14 @@
         fill: none;
         stroke-width: 3px;
         stroke-linecap: round;
+        @include animation(dash 2s linear forwards);
+        @at-root {
+          @include keyframes(dash) {
+            to {
+              stroke-dashoffset: 0;
+            }
+          }
+        }
       }
       path:first-of-type {
         stroke: $disagreement-color;

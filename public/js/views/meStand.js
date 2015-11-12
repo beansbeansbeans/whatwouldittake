@@ -83,7 +83,12 @@ class meStandView extends view {
 
     var sparklines = chartEl.selectAll("path").data([viewState.issue.data.aff, viewState.issue.data.neg]);
     sparklines.enter().append("path");
-    sparklines.attr("d", line);
+    sparklines.attr("d", line)
+      .each(function(d) {
+        d.totalLength = this.getTotalLength();
+      })
+      .attr("stroke-dasharray", d => d.totalLength)
+      .attr("stroke-dashoffset", d => d.totalLength);
   }
 
   handleResize() {
