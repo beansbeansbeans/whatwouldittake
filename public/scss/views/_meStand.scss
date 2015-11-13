@@ -74,6 +74,20 @@
       margin: auto;      
       margin-top: 2.5rem;
       margin-bottom: 3rem;
+      position: relative;
+      .y-axis-label {
+        position: absolute;
+        left: 0;
+        text-align: center;
+        -webkit-transform-origin: left;
+        transform-origin: left;
+        @include transform(rotate(-90deg) translateX(-100%) translateY(-4.5rem));
+        @extend %header-font;
+        font-size: 0.7rem;
+        color: lighten($text-color, 5%);
+        font-weight: 100;
+        text-transform: uppercase;
+      }
       text {
         @extend %header-font;
         font-size: 0.8rem;

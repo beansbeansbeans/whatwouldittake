@@ -98,6 +98,8 @@ class meStandView extends view {
       })
       .attr("stroke-dasharray", d => d.totalLength)
       .attr("stroke-dashoffset", d => d.totalLength);
+
+    d.qs(".y-axis-label").style.width = (availableHeight - dateBuffer) + 'px';
   }
 
   handleResize() {
@@ -228,6 +230,7 @@ class meStandView extends view {
       h('div.chart', [
         h('div.chart-title', 'How opinions have changed:'),
         h('div.chart-contents', [
+          h('div.y-axis-label', 'percent'),
           svg('svg'),
           key,
           source
