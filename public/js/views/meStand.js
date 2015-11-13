@@ -213,8 +213,8 @@ class meStandView extends view {
       ]);
 
       key = h('div.key', [
-        h('div.aff', viewState.issue.aff),
-        h('div.neg', viewState.issue.neg)
+        h('div.aff', viewState.issue.data.affDisplay ? viewState.issue.data.affDisplay : viewState.issue.aff),
+        h('div.neg', viewState.issue.data.negDisplay ? viewState.issue.data.negDisplay : viewState.issue.neg)
       ]);
     }
 
