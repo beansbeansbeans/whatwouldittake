@@ -22,6 +22,7 @@ class meStandView extends view {
   didRender() {
     if(!viewState.issue) { return; }
 
+    var format = viewState.issue.data.format || 'M/YY';
     var yAxisWidth = 20;
     var dateBuffer = 25;
     var chartWrapper = d3.select(".chart-contents");
@@ -54,7 +55,7 @@ class meStandView extends view {
 
     var dateMarkers = chartEl.select(".date-markers").selectAll("text").data(times);
     dateMarkers.enter().append("text");
-    dateMarkers.text(d => moment.unix(d).format('M/YY')).attr("x", (d, i) => { return x(d, i, times) + 5}).attr("y", availableHeight - 5)
+    dateMarkers.text(d => moment.unix(d).format(format)).attr("x", (d, i) => { return x(d, i, times) + 5}).attr("y", availableHeight - 5)
       .attr("transform", (d, i) => { return `rotate(-90, ${x(d, i, times) + 5}, ${availableHeight - 5})`; })
       .attr("text-anchor", "end");
 
