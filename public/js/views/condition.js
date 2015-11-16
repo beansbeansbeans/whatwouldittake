@@ -58,7 +58,7 @@ class conditionView extends view {
 
     d.qs(".proof.target").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], (e) => {
       if(e.target.classList.contains("target")) {
-        page.show('/me/' + viewState.issue.slug);
+        page.show('/' + viewState.issue.slug);
       }
     });
   }

@@ -117,7 +117,7 @@ class issueView extends view {
 
   render() {
     var issue;
-    var user = state.get("user");
+    var user = state.get("user") || state.get("anonymous_activity");
     var userOnIssue;
     var stand;
     var proof;
@@ -224,7 +224,7 @@ class issueView extends view {
       ]);
     }
 
-    return h('div#me-stand', [
+    return h('div#issue', [
       h('div.contents', [
         h('div.header', [
           h('div.prompt', prompt),
