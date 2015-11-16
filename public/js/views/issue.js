@@ -136,71 +136,77 @@ class issueView extends view {
     var source;
     var key;
 
-    if(viewState.issue && user && userOnIssue && userOnIssue.previous) {
+    if(viewState.issue && user && userOnIssue) {
       prompt = "You believe:";
       stand = userOnIssue.stand;
       issue = viewState.issue[stand];
 
-      condition = _.findWhere(viewState.issue.conditions[stand === 'aff' ? 'neg' : 'aff'], {_id: userOnIssue.previous.conditionID});
+      if(userOnIssue.previous) {
+        condition = _.findWhere(viewState.issue.conditions[stand === 'aff' ? 'neg' : 'aff'], {_id: userOnIssue.previous.conditionID});
 
-      if(condition.author) {
-        conditionAuthor = h('div.author', 'by ' + condition.author.name);
-      }
-      pendingCount = condition.dependents && condition.dependents.filter(x => x.status === 'pending').length;
-      confirmedCount = condition.dependents && condition.dependents.filter(x => x.status === 'confirmed').length;
+        if(condition.author) {
+          conditionAuthor = h('div.author', 'by ' + condition.author.name);
+        }
+        pendingCount = condition.dependents && condition.dependents.filter(x => x.status === 'pending').length;
+        confirmedCount = condition.dependents && condition.dependents.filter(x => x.status === 'confirmed').length;
 
-      conditionTagline = condition.tagline;
-      proof = _.findWhere(condition.proofs, { _id: userOnIssue.previous.proofID });
-      proofTagline = proof.description;
+        conditionTagline = condition.tagline;
+        proof = _.findWhere(condition.proofs, { _id: userOnIssue.previous.proofID });
+        proofTagline = proof.description;
 
-      if(proof.sources && proof.sources.length) {
-        sourcesOfProof = h('div.source-list', [
-          h('div.label', 'Sources:'),
-          proof.sources.map((source) => {
-            return h('a.source', {
-              href: source.address,
-              target: '_blank'
-            }, source.display.length ? source.display : source.address)
-          })
+        if(proof.sources && proof.sources.length) {
+          sourcesOfProof = h('div.source-list', [
+            h('div.label', 'Sources:'),
+            proof.sources.map((source) => {
+              return h('a.source', {
+                href: source.address,
+                target: '_blank'
+              }, source.display.length ? source.display : source.address)
+            })
+          ]);
+        }
+
+        if(condition.sources && condition.sources.length) {
+          sourcesForCondition = h('div.source-list', [
+            h('div.label', 'Sources:'),
+            condition.sources.map((source) => {
+              return h('a.source', {
+                href: source.address,
+                target: '_blank'
+              }, source.display.length ? source.display : source.address)
+            })
+          ]);
+        }
+        
+        body = h("div.body", [
+          h('div.frame', 'What it took to change your mind:'),
+          h('div.main-condition', [
+            conditionAuthor,
+            h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
+            h('span.separator', '/'),
+            h('div.confirmed', {
+              dataset: {
+                confirmedCount: confirmedCount,
+                exists: confirmedCount > 0
+              }
+            }, confirmedCount + " convinced"),
+            h('div.title', conditionTagline),
+            sourcesForCondition
+          ])
+        ]);
+        proofEl = h('div.proof', [
+          h('div.tagline', proofTagline),
+          sourcesOfProof
         ]);
       }
-
-      if(condition.sources && condition.sources.length) {
-        sourcesForCondition = h('div.source-list', [
-          h('div.label', 'Sources:'),
-          condition.sources.map((source) => {
-            return h('a.source', {
-              href: source.address,
-              target: '_blank'
-            }, source.display.length ? source.display : source.address)
-          })
-        ]);
-      }
-
-      body = h("div.body", [
-        h('div.frame', 'What it took to change your mind:'),
-        h('div.main-condition', [
-          conditionAuthor,
-          h('div.pending', pendingCount + ' ' + util.pluralize(pendingCount, 'opinion') + "  at stake"),
-          h('span.separator', '/'),
-          h('div.confirmed', {
-            dataset: {
-              confirmedCount: confirmedCount,
-              exists: confirmedCount > 0
-            }
-          }, confirmedCount + " convinced"),
-          h('div.title', conditionTagline),
-          sourcesForCondition
-        ])
-      ]);
-
-      proofEl = h('div.proof', [
-        h('div.tagline', proofTagline),
-        sourcesOfProof
-      ]);
     } else {
-      prompt = "The issue:";
-      issue = viewState.issue && viewState.issue.description;
+      if(user && userOnIssue) {
+        prompt = "You believe:";
+        stand = userOnIssue.stand;
+      } else {
+        prompt = "The issue:";
+        issue = viewState.issue && viewState.issue.description;
+      }
     }
 
     if(viewState.issue) {
