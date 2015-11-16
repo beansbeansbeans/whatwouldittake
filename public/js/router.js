@@ -56,10 +56,10 @@ module.exports = {
         page.show('stands/' + ctx.params.issue + '/' + getRandomPosition());
       });
       page('stands/:issue/:side', routes.stand.start);
-      page(':issue', routes.issue.start);
       page('vote', routes.vote.start);
       page('vote/:issue', routes.vote.start);
       page('stands/:issue/:side/:condition', routes.condition.start);
+      page(':issue', routes.issue.start);
       page();
     });
 
