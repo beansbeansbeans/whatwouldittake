@@ -6,7 +6,7 @@ var routes = {
   condition: require('./views/condition'),
   vote: require('./views/vote'),
   stand: require('./views/stand'),
-  meStand: require('./views/meStand'),
+  issue: require('./views/issue'),
   issues: require('./views/issues'),
   about: require('./views/about')
 };
@@ -56,7 +56,7 @@ module.exports = {
         page.show('stands/' + ctx.params.issue + '/' + getRandomPosition());
       });
       page('stands/:issue/:side', routes.stand.start);
-      page('me/:issue', routes.meStand.start);
+      page(':issue', routes.issue.start);
       page('vote', routes.vote.start);
       page('vote/:issue', routes.vote.start);
       page('stands/:issue/:side/:condition', routes.condition.start);

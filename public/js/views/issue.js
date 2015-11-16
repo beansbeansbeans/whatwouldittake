@@ -12,7 +12,7 @@ var dimensions = {};
 
 var chartWidthOverHeight = 2.75;
 
-class meStandView extends view {
+class issueView extends view {
   start(ctx) {
     super.start();
     viewState.issue = _.findWhere(state.get("issues"), { slug: ctx.params.issue });
@@ -240,4 +240,4 @@ class meStandView extends view {
   }
 }
 
-module.exports = new meStandView();
+module.exports = new issueView();
