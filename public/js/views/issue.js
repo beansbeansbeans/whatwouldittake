@@ -154,7 +154,6 @@ class issueView extends view {
     var body;
     var source;
     var key;
-    var backCTA;
 
     if(viewState.issue && user && userOnIssue) {
       prompt = "You believe:";
@@ -242,8 +241,6 @@ class issueView extends view {
         h('div.aff', viewState.issue.data.affDisplay ? viewState.issue.data.affDisplay : viewState.issue.aff),
         h('div.neg', viewState.issue.data.negDisplay ? viewState.issue.data.negDisplay : viewState.issue.neg)
       ]);
-
-      backCTA = 'back to ' + viewState.issue.title;
     }
 
     return h('div#issue', [
@@ -264,7 +261,7 @@ class issueView extends view {
           source
         ]),
         h('div.ctas', [
-          h('div#back', backCTA),
+          h('div#back', 'back'),
           h('div#explore-other-issues', 'Explore other issues')
         ])
       ])

@@ -167,5 +167,23 @@
         background: $disagreement-color;
       }
     }
+    .ctas {
+      margin-top: 3rem;
+      #back, #explore-other-issues {
+        @extend %subdued-label;
+        display: inline-block;
+      }
+      #back {
+        &:after {
+          content: "|";
+          display: inline-block;
+          margin-left: 0.7rem;
+          margin-right: 0.75rem;
+        }
+      }
+      #explore-other-issues {
+
+      }
+    }
   }
 }
