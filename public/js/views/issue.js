@@ -130,7 +130,7 @@ class issueView extends view {
     var sourcesForCondition;
     var sourcesOfProof;
     var proofTagline;
-    var userOnIssue = viewState.issue && _.findWhere(user.stands, { id: viewState.issue._id});
+    var userOnIssue = viewState.issue && user && _.findWhere(user.stands, { id: viewState.issue._id});
     var prompt;
     var body;
     var source;
@@ -177,7 +177,7 @@ class issueView extends view {
             })
           ]);
         }
-        
+
         body = h("div.body", [
           h('div.frame', 'What it took to change your mind:'),
           h('div.main-condition', [
