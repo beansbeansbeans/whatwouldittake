@@ -287,19 +287,21 @@ a {
     margin-right: auto;
     min-width: $min-content-width;
   }
-  #convert-belief {
+  #see-other-side, #convert-belief {
     margin-left: 1rem;
     &:before {
       content: "/";
       display: inline-block;
       margin-right: 1rem;
       color: $subdued-text-color !important;
-    }
+    }    
+  }
+  #convert-belief {
     &:hover {
       color: $agreement-color;
     }
   }
-  #see-other-side, #convert-belief {
+  #see-info, #see-other-side, #convert-belief {
     @extend %subdued-label;
     display: inline-block;
   }

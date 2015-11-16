@@ -21,6 +21,7 @@ module.exports = {
         h('div.prompt', frame),
         h('h1', opts.issue[opts.position]),
         h('div.actions', [
+          h('div#see-info', 'Info'),
           h('div#see-other-side', 'See the other side'),
           convertButton
         ])

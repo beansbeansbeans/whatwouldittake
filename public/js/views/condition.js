@@ -229,6 +229,8 @@ class conditionView extends view {
         state.set("anonymous_activity", anonymous_activity);
         this.convertBeliefTransition();
       }
+    } else if(e.target.id === 'see-info') {
+      fadeOut('/' + viewState.issue.slug);
     } else if(e.target.id === 'see-other-side') {
       page.show('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
     } else if(e.target.id === "submit-proof-button") {
