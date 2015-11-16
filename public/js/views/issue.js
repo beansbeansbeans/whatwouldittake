@@ -17,6 +17,10 @@ class issueView extends view {
     super.start();
     viewState.issue = _.findWhere(state.get("issues"), { slug: ctx.params.issue });
     this.updateState();
+
+    _.bindAll(this, 'handleClick');
+
+    mediator.subscribe("window_click", this.handleClick);
   }
 
   didRender() {
@@ -102,6 +106,20 @@ class issueView extends view {
     d.qs(".y-axis-label").style.width = (availableHeight - dateBuffer) + 'px';
   }
 
+  handleClick(e) {
+    if(e.target.id === 'back') {
+      var user = state.get("user") || state.get("anonymous_activity");
+      var userOnIssue = user && _.findWhere(user.stands, { id: viewState.issue._id});
+      var stand = 'aff';
+      if(userOnIssue) {
+        stand = userOnIssue.stand;
+      }
+      page.show('/stands/' + viewState.issue.slug + '/' + stand);
+    } else if(e.target.id === 'explore-other-issues') {
+      page.show('/issues');
+    }
+  }
+
   handleResize() {
 
   }
@@ -113,6 +131,7 @@ class issueView extends view {
 
   stop() {
     super.stop();
+    mediator.unsubscribe("window_click", this.handleClick);
   }
 
   render() {
@@ -135,6 +154,7 @@ class issueView extends view {
     var body;
     var source;
     var key;
+    var backCTA;
 
     if(viewState.issue && user && userOnIssue) {
       prompt = "You believe:";
@@ -222,6 +242,8 @@ class issueView extends view {
         h('div.aff', viewState.issue.data.affDisplay ? viewState.issue.data.affDisplay : viewState.issue.aff),
         h('div.neg', viewState.issue.data.negDisplay ? viewState.issue.data.negDisplay : viewState.issue.neg)
       ]);
+
+      backCTA = 'back to ' + viewState.issue.title;
     }
 
     return h('div#issue', [
@@ -240,6 +262,10 @@ class issueView extends view {
           svg('svg'),
           key,
           source
+        ]),
+        h('div.ctas', [
+          h('div#back', backCTA),
+          h('div#explore-other-issues', 'Explore other issues')
         ])
       ])
     ]);
