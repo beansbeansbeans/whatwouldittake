@@ -154,6 +154,7 @@ class issueView extends view {
     var body;
     var source;
     var key;
+    var firstDate;
 
     if(viewState.issue && user && userOnIssue) {
       prompt = "You believe:";
@@ -241,6 +242,8 @@ class issueView extends view {
         h('div.aff', viewState.issue.data.affDisplay ? viewState.issue.data.affDisplay : viewState.issue.aff),
         h('div.neg', viewState.issue.data.negDisplay ? viewState.issue.data.negDisplay : viewState.issue.neg)
       ]);
+
+      firstDate = moment.unix(viewState.issue.data.times[0]).format('YYYY');
     }
 
     return h('div#issue', [
@@ -253,7 +256,7 @@ class issueView extends view {
         proofEl
       ]),
       h('div.chart', [
-        h('div.chart-title', 'How opinions have changed:'),
+        h('div.chart-title', 'How opinions have changed since ' + firstDate + ':'),
         h('div.chart-contents', [
           h('div.y-axis-label', 'percent'),
           svg('svg'),
