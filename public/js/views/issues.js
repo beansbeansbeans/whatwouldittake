@@ -47,7 +47,9 @@ class issuesView extends view {
         stand = _.findWhere(user.stands, {id: issue.dataset.id});
       }
 
-      if(stand) {
+      if(e.target.classList.contains("label")) {
+        fadeOut('/' + issue.dataset.slug);
+      } else if(stand) {
         fadeOut('/stands/' + issue.dataset.slug + '/' + stand.stand);
       } else {
         fadeOut('/vote/' + issue.dataset.slug);
@@ -65,14 +67,27 @@ class issuesView extends view {
 
     if(viewState.issues.length) {
       issues = viewState.issues.map((d) => {
+        var label;
+        var userOnIssue;
+        if(state.get("user") && state.get("user").stands.length) {
+          userOnIssue = _.findWhere(state.get("user").stands, { id: d._id });
+          label = h('div.label', {
+            dataset: { stand: userOnIssue ? userOnIssue.stand : '' }
+          }, userOnIssue ? (userOnIssue.stand === 'aff' ? 'y' : 'n') : '');
+        }
+
         return h('div.issue', {
           dataset: {
             id: d._id,
-            slug: d.slug
+            slug: d.slug,
+            containsLabel: typeof label !== 'undefined'
           }
         }, [
-          h('div.slug', d.title),
-          h("div.description", d.description)
+          label,
+          h('div.body', [
+            h('div.slug', d.title),
+            h("div.description", d.description)
+          ])
         ]);
       });
     }

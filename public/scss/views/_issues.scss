@@ -1,3 +1,6 @@
+$label-width: 3.6rem;
+$label-margin: 1.5rem;
+
 #issues-view {
   width: $content-width * 1%;
   margin: auto;
@@ -15,6 +18,41 @@
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
       color: $highlight-text-color;
+    }
+    &[data-contains-label="true"] {
+      .label, .body {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .body {
+        width: calc(100% - #{$label-width + $label-margin});
+      }      
+    }
+    .label {
+      @include square($label-width);
+      text-transform: uppercase;
+      @extend %header-font;
+      border-radius: 50%;
+      margin-right: $label-margin;
+      text-align: center;
+      line-height: $label-width;
+      font-size: 1rem;
+      @include transition(border-color $transition-duration);
+      &:not(:empty) {
+        border: solid 1px $border-color;
+      }
+      &[data-stand="aff"] {
+        color: $agreement-color;
+        &:hover {
+          border-color: $agreement-color;
+        }
+      }
+      &[data-stand="neg"] {
+        color: $disagreement-color;
+        &:hover {
+          border-color: $disagreement-color;
+        }
+      }
     }
   }
 }
