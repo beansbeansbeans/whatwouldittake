@@ -5,22 +5,9 @@ var view = require('../view');
 var auth = require('../auth');
 var util = require('../util');
 var state = require('../state');
+var animationHelpers = require('../util/animation_helpers');
 
 var viewState = {};
-
-var fadeOutEndHandler = (e) => {
-  if(e.target.id === "content") {
-    d.gbID("content").classList.remove("fade-out-view");
-    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-    page.show(viewState.nextRoute);    
-  }
-}
-
-var fadeOut = (nextRoute) => {
-  viewState.nextRoute = nextRoute;
-  d.gbID("content").classList.add("fade-out-view");
-  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-}
 
 class navView extends view {
   start() {
@@ -35,15 +22,15 @@ class navView extends view {
         api.post('/logout', {}, () => {});
         auth.deauthenticated();
       } else if(e.target.id === 'login-anchor') {
-        fadeOut('/login');
+        animationHelpers.fadeOut('/login');
       } else if(e.target.id === 'signup-anchor') {
-        fadeOut('/signup');
+        animationHelpers.fadeOut('/signup');
       } else if(e.target.id === 'logo-anchor') {
-        fadeOut('/issues');
+        animationHelpers.fadeOut('/issues');
       } else if(e.target.id === 'about-anchor') {
-        fadeOut('/about');
+        animationHelpers.fadeOut('/about');
       } else if(e.target.id === 'issues-anchor') {
-        fadeOut('/issues');
+        animationHelpers.fadeOut('/issues');
       }
     });
   }

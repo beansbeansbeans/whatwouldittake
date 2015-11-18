@@ -6,6 +6,7 @@ var auth = require('../auth');
 var util = require('../util');
 var state = require('../state');
 var modalSubview = require('./subviews/modal');
+var animationHelpers = require('../util/animation_helpers');
 var helpers = require('../util/belief_helpers');
 var headerSubview = require('./subviews/belief_header');
 
@@ -19,20 +20,6 @@ var pristineState = {
   descriptionTextarea: descriptionTextareaMaxLength
 };
 var viewState = JSON.parse(JSON.stringify(pristineState));
-
-var fadeOutEndHandler = (e) => {
-  if(e.target.id === "content") {
-    d.gbID("content").classList.remove("fade-out-view");
-    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-    page.show(viewState.nextRoute);    
-  }
-}
-
-var fadeOut = (nextRoute) => {
-  viewState.nextRoute = nextRoute;
-  d.gbID("content").classList.add("fade-out-view");
-  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-}
 
 class conditionView extends view {
   start(ctx) {
@@ -231,7 +218,7 @@ class conditionView extends view {
       helpers.vote(viewState.issue, stand.stand);
       this.convertBeliefTransition();
     } else if(e.target.id === 'see-info') {
-      fadeOut('/' + viewState.issue.slug);
+      animationHelpers.fadeOut('/' + viewState.issue.slug);
     } else if(e.target.id === 'see-other-side') {
       page.show('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
     } else if(e.target.id === "submit-proof-button") {

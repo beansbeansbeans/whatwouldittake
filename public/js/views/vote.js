@@ -5,26 +5,13 @@ var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
 var helpers = require('../util/belief_helpers');
+var animationHelpers = require('../util/animation_helpers');
 
 var viewState = {
   issue: {}
 };
 
 var dimensions = {};
-
-var fadeOutEndHandler = (e) => {
-  if(e.target.id === "content") {
-    d.gbID("content").classList.remove("fade-out-view");
-    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-    page.show(viewState.nextRoute);    
-  }
-}
-
-var fadeOut = (nextRoute) => {
-  viewState.nextRoute = nextRoute;
-  d.gbID("content").classList.add("fade-out-view");
-  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-}
 
 var vote = (stand) => {
   if(!helpers.isBeliever(viewState.issue, stand)) {
@@ -41,7 +28,7 @@ var vote = (stand) => {
     helpers.vote(viewState.issue, stand);
   }
 
-  fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
+  animationHelpers.fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
 };
 
 class voteView extends view {

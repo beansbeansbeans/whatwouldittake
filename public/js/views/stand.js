@@ -4,6 +4,7 @@ var state = require('../state');
 var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
+var animationHelpers = require('../util/animation_helpers');
 var helpers = require('../util/belief_helpers');
 var headerSubview = require('./subviews/belief_header');
 
@@ -16,20 +17,6 @@ var pristineState = {
   descriptionTextarea: descriptionTextareaMaxLength
 };
 var viewState = JSON.parse(JSON.stringify(pristineState));
-
-var fadeOutEndHandler = (e) => {
-  if(e.target.id === "content") {
-    d.gbID("content").classList.remove("fade-out-view");
-    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-    page.show(viewState.nextRoute);    
-  }
-}
-
-var fadeOut = (nextRoute) => {
-  viewState.nextRoute = nextRoute;
-  d.gbID("content").classList.add("fade-out-view");
-  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
-}
 
 var convertBeliefTransition = () => {
   d.gbID("condition-view").classList.add("converting-belief");
@@ -161,9 +148,9 @@ class standView extends view {
       helpers.vote(viewState.issue, stand.stand);
       this.convertBeliefTransition();
     } else if(e.target.id === 'see-info') {
-      fadeOut('/' + viewState.issue.slug);
+      animationHelpers.fadeOut('/' + viewState.issue.slug);
     } else if(e.target.id === 'see-other-side') {
-      fadeOut('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
+      animationHelpers.fadeOut('/stands/' + viewState.issue.slug + '/' + (viewState.position === 'aff' ? 'neg' : 'aff'));
     } else if(e.target.id === 'submit-what-would-it-take') {
       if(d.qs("#contribute .tagline textarea").value.length) {
         api.post('/contribute', {
