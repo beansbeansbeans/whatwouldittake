@@ -20,6 +20,20 @@ var pristineState = {
 };
 var viewState = JSON.parse(JSON.stringify(pristineState));
 
+var fadeOutEndHandler = (e) => {
+  if(e.target.id === "content") {
+    d.gbID("content").classList.remove("fade-out-view");
+    d.gbID("content").removeEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+    page.show(viewState.nextRoute);    
+  }
+}
+
+var fadeOut = (nextRoute) => {
+  viewState.nextRoute = nextRoute;
+  d.gbID("content").classList.add("fade-out-view");
+  d.gbID("content").addEventListener(util.prefixedTransitionEnd[util.prefixedProperties.transition.js], fadeOutEndHandler);
+}
+
 class conditionView extends view {
   start(ctx) {
     super.start();

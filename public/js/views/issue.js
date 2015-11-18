@@ -264,7 +264,7 @@ class issueView extends view {
           source
         ]),
         h('div.ctas', [
-          h('div#back', 'back'),
+          h('div#back', 'view arguments'),
           h('div#explore-other-issues', 'Explore other issues')
         ])
       ])
