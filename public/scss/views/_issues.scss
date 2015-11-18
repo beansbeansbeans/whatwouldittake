@@ -22,7 +22,7 @@ $label-margin: 1.5rem;
     &[data-contains-label="true"] {
       .label, .body {
         display: inline-block;
-        vertical-align: middle;
+        vertical-align: top;
       }
       .body {
         width: calc(100% - #{$label-width + $label-margin});

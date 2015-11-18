@@ -27,37 +27,21 @@ var fadeOut = (nextRoute) => {
 }
 
 var vote = (stand) => {
-  if(state.get("user") !== null) {
-    if(helpers.isBeliever(viewState.issue, stand)) {
-      fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
-    } else {
+  if(!helpers.isBeliever(viewState.issue, stand)) {
+    if(state.get("user") !== null) {
       api.post('/vote', {
         id: viewState.issue._id,
         stand: stand
       }, (data) => {
         helpers.refreshIssue(data.data.issue);
         state.set("user", data.data.user);
-        fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
-      });                  
+      }); 
     }
-  } else {
-    var anonymous_activity = state.get("anonymous_activity");
-    if(!anonymous_activity.stands) {
-      anonymous_activity.stands = [];
-    }
-    var matchingStand = _.findWhere(anonymous_activity.stands, { id: viewState.issue._id});
 
-    if(matchingStand) {
-      matchingStand.stand = stand;
-    } else {
-      anonymous_activity.stands.push({
-        id: viewState.issue._id,
-        stand: stand
-      });
-    }
-    state.set("anonymous_activity", anonymous_activity);
-    fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
+    helpers.vote(viewState.issue, stand);
   }
+
+  fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
 };
 
 class voteView extends view {

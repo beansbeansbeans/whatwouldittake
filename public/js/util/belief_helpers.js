@@ -21,5 +21,22 @@ module.exports = {
     api.setCache("/issues", {
       data: issues
     });
+  },
+  vote(issue, stand) {
+    var user = state.get("user") || state.get("anonymous_activity");
+    if(!user.stands) {
+      user.stands = [];
+    }
+
+    var matchingStand = _.findWhere(user.stands, { id: issue._id});
+
+    if(matchingStand) {
+      matchingStand.stand = stand;
+    } else {
+      user.stands.push({
+        id: issue._id,
+        stand: stand
+      });
+    }
   }
 }
