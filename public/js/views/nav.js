@@ -32,9 +32,8 @@ class navView extends view {
 
     mediator.subscribe("window_click", (e) => {
       if(e.target.getAttribute("id") === "logout-button") {
-        api.post('/logout', {}, () => {
-          auth.deauthenticated();
-        });
+        api.post('/logout', {}, () => {});
+        auth.deauthenticated();
       } else if(e.target.id === 'login-anchor') {
         fadeOut('/login');
       } else if(e.target.id === 'signup-anchor') {
