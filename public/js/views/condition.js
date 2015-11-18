@@ -211,24 +211,11 @@ class conditionView extends view {
           helpers.refreshIssue(data.data.issue);
           state.set("user", data.data.user);
           viewState.issue = data.data.issue;
-          this.convertBeliefTransition();
         });        
-      } else {
-        var anonymous_activity = state.get("anonymous_activity");
-        if(!anonymous_activity.stands) {
-          anonymous_activity.stands = [];
-        }
-
-        var matchingStand = _.findWhere(anonymous_activity.stands, {id: stand.id });
-        if(matchingStand) {
-          matchingStand.stand = viewState.position;
-        } else {
-          anonymous_activity.stands.push(stand);
-        }
-
-        state.set("anonymous_activity", anonymous_activity);
-        this.convertBeliefTransition();
       }
+
+      helpers.vote(viewState.issue, stand.stand);
+      this.convertBeliefTransition();
     } else if(e.target.id === 'see-info') {
       fadeOut('/' + viewState.issue.slug);
     } else if(e.target.id === 'see-other-side') {
