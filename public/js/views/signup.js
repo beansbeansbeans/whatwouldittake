@@ -5,14 +5,17 @@ var view = require('../view');
 var auth = require('../auth');
 var formHelpers = require('../util/form_helpers');
 
-var state = {
+var pristineState = {
   attemptingSubmission: false,
+  loading: false,
   fieldStatus: {
     username: false,
     email: false,
     password: false
   }
 };
+
+var state = JSON.parse(JSON.stringify(pristineState));
 
 var errorMessages = {
   username: {
@@ -66,6 +69,8 @@ class signupView extends view {
           password = form.querySelector('[name="password"]').value;
 
         if(this.validate()) {
+          state.loading = true;
+          this.updateState();
           api.post('/signup', {
             username: username,
             email: email,
@@ -74,6 +79,7 @@ class signupView extends view {
             if(data.success) {
               auth.authenticated(data.data.user);
             } else {
+              state.loading = false;
               state.fieldStatus[data.data.error.field] = data.data.error.message;
               this.updateState();
             }
@@ -81,6 +87,10 @@ class signupView extends view {
         }
       }
     });
+  }
+
+  stop() {
+    state = JSON.parse(JSON.stringify(pristineState));
   }
 
   render() {
@@ -117,10 +127,14 @@ class signupView extends view {
           }),
           h('div.error', state.fieldStatus.password)
         ]),
-        h('input#signup-button', {
-          type: "submit",
-          value: "signup"
-        })
+        h('div#signup-button', {
+          dataset: { loading: state.loading }
+        }, [
+          h('div.button-loader', [
+            h('div.button-loader-center')
+          ]),
+          h('div.text', 'signup')
+        ])
       ])
     ]);
   }

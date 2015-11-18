@@ -9,7 +9,7 @@ module.exports = {
         return result === true;
       })
     });
-
+    
     view.updateState();
 
     return Object.keys(state.fieldStatus).every(x => !state.fieldStatus[x]);

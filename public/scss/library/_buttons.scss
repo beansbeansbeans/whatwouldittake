@@ -28,17 +28,64 @@
   text-transform: uppercase;
   @extend %header-font;
   @include transition(background-color $transition-duration);
-  &[data-type="severe"] {
-    color: white;
-    border-color: $bittersweet;
-    background: $bittersweet;
-  }
-  &[data-type="critical"] {
-    color: white;
-    border-color: $bittersweet;
-    background: $bittersweet;
+  .text {
+    pointer-events: none;
+    @include transition(opacity $transition-duration);
   }
   &:hover {
     background: lighten($gray, 20%);
+  }
+  &[data-loading="true"] {
+    .text {
+      opacity: 0;
+    }
+    .button-loader {
+      opacity: 1;
+    }
+  }
+}
+
+.button-loader {
+  pointer-events: none;
+  opacity: 0;
+  @include transition(opacity $transition-duration);
+  left: 50%;
+  top: 50%;
+  margin-top: -3px;
+  margin-left: -2px;
+  position: absolute;
+  .button-loader-center, &:before, &:after {
+    opacity: .35;
+    background-color: white;
+    position: absolute;
+    @include square(5px);
+    @include border-radius(50%);
+  }
+  .button-loader-center {
+    @include animation(button-loader 0.9s 0.3s infinite);
+  }
+  &:before, &:after {
+    content: '';
+  }
+  &:before {
+    margin-left: -9px;
+    @include animation(button-loader 0.9s infinite);
+  }
+  &:after {
+    margin-left: 9px;
+    @include animation(button-loader 0.9s 0.6s infinite);
+  }
+  @at-root {
+    @include keyframes(button-loader) {
+      0% {
+        opacity: .35;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: .35;
+      }
+    }
   }
 }

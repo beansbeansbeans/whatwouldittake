@@ -160,13 +160,14 @@
   }
   input {
     display: block;
-    &[type="submit"] {
-      margin-top: 2rem;
-      @extend .button;
-      background: none;
-      text-transform: capitalize;
-      @extend %body-font;
-    }
+  }
+  #signup-button, #login-button {
+    position: relative;
+    margin-top: 2rem;
+    @extend .button;
+    background: none;
+    text-transform: capitalize;
+    @extend %body-font;    
   }
 }
 
