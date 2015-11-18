@@ -255,8 +255,13 @@ class conditionView extends view {
           viewState.issue = data.data;
           viewState.condition = _.findWhere(viewState.issue.conditions[viewState.position], {_id: viewState.condition._id});
           helpers.refreshIssue(data.data);
-          this.vote();
         });
+
+        viewState.condition.dependents.push({
+          id: state.get("user").id,
+          status: "pending"
+        });
+        this.vote();
       } else {
         viewState.anonymousUserAttemptedVote = true;
         this.updateState();
