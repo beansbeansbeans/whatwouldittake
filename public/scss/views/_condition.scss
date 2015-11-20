@@ -20,6 +20,8 @@
     .proof.target {
       @include transition(all $transition-duration $transition-duration !important);
       @extend %highlight-submitted-item;
+      position: relative;
+      overflow: hidden;
     }
     .main-condition .confirmed {
       color: $agreement-color;
@@ -136,8 +138,11 @@
         line-height: $body-font-line-height;
       }
       .source-list {
+        background: white;
         @extend %source-list;
-        margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
       }
       @extend %pending-confirmed-author;     
       .confirmed {

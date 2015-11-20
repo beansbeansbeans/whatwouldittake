@@ -114,7 +114,7 @@ class conditionView extends view {
 
       var bodyTarget = d.qs("h1").getBoundingClientRect().bottom - 12;
       var bodyCurrent = d.qs(".body").getBoundingClientRect().top;
-      var proofTarget = d.qs(".main-condition").getBoundingClientRect().bottom - 2;
+      var proofTarget = d.qs(".main-condition").getBoundingClientRect().bottom - 12;
       var proofCurrent = closestProof.getBoundingClientRect().top;
 
       d.qs(".body").style[util.prefixedProperties.transform.js] = "translateY(" + (bodyTarget - bodyCurrent) + "px)";
