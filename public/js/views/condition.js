@@ -404,7 +404,7 @@ class conditionView extends view {
     }
 
     if(viewState.condition.proofs && viewState.condition.proofs.length) {
-      var titleText = 'Responses:';
+      var titleText = "Responses from the other side:";
 
       if(beliefAtStake) {
         titleText = 'See anything convincing?';
