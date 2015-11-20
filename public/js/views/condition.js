@@ -259,9 +259,19 @@ class conditionView extends view {
         });
 
         viewState.condition.dependents.push({
-          id: state.get("user").id,
+          id: state.get("user")._id,
           status: "pending"
         });
+
+        var matchingIssue = _.findWhere(state.get("user").stands, { id: viewState.issue._id });
+        if(matchingIssue) {
+          matchingIssue.stand = viewState.position;
+        } else {
+          state.get("user").stands.push({
+            id: viewState.issue._id,
+            stand: viewState.position
+          });
+        }
         this.vote();
       } else {
         viewState.anonymousUserAttemptedVote = true;
