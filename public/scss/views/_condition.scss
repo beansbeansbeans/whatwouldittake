@@ -18,10 +18,12 @@
       @include animation(none);
     }
     .proof.target {
+      .author, .pending {
+        @include transition(opacity $transition-duration);
+        opacity: 0;
+      }
       @include transition(all $transition-duration $transition-duration !important);
       @extend %highlight-submitted-item;
-      position: relative;
-      overflow: hidden;
     }
     .main-condition .confirmed {
       color: $agreement-color;
