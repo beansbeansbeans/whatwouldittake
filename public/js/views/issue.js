@@ -5,6 +5,7 @@ var state = require('../state');
 var mediator = require('../mediator');
 var view = require('../view');
 var util = require('../util');
+var animationHelpers = require('../util/animation_helpers');
 
 var viewState = {}
 
@@ -114,9 +115,9 @@ class issueView extends view {
       if(userOnIssue) {
         stand = userOnIssue.stand;
       }
-      page.show('/stands/' + viewState.issue.slug + '/' + stand);
+      animationHelpers.fadeOut('/stands/' + viewState.issue.slug + '/' + stand);
     } else if(e.target.id === 'explore-other-issues') {
-      page.show('/issues');
+      animationHelpers.fadeOut('/issues');
     }
   }
 
