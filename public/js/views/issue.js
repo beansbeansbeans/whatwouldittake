@@ -16,6 +16,9 @@ var chartWidthOverHeight = 2.75;
 class issueView extends view {
   start(ctx) {
     super.start();
+
+    document.body.scrollTop = 0;
+    
     viewState.issue = _.findWhere(state.get("issues"), { slug: ctx.params.issue });
     this.updateState();
 
