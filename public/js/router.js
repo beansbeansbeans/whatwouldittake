@@ -31,17 +31,18 @@ module.exports = {
         }
 
         mediator.publish("route_updated", context);
-        next();
+        next();          
       });
 
       page('/', (context) => {
         if(context.pathname.indexOf("#!") !== -1) {
-          page.redirect(context.pathname.slice(3));
-        }
-        if(state.get("user") !== null) {
-          page.show('/issues');
+          page.show(context.pathname.slice(3));
         } else {
-          page.redirect('/vote');
+          if(state.get("user") !== null) {
+            page.show('/issues');
+          } else {
+            page.redirect('/vote');
+          }          
         }
       });
 
