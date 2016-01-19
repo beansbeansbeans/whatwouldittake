@@ -16,7 +16,7 @@ nav.start();
 if(window.location.hostname === "localhost") {
   api.setURL("http://localhost:5500");
 } else {
-  api.setURL("https://whatwouldittake-53541.onmodulus.net");
+  api.setURL("http://whatwouldittake-53541.onmodulus.net");
 }
 
 window.addEventListener("click", (e) => {
